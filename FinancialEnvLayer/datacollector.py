@@ -112,21 +112,21 @@ class DataDownloader(DatasetCollector):
 
 class CustomDatasetImporter(DatasetCollector):
 
-    def __init__(self, df):
-        self.df = df
+    def __init__(self):
+        pass
 
-    @classmethod
-    def from_df(cls, df):
-        df = cls.__load_from_df(df_to_load=df)
+    @staticmethod
+    def from_df(df):
+        df = CustomDatasetImporter.__load_from_df(df_to_load=df)
         return df
 
     @staticmethod
     def __load_from_df(df_to_load) -> pd.DataFrame:
         return df_to_load
 
-    @classmethod
-    def from_file(cls, filename):
-        df = cls.__load_from_file(path=filename)
+    @staticmethod
+    def from_file(filename):
+        df = CustomDatasetImporter.__load_from_file(path=filename)
         return df
 
     @staticmethod

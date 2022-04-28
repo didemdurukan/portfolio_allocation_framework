@@ -30,21 +30,20 @@ class FeatureEngineer:
     def __init__(self):
         pass
 
-    @classmethod
-    def add_features(cls,
-                     df,
+    @staticmethod
+    def add_features(df,
                      use_default: bool = True,
                      tech_indicator_list: list = config.IMPLEMENTED_TECH_INDICATORS_LIST,
                      use_vix: bool = False,
                      use_turbulence: bool = False,
                      user_defined_feature: bool = False):
 
-        extended_df = cls.__extend_data(df,
-                                        use_default,
-                                        tech_indicator_list,
-                                        use_vix,
-                                        use_turbulence,
-                                        user_defined_feature)
+        extended_df = FeatureEngineer.__extend_data(df,
+                                                    use_default,
+                                                    tech_indicator_list,
+                                                    use_vix,
+                                                    use_turbulence,
+                                                    user_defined_feature)
         return extended_df
 
     @staticmethod
