@@ -1,14 +1,24 @@
-"""Contains methods and classes to collect data from
-Yahoo Finance API
+"""Contains methods and classes to collect data from Yahoo Finance API or import custom dataset
 """
 
+from abc import ABC, abstractmethod
 import pandas as pd
 import yfinance as yf
-from dataset import Dataset
+import json
 
 
-class DownloadDataset(Dataset):
-    """Provides methods for retrieving daily security data from Yahoo Finance API
+class DatasetCollector(ABC):
+    """"
+    This abstract base class defines the base structure of data collectors
+    """
+
+    def __init__(self):
+        pass
+
+
+class DataDownloader(DatasetCollector):
+    """
+    Provides methods for retrieving daily security data from Yahoo Finance API
 
     Attributes
     ----------
@@ -21,18 +31,21 @@ class DownloadDataset(Dataset):
 
     Methods
     -------
-    createDataset()
+    create_dataset()
         Fetches data from yahoo API
 
     """
 
-    def __init__(self, start_date: str, end_date: str, ticker_list: list):
+    def __init__(self):
+        pass
 
-        self.start_date = start_date
-        self.end_date = end_date
-        self.ticker_list = ticker_list
+    @classmethod
+    def download_data(cls, start_date: str, end_date: str, ticker_list: list, proxy=None):
+        df = cls.download_from_yahoo(start_date, end_date, ticker_list, proxy)
+        return df
 
-    def createDataset(self, proxy=None) -> pd.DataFrame:
+    @staticmethod
+    def download_from_yahoo(start_date: str, end_date: str, ticker_list: list, proxy=None) -> pd.DataFrame:
         """Fetches data from Yahoo Finance API
         Parameters
         ----------
@@ -45,8 +58,8 @@ class DownloadDataset(Dataset):
         """
         # Download and save the data in a pandas DataFrame:
         data_df = pd.DataFrame()
-        for tic in self.ticker_list:
-            temp_df = yf.download(tic, start=self.start_date, end=self.end_date, proxy=proxy)
+        for tic in ticker_list:
+            temp_df = yf.download(tic, start=start_date, end=end_date, proxy=proxy)
             temp_df["tic"] = tic
             data_df = pd.concat([data_df, temp_df])
         # reset the index, we want to use numbers as index instead of dates
@@ -77,7 +90,7 @@ class DownloadDataset(Dataset):
         data_df = data_df.dropna()
         data_df = data_df.reset_index(drop=True)
         print("Shape of DataFrame: ", data_df.shape)
-        #print("Display DataFrame: ", data_df.head())
+        # print("Display DataFrame: ", data_df.head())
 
         data_df = data_df.sort_values(by=["date", "tic"]).reset_index(drop=True)
 
@@ -93,3 +106,45 @@ class DownloadDataset(Dataset):
         select_stocks_list = list(names[equal_list])
         df = df[df.tic.isin(select_stocks_list)]
         return df
+
+
+# User Imports his/her own dataset
+
+class CustomDatasetImporter(DatasetCollector):
+
+    def __init__(self, df):
+        self.df = df
+
+    @classmethod
+    def from_df(cls, df):
+        df = cls.__load_from_df(df_to_load=df)
+        return df
+
+    @staticmethod
+    def __load_from_df(df_to_load) -> pd.DataFrame:
+        return df_to_load
+
+    @classmethod
+    def from_file(cls, filename):
+        df = cls.__load_from_file(path=filename)
+        return df
+
+    @staticmethod
+    def __load_from_file(path) -> pd.DataFrame:
+        csv = ".csv"
+        excel = ".xlsx"
+        json_str = ".json"
+
+        try:
+            if csv in path:
+                data = pd.read_csv(path)
+            elif excel in path:
+                data = pd.read_excel(path)
+            elif json_str in path:
+                f = open(path)
+                json_data = json.load(f)
+                data = pd.json_normalize(json_data)
+            return data
+
+        except FileNotFoundError:
+            print("File not found.")

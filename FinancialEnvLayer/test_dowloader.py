@@ -1,14 +1,22 @@
 # Test File
-from customDataset import ImportCustomDataset
-from downloadDataset import DownloadDataset
+import config
+from datacollector import CustomDatasetImporter
+from datacollector import DataDownloader
+from dataprocessor import FeatureEngineer
 import yaml
 
 import pandas as pd
 
 if __name__ == '__main__':
 
-    # df = ImportCustomDataset("examplejson.json").createDataset()
-    # print(df)
+    print("\nTest 1: Loading from json............")
+    json_df = CustomDatasetImporter.from_file("examplejson.json")
+    print(json_df.head())
+
+    print("\nTest 2: Loading from custom df.........")
+    df_to_load = pd.DataFrame(data=[5, 4, 3])
+    custom_df = CustomDatasetImporter.from_df(df_to_load)
+    print(custom_df.head())
 
     # Read YAML file
     with open("download.yaml", "r") as stream:
@@ -19,11 +27,18 @@ if __name__ == '__main__':
 
     tickers = download_config["tickers"]
 
-    df = DownloadDataset(start_date='2009-01-01',
-                         end_date='2021-10-31',
-                         ticker_list=tickers)\
-        .createDataset()  # get data from Yahoo Finance API Downloader
+    print("\nTest 3: Downloading from Yahoo.........")
+    downloaded_df = DataDownloader.download_data(start_date='2009-01-01',
+                                                 end_date='2021-10-31',
+                                                 ticker_list=tickers)
+    print(downloaded_df.head())
 
-    print(df.head())
+    print("\nTest 4: Feature engineer.........")
+    df_processed = FeatureEngineer.add_features(df=downloaded_df,
+                                                use_default=True,
+                                                tech_indicator_list=config.IMPLEMENTED_TECH_INDICATORS_LIST,
+                                                use_vix=True,
+                                                use_turbulence=True,
+                                                user_defined_feature=True)  # included technical indicators as features
 
-
+    print(df_processed.head())
