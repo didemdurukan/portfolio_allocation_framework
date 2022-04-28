@@ -8,21 +8,20 @@ from dataset import Dataset
 
 
 class DownloadDataset(Dataset):
-    """Provides methods for retrieving daily stock data from
-    Yahoo Finance API
+    """Provides methods for retrieving daily security data from Yahoo Finance API
 
     Attributes
     ----------
         start_date : str
-            start date of the data (modified from neofinrl_config.py)
+            start date of the data
         end_date : str
-            end date of the data (modified from neofinrl_config.py)
+            end date of the data
         ticker_list : list
-            a list of stock tickers (modified from neofinrl_config.py)
+            a list of security tickers
 
     Methods
     -------
-    fetch_data()
+    createDataset()
         Fetches data from yahoo API
 
     """
@@ -41,15 +40,15 @@ class DownloadDataset(Dataset):
         Returns
         -------
         `pd.DataFrame`
-            7 columns: A date, open, high, low, close, volume and tick symbol
-            for the specified stock ticker
+            7 columns: A date, open, high, low, (adjusted) close, volume and tick symbol
+            for the specified security ticker
         """
         # Download and save the data in a pandas DataFrame:
         data_df = pd.DataFrame()
         for tic in self.ticker_list:
             temp_df = yf.download(tic, start=self.start_date, end=self.end_date, proxy=proxy)
             temp_df["tic"] = tic
-            data_df = data_df.append(temp_df)
+            data_df = pd.concat([data_df, temp_df])
         # reset the index, we want to use numbers as index instead of dates
         data_df = data_df.reset_index()
         try:
@@ -60,14 +59,14 @@ class DownloadDataset(Dataset):
                 "high",
                 "low",
                 "close",
-                "adjcp",
+                "adjclose",
                 "volume",
                 "tic",
             ]
             # use adjusted close price instead of close price
-            data_df["close"] = data_df["adjcp"]
+            data_df["close"] = data_df["adjclose"]
             # drop the adjusted close price column
-            data_df = data_df.drop(labels="adjcp", axis=1)
+            data_df = data_df.drop(labels="adjclose", axis=1)
         except NotImplementedError:
             print("the features are not supported currently")
         # create day of the week column (monday = 0)
@@ -78,7 +77,7 @@ class DownloadDataset(Dataset):
         data_df = data_df.dropna()
         data_df = data_df.reset_index(drop=True)
         print("Shape of DataFrame: ", data_df.shape)
-        # print("Display DataFrame: ", data_df.head())
+        #print("Display DataFrame: ", data_df.head())
 
         data_df = data_df.sort_values(by=["date", "tic"]).reset_index(drop=True)
 

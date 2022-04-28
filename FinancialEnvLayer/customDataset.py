@@ -6,14 +6,13 @@ import json
 
 class ImportCustomDataset(Dataset):
 
-    def __init__(self, path):
+    def __init__(self, path: str):
 
         self.df = pd.DataFrame()
         self.path = path
         self.createDataset()
 
-    def createDataset(self):
-
+    def createDataset(self) -> pd.DataFrame:
         csv = ".csv"
         excel = ".xlsx"
         json_str = ".json"
