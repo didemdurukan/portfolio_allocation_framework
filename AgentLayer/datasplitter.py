@@ -4,7 +4,7 @@ from sklearn.utils import indexable
 from sklearn.utils.validation import _num_samples
 
 
-class TimeSeriesSplitter(TimeSeriesSplit):
+class ExpandingWindowSplitter(TimeSeriesSplit):
 
     def _iter_test_indices(self, X=None, y=None, groups=None):
         super()._iter_test_indices(X, y, groups)
