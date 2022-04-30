@@ -1,6 +1,6 @@
 import config
 import pandas as pd
-from datacollector import DataDownloader
+from FinancialEnvLayer.datacollector import DataDownloader
 import numpy as np
 from stockstats import StockDataFrame as Sdf
 
