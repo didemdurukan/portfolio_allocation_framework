@@ -1,11 +1,10 @@
+import itertools
+
 import config
 import pandas as pd
 from FinancialEnvLayer.datacollector import DataDownloader
 import numpy as np
 from stockstats import StockDataFrame as Sdf
-
-
-# TODO: class DataCleaner:
 
 
 class FeatureEngineer:
@@ -22,8 +21,6 @@ class FeatureEngineer:
 
     Methods
     -------
-    extend_data()
-        main method to do the feature engineering
 
     """
 
@@ -32,8 +29,9 @@ class FeatureEngineer:
 
     @staticmethod
     def add_features(df,
+                     tech_indicator_list: list = None,
                      use_default: bool = True,
-                     tech_indicator_list: list = config.IMPLEMENTED_TECH_INDICATORS_LIST,
+                     use_covar=True,
                      use_vix: bool = False,
                      use_turbulence: bool = False,
                      user_defined_feature: bool = False):
@@ -41,6 +39,7 @@ class FeatureEngineer:
         extended_df = FeatureEngineer.__extend_data(df,
                                                     use_default,
                                                     tech_indicator_list,
+                                                    use_covar,
                                                     use_vix,
                                                     use_turbulence,
                                                     user_defined_feature)
@@ -50,6 +49,7 @@ class FeatureEngineer:
     def __extend_data(df,
                       use_default,
                       tech_indicator_list,
+                      use_covar,
                       use_vix,
                       use_turbulence,
                       user_defined_feature):
@@ -65,6 +65,7 @@ class FeatureEngineer:
         if use_default:
             df = FeatureEngineer.__add_technical_indicator(df, config.IMPLEMENTED_TECH_INDICATORS_LIST)
             print("Successfully added technical indicators")
+
         elif not use_default:
             df = FeatureEngineer.__add_technical_indicator(df, tech_indicator_list)
             print("Successfully added technical indicators")
@@ -83,6 +84,11 @@ class FeatureEngineer:
         if user_defined_feature:
             df = FeatureEngineer.__add_user_defined_feature(df)
             print("Successfully added user defined features")
+
+        # add covariances
+        if use_covar:
+            df = FeatureEngineer.__add_covariances(df)
+            print("Successfully added covariances")
 
         # fill the missing values at the beginning and the end
         df = df.fillna(method="ffill").fillna(method="bfill")
@@ -247,3 +253,45 @@ class FeatureEngineer:
             {"date": df_price_pivot.index, "turbulence": turbulence_index}
         )
         return turbulence_index
+
+    @staticmethod
+    # TODO: add lookback as parameter
+    def __add_covariances(df_processed):
+        # TODO: Check if some of these preprocessing steps are necessary
+        df_processed['date'] = df_processed['date'].astype(
+            str)  # convert to string temporarily for concatenation purposes
+        ticker_list = df_processed["tic"].unique().tolist()  # get ticker types
+        date_list = list(pd.date_range(df_processed['date'].min(), df_processed['date'].max()).astype(str))  # get dates
+        date_ticker_list = list(itertools.product(date_list, ticker_list))  # combine them
+        df_processed_full = pd.DataFrame(date_ticker_list, columns=["date", "tic"]).merge(df_processed,
+                                                                                          on=["date", "tic"],
+                                                                                          how="left")  # apply left join with that combination
+        df_processed_full['date'] = pd.to_datetime(df_processed_full['date'],
+                                                   format='%Y-%m-%d')  # back to datetime format
+        df_processed_full = df_processed_full[
+            df_processed_full['date'].isin(df_processed['date'])]  # keep only actual data by matching the dates
+        df_processed_full = df_processed_full.sort_values(['date', 'tic'])  # sort by date-ticker combination
+        df_processed_full = df_processed_full.fillna(0)  # fill the missing data with 0 # TODO: Check if this is a good idea
+
+        # include covariance of stocks as feature depending on 1 year data
+        df_processed_full = df_processed_full.sort_values(['date', 'tic'], ignore_index=True)
+        df_processed_full.index = df_processed_full.date.factorize()[0]
+        cov_list = []
+        return_list = []
+
+        # look back is one year
+        lookback = 252
+        for i in range(lookback, len(df_processed_full.index.unique())):
+            data_lookback = df_processed_full.loc[i - lookback:i, :]
+            price_lookback = data_lookback.pivot_table(index='date', columns='tic', values='close')
+            return_lookback = price_lookback.pct_change().dropna()
+            return_list.append(return_lookback)
+
+            covs = return_lookback.cov().values
+            cov_list.append(covs)
+
+        df_cov = pd.DataFrame(
+                {'date': df_processed_full.date.unique()[lookback:], 'cov_list': cov_list, 'return_list': return_list})
+        df_processed_full = df_processed_full.merge(df_cov, on='date')
+        df_processed_full = df_processed_full.sort_values(['date', 'tic']).reset_index(drop=True)
+        return df_processed_full

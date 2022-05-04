@@ -19,13 +19,13 @@ if __name__ == '__main__':
     print(custom_df.head())
 
     # Read YAML file
-    with open("download.yaml", "r") as stream:
+    with open("../user_params.yaml", "r") as stream:
         try:
-            download_config = yaml.safe_load(stream)
+            user_params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
 
-    tickers = download_config["tickers"]
+    tickers = user_params["tickers"]
 
     print("\nTest 3: Downloading from Yahoo.........")
     downloaded_df = DataDownloader.download_data(start_date='2009-01-01',
@@ -36,9 +36,10 @@ if __name__ == '__main__':
     print("\nTest 4: Feature engineer.........")
     df_processed = FeatureEngineer.add_features(df=downloaded_df,
                                                 use_default=True,
-                                                tech_indicator_list=config.IMPLEMENTED_TECH_INDICATORS_LIST,
+                                                use_covar=True,
                                                 use_vix=True,
                                                 use_turbulence=True,
                                                 user_defined_feature=True)  # included technical indicators as features
+    print("\nAdded features....")
 
-    print(df_processed.head())
+    print(df_processed.head(1))

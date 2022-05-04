@@ -12,9 +12,6 @@ class DatasetCollector(ABC):
     This abstract base class defines the base structure of data collectors
     """
 
-    def __init__(self):
-        pass
-
 
 class DataDownloader(DatasetCollector):
     """
@@ -22,18 +19,9 @@ class DataDownloader(DatasetCollector):
 
     Attributes
     ----------
-        start_date : str
-            start date of the data
-        end_date : str
-            end date of the data
-        ticker_list : list
-            a list of security tickers
 
     Methods
     -------
-    create_dataset()
-        Fetches data from yahoo API
-
     """
 
     def __init__(self):
@@ -121,13 +109,13 @@ class CustomDatasetImporter(DatasetCollector):
         return df
 
     @staticmethod
-    def __load_from_df(df_to_load) -> pd.DataFrame:
-        return df_to_load
-
-    @staticmethod
-    def from_file(filename):
+    def from_file(filename) -> pd.DataFrame:
         df = CustomDatasetImporter.__load_from_file(path=filename)
         return df
+
+    @staticmethod
+    def __load_from_df(df_to_load) -> pd.DataFrame:
+        return df_to_load
 
     @staticmethod
     def __load_from_file(path) -> pd.DataFrame:
@@ -141,9 +129,13 @@ class CustomDatasetImporter(DatasetCollector):
             elif excel in path:
                 data = pd.read_excel(path)
             elif json_str in path:
-                f = open(path)
-                json_data = json.load(f)
-                data = pd.json_normalize(json_data)
+                with open(path) as json_file:
+                    json_data = json.load(json_file)
+                    data = pd.json_normalize(json_data)
+            else:
+                raise ValueError(
+                    f"Unexpected path input. Please try with .csv, .xlsx, .json files"
+                )
             return data
 
         except FileNotFoundError:
