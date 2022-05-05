@@ -43,8 +43,8 @@ class PortfolioEnv(Environment):
                  initial_amount: float,  # initial cash value
                  transaction_cost_pct: float,  # transaction cost percentage per trade
                  reward_scaling: float,  # scaling factor for reward as training progresses
-                 n_state: int,  # the dimension of input features (state space)
-                 n_action: int,  # number of actions, which is equal to portfolio dimension
+                 state_space: int,  # the dimension of input features (state space)
+                 action_space: int,  # number of actions, which is equal to portfolio dimension
                  tech_indicator_list: list,  # a list of technical indicator names
                  turbulence_threshold=None,  # a threshold to control risk aversion
                  lookback=252,  #
@@ -58,19 +58,19 @@ class PortfolioEnv(Environment):
         self.initial_amount = initial_amount
         self.transaction_cost_pct = transaction_cost_pct
         self.reward_scaling = reward_scaling
-        self.n_state = n_state
-        self.n_action = n_action
+        self.state_space = state_space
+        self.action_space = action_space
         self.tech_indicator_list = tech_indicator_list
 
         # action_space normalization and shape is self.stock_dim
-        self.n_action = spaces.Box(low=0, high=1, shape=(self.action_space,))
+        self.action_space = spaces.Box(low=0, high=1, shape=(self.action_space,))
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf,
-                                            shape=(self.n_state + len(self.tech_indicator_list), self.n_state))
+                                            shape=(self.state_space + len(self.tech_indicator_list), self.state_space))
 
         # print(self.df.head(3))
         # load data from a pandas dataframe
         self.data = self.df.loc[self.day, :]
-        print(self.data.head(3))
+        #print(self.data.head(3))
         self.covs = self.data['cov_list'][0]
         self.state = np.append(np.array(self.covs), [self.data[tech].tolist() for tech in self.tech_indicator_list],
                                axis=0)
@@ -85,7 +85,7 @@ class PortfolioEnv(Environment):
         self.portfolio_return_memory = [0]
         self.actions_memory = [[1 / self.port_dim] * self.port_dim]
         # print(self.data.head(3))
-        self.date_memory = [self.data.date.unique()[0]]
+        #self.date_memory = [self.data.date.unique()[0]] # TODO: Solve this issue
 
     def reset(self):
         pass

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from stable_baselines3 import A2C as sb_A2C
 
-
+# TODO: adhere to PyPI structure
 class Agent(ABC):
 
     @abstractmethod
@@ -51,7 +51,12 @@ class ConventionalAgent(Agent):
 class RLAgent(Agent):
 
     @abstractmethod
-    def train_model(self):
+    def train_model(self,
+                    total_timesteps,
+                    callback=None,
+                    log_interval=100,
+                    tb_log_name="A2C",
+                    reset_num_timesteps=True):
         pass
 
     @abstractmethod
@@ -67,11 +72,11 @@ class RLAgent(Agent):
         pass
 
 
-class A2C(RLAgent):
+class A2C(RLAgent, sb_A2C):
 
     def __init__(self,
-                 policy="MlpPolicy",
-                 env=None,
+                 policy,
+                 env,
                  learning_rate: float = 7e-4,
                  n_steps: int = 5,
                  gamma: float = 0.99,
@@ -92,20 +97,35 @@ class A2C(RLAgent):
                  device="auto",
                  _init_setup_model: bool = True):
 
-        self.env = env
-        # self.model = A2C(model_params["policy"], model_params["environment"], model_params["verbose"])
-        self.model = sb_A2C(policy=policy,
-                            env=self.env,
-                            tensorboard_log=tensorboard_log,
-                            verbose=verbose,
-                            policy_kwargs=policy_kwargs,
-                            seed=seed,
-                            **model_kwargs)
+        super(A2C, self).__init__(policy=policy,
+                                  env=env,
+                                  learning_rate=learning_rate,
+                                  n_steps=n_steps,
+                                  gamma=gamma,
+                                  gae_lambda=gae_lambda,
+                                  ent_coef=ent_coef,
+                                  vf_coef=vf_coef,
+                                  max_grad_norm=max_grad_norm,
+                                  rms_prop_eps=rms_prop_eps,
+                                  use_rms_prop=use_rms_prop,
+                                  use_sde=use_sde,
+                                  sde_sample_freq=sde_sample_freq,
+                                  normalize_advantage=normalize_advantage,
+                                  tensorboard_log=tensorboard_log,
+                                  create_eval_env=create_eval_env,
+                                  policy_kwargs=policy_kwargs,
+                                  verbose=verbose,
+                                  seed=seed,
+                                  device=device,
+                                  _init_setup_model=_init_setup_model)
 
-    def train_model(self, **train_params):
-        self.model = self.model.learn(total_timesteps=train_params["total_timesteps"],
-                                      log_interval=train_params["log_interval"])
-        return self.model
+    def train_model(self,
+                    total_timesteps,
+                    callback=None,
+                    log_interval=100,
+                    tb_log_name="A2C",
+                    reset_num_timesteps=True):
+        return super().learn(total_timesteps, callback, log_interval, tb_log_name, reset_num_timesteps)
 
     def predict(self, **test_params):
 

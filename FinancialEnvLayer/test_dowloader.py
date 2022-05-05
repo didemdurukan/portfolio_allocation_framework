@@ -1,8 +1,8 @@
 # Test File
 import config
-from datacollector import CustomDatasetImporter
-from datacollector import DataDownloader
-from dataprocessor import FeatureEngineer
+from FinancialEnvLayer.datacollector import CustomDatasetImporter
+from FinancialEnvLayer.dataprocessor import DataDownloader
+from FinancialEnvLayer.dataprocessor import FeatureEngineer
 import yaml
 
 import pandas as pd
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     df_processed = FeatureEngineer.add_features(df=downloaded_df,
                                                 use_default=True,
                                                 use_covar=True,
-                                                use_vix=True,
+                                                use_vix=True,               #VIX volatility index
                                                 use_turbulence=True,
                                                 user_defined_feature=True)  # included technical indicators as features
     print("\nAdded features....")

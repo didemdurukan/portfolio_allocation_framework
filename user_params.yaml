@@ -19,7 +19,6 @@ env_params :
     n_action: 3  # number of stocks in training data
     reward_scaling: 0.1  # hyperparameter
 
-
 policy_params:
   A2C_PARAMS: {"n_steps": 10, "ent_coef": 0.005, "learning_rate": 0.0004}
 

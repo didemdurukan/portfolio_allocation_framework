@@ -24,7 +24,7 @@ class FeatureEngineer:
 
     """
 
-    def __init__(self):
+    def __init__(self):  # TODO: add df here make other functions member functions, get rid of __
         pass
 
     @staticmethod
@@ -70,7 +70,7 @@ class FeatureEngineer:
             df = FeatureEngineer.__add_technical_indicator(df, tech_indicator_list)
             print("Successfully added technical indicators")
 
-        # add vix for multiple stock
+        # add vix for multiple stock (volatility index)
         if use_vix:
             df = FeatureEngineer.__add_vix(df)
             print("Successfully added vix")
