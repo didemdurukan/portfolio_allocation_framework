@@ -46,7 +46,7 @@ env_trade = PortfolioEnv(df=df_processed, **env_kwargs)  # trade parametresi tes
 
 print("\nTest 4: Agent creation.........")
 # object creation
-a2c = A2C(env=env_train, **agent_kwargs)
+a2c = A2C(env=env_train, **agent_kwargs)  # TODO: Handle it within function
 # # training
 # a2c.train_model(**train_kwargs)
 

@@ -1,4 +1,6 @@
-tickers: ["AAPL"]
+tickers: ["AAPL", "DOW", "GS"]
+
+tech_indicator_list: ["macd", "boll_ub", "boll_lb", "rsi_30", "cci_30", "dx_30", "close_30_sma", "close_60_sma"]
 
 env_params :
     tech_indicator_list: ["macd", "boll_ub", "boll_lb", "rsi_30", "cci_30", "dx_30", "close_30_sma", "close_60_sma"]

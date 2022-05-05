@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from stable_baselines3 import A2C as sb_A2C
 
-
+# TODO: adhere to PyPI structure
 class Agent(ABC):
 
     @abstractmethod
