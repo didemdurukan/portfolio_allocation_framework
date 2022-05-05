@@ -1,28 +1,38 @@
 tickers: ["AAPL"]
 
 env_params :
-    hmax: 100,  # maximum number of shares to trade
-    initial_amount: 1000000,  # initial cash
-    transaction_cost_pct: 0.001,  # transaction cost percentage
-    n_state: 1,  # number of unique stocks
-    port_dim: 1,  # number of unique stocks
-    tech_indicator_list: config.IMPLEMENTED_TECH_INDICATORS_LIST,  # technical indicators
-    n_action: 1,  # number of stocks in training data
+    tech_indicator_list: ["macd", "boll_ub", "boll_lb", "rsi_30", "cci_30", "dx_30", "close_30_sma", "close_60_sma"]
+    hmax: 100  # maximum number of shares to trade
+    initial_amount: 1000000  # initial cash
+    transaction_cost_pct: 0.001  # transaction cost percentage
+    state_space: 1  # number of unique stocks
+    port_dim: 1  # number of unique stocks
+    action_space: 1  # number of stocks in training data
     reward_scaling: 1e-1  # hyperparameter
 
-
 policy_params:
-model_params:
+   act_fun: tf.nn.tanh
+   net_arch:          #network architecture
+      vf: [32, 32]    #vf: value network
+      pi: [32, 32]    #pi: policy network
 
-A2C_PARAMS = {"n_steps": 10, "ent_coef": 0.005, "learning_rate": 0.0004}
+agent_params:
+  policy: "MlpPolicy"
+  verbose: 1
+  n_steps: 10
+  ent_coef: 0.005
+  learning_rate: 0.0004
 
 train_params :
-  total_timesteps: 25000,
+  total_timesteps: 25000
   log_interval: 100
 
-test_params :
-  deterministic: True
-
-a2c_params :
-  policy: "MlpPolicy",
-  verbose: 1
+#
+##a2c_params :
+##  policy: "MlpPolicy",
+##  verbose: 1
+#
+#
+##test_params :
+##  deterministic: True
+##
