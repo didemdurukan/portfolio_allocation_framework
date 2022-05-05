@@ -7,6 +7,7 @@ from FinancialEnvLayer.datacollector import DataDownloader
 from FinancialEnvLayer.dataprocessor import FeatureEngineer
 
 
+
 #Gather user parameters
 with open("../user_params.yaml", "r") as stream:
     try:
@@ -16,8 +17,9 @@ with open("../user_params.yaml", "r") as stream:
 
 tickers = user_params["tickers"]
 env_kwargs = user_params["env_params"]
-a2c_params
-train_params
+
+#a2c_params
+#train_params
 
 #Download data from Yahoo
 print("\nDownloading from Yahoo.........")
