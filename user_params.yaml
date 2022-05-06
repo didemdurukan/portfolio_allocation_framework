@@ -4,7 +4,7 @@ env_params :
     hmax: 100  # maximum number of shares to trade
     initial_amount: 1000000 # initial cash
     transaction_cost_pct: 0.001  # transaction cost percentage
-    n_state: 3  # number of unique stocks
+    state_space: 3  # number of unique stocks
     port_dim: 3  # number of unique stocks
     tech_indicator_list: [
         "macd",
@@ -16,19 +16,37 @@ env_params :
         "close_30_sma",
         "close_60_sma",
     ]  # technical indicators
-    n_action: 3  # number of stocks in training data
+    action_space: 3  # number of stocks in training data
     reward_scaling: 0.1  # hyperparameter
 
-policy_params:
-  A2C_PARAMS: {"n_steps": 10, "ent_coef": 0.005, "learning_rate": 0.0004}
-
 train_params:
-  total_timesteps: 25000
-  log_interval: 100
-
-test_params:
-  deterministic: True
-
-a2c_params:
-  policy: "MlpPolicy"
-  verbose: 1
+  A2C_PARAMS: { total_timesteps: 1000,
+                callback: null,
+                log_interval:  100,
+                eval_env: null,
+                eval_freq: -1,
+                n_eval_episodes: 5,
+                tb_log_name: "A2C",
+                eval_log_path: null,
+                reset_num_timesteps: True}
+policy_params:
+  A2C_PARAMS : { policy : "MlpPolicy",
+                 learning_rate:  0.0007,
+                 n_steps:  5,
+                 gamma:  0.99,
+                 gae_lambda: 1.0,
+                 ent_coef:  0.0,
+                 vf_coef:  0.5,
+                 max_grad_norm:  0.5,
+                 rms_prop_eps:  0.00005,
+                 use_rms_prop: True,
+                 use_sde: False,
+                 sde_sample_freq: -1,
+                 normalize_advantage:  False,
+                 tensorboard_log : null,
+                 create_eval_env: False,
+                 policy_kwargs : null,
+                 verbose: 0,
+                 seed : null,
+                 device : "auto",
+                 _init_setup_model:  True}
