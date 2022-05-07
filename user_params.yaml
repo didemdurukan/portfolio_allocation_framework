@@ -1,11 +1,11 @@
-tickers: ["AAPL", "GS", "DOW", "AMZN"]
+tickers: ["AAPL", "BA", "CAT", "CVX"]
 
 env_params :
     hmax: 100  # maximum number of shares to trade
     initial_amount: 1000000 # initial cash
     transaction_cost_pct: 0.001  # transaction cost percentage
-    state_space: 3  # number of unique stocks
-    port_dim: 3  # number of unique stocks
+    state_space: 4  # number of unique stocks
+    stock_dim: 4  # number of unique stocks
     tech_indicator_list: [
         "macd",
         "boll_ub",
@@ -16,7 +16,7 @@ env_params :
         "close_30_sma",
         "close_60_sma",
     ]  # technical indicators
-    action_space: 3  # number of stocks in training data
+    action_space: 4  # number of stocks in training data
     reward_scaling: 0.1  # hyperparameter
 
 train_params:
