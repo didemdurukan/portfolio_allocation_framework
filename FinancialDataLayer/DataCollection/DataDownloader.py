@@ -1,7 +1,7 @@
 import pandas as pd
 import yfinance as yf
 
-from FinancialDataLayer.DataCollection.DataCollector import DatasetCollector
+from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 
 
 class DataDownloader(DatasetCollector):  # TODO: add functionality to download minute data

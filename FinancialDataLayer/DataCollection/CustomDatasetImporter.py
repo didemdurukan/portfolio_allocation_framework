@@ -1,13 +1,13 @@
-from FinancialDataLayer.DataCollection.DataCollector import DatasetCollector, load_from_file, load_from_df
+from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 
 
 class CustomDatasetImporter(DatasetCollector):
 
     def collect(self):
         if self.df is None:
-            df = load_from_file(self.path)
+            df = self.load_from_file(self.path)
         else:
-            df = load_from_df(self.df)
+            df = self.load_from_df(self.df)
         self.df = df
         return self.df
 

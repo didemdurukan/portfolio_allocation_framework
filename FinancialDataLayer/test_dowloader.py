@@ -46,7 +46,7 @@ if __name__ == '__main__':
     print(df_processed.head())
 
     print("\nTest 5: Custom Feature Engineer....")
-    df_processed = CustomFeatureEngineer(lag=3).extend_data(downloaded_df)
+    df_processed = CustomFeatureEngineer(lag=2).extend_data(downloaded_df)
     print("\nAdded custom features")
     print(df_processed.head())
 
