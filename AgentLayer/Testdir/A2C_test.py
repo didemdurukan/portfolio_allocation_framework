@@ -62,9 +62,9 @@ if __name__ == '__main__':
     a2c.predict(environment = env_test, **test_params["A2C_PARAMS"])
 
     #SAVE AGENT
-    a2c.save_model("RLAgentS/a2c_model")
+    a2c.save_model("AgentLayer/RLAgents/a2c_model")
 
     #LOAD AGENT 
-    loaded_a2c_model = a2c.load_model("RLAgents/a2c_model")
+    loaded_a2c_model = a2c.load_model("AgentLayer/RLAgents/a2c_model")
 
     print(loaded_a2c_model)
