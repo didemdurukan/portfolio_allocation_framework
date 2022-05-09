@@ -89,7 +89,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
         self.df_processed = self.df_processed.fillna(method="ffill").fillna(method="bfill")
         #Index - Date Match by DOGAN
         self.df_processed.index = self.df_processed["date"].factorize()[0]
-        
+        self.df_processed.index = self.df_processed.index.reset_index(drop=True)
 
         return self.df_processed
 

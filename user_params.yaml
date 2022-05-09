@@ -29,6 +29,12 @@ train_params:
                 tb_log_name: "A2C",
                 eval_log_path: null,
                 reset_num_timesteps: True}
+test_params:
+  A2C_PARAMS: {
+                state : null,
+                episode_start: null,
+                deterministic: True
+              }
 policy_params:
   A2C_PARAMS : { policy : "MlpPolicy",
                  learning_rate:  0.0007,
