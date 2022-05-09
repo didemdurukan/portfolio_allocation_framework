@@ -3,6 +3,8 @@ import pandas as pd
 from FinancialDataLayer.DataProcessing.FeatureEngineer import FeatureEngineer
 
 
+# inspired by:https://stable-baselines.readthedocs.io/en/master/guide/custom_policy.html
+# or directly add column?
 class CustomFeatureEngineer(FeatureEngineer):
 
     def __init__(self, lag=1):
@@ -16,7 +18,7 @@ class CustomFeatureEngineer(FeatureEngineer):
         self.df_processed = self._add_user_defined_feature()
         return self.df_processed
 
-    def _add_user_defined_feature(self): # TODO: Currently does not compute symbol-wise, problematic
+    def _add_user_defined_feature(self):  # TODO: Currently does not compute symbol-wise, problematic
         """
          add user defined features
         :param data: (df) pandas dataframe
