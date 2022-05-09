@@ -9,7 +9,7 @@ import pandas as pd
 import yaml
 import gym
 from datetime import datetime
-from AgentLayer.RLAgents import RLAgent
+from AgentLayer.RLAgents.RLAgent import RLAgent
 class A2C(RLAgent):
 
     def __init__(self,

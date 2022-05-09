@@ -1,0 +1,58 @@
+tickers: ["AAPL", "BA", "CAT", "CVX"]
+
+env_params :
+    hmax: 100  # maximum number of shares to trade
+    initial_amount: 1000000 # initial cash
+    transaction_cost_pct: 0.001  # transaction cost percentage
+    state_space: 4  # number of unique stocks
+    stock_dim: 4  # number of unique stocks
+    tech_indicator_list: [
+        "macd",
+        "boll_ub",
+        "boll_lb",
+        "rsi_30",
+        "cci_30",
+        "dx_30",
+        "close_30_sma",
+        "close_60_sma",
+    ]  # technical indicators
+    action_space: 4  # number of stocks in training data
+    reward_scaling: 0.1  # hyperparameter
+
+train_params:
+  A2C_PARAMS: { total_timesteps: 1000,
+                callback: null,
+                log_interval:  100,
+                eval_env: null,
+                eval_freq: -1,
+                n_eval_episodes: 5,
+                tb_log_name: "A2C",
+                eval_log_path: null,
+                reset_num_timesteps: True}
+test_params:
+  A2C_PARAMS: {
+                state : null,
+                episode_start: null,
+                deterministic: True
+              }
+policy_params:
+  A2C_PARAMS : { policy : "MlpPolicy",
+                 learning_rate:  0.0007,
+                 n_steps:  5,
+                 gamma:  0.99,
+                 gae_lambda: 1.0,
+                 ent_coef:  0.0,
+                 vf_coef:  0.5,
+                 max_grad_norm:  0.5,
+                 rms_prop_eps:  0.00005,
+                 use_rms_prop: True,
+                 use_sde: False,
+                 sde_sample_freq: -1,
+                 normalize_advantage:  False,
+                 tensorboard_log : null,
+                 create_eval_env: False,
+                 policy_kwargs : null,
+                 verbose: 0,
+                 seed : null,
+                 device : "auto",
+                 _init_setup_model:  True}
