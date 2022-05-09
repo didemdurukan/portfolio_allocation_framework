@@ -1,13 +1,14 @@
-
+import yaml
 from AgentLayer.RLAgents.A2C import A2C
 from AgentLayer.Environment.PortfolioEnv import PortfolioEnv
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
-import yaml
 
+
+    
 #IMPORT .yaml FILE
 #Gather user parameters
-with open("../user_params.yaml", "r") as stream:
+with open("/user_params.yaml", "r") as stream:
     try:
         user_params = yaml.safe_load(stream)
     except yaml.YAMLError as exc:
