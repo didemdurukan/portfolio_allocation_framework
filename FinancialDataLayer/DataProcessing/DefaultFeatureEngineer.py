@@ -87,6 +87,10 @@ class DefaultFeatureEngineer(FeatureEngineer):
 
         # fill the missing values at the beginning and the end
         self.df_processed = self.df_processed.fillna(method="ffill").fillna(method="bfill")
+        #Index - Date Match by DOGAN
+        self.df_processed.index = self.df_processed["date"].factorize()[0]
+        
+
         return self.df_processed
 
     def _clean_data(self):  # removes delisted
