@@ -29,8 +29,23 @@ train_params:
                 tb_log_name: "A2C",
                 eval_log_path: null,
                 reset_num_timesteps: True}
+
+  PPO_PARAMS: { total_timesteps: 1000,
+                callback: null,
+                log_interval: 1,
+                eval_env: null,
+                eval_freq: -1,
+                n_eval_episodes:  5,
+                tb_log_name: "PPO",
+                eval_log_path: null,
+                reset_num_timesteps: True}
 test_params:
   A2C_PARAMS: {
+                state : null,
+                episode_start: null,
+                deterministic: True
+              }
+  PPO_PARAMS: {
                 state : null,
                 episode_start: null,
                 deterministic: True
@@ -56,3 +71,27 @@ policy_params:
                  seed : null,
                  device : "auto",
                  _init_setup_model:  True}
+
+  PPO_PARAMS : {  policy: "MlpPolicy",
+                  learning_rate:  0.0003,
+                  n_steps: 2048,
+                  batch_size: 64,
+                  n_epochs: 10,
+                  gamma: 0.99,
+                  gae_lambda: 0.95,
+                  clip_range: 0.2,
+                  clip_range_vf : null,
+                  normalize_advantage: True,
+                  ent_coef: 0.0,
+                  vf_coef: 0.5,
+                  max_grad_norm: 0.5,
+                  use_sde: False,
+                  sde_sample_freq:  -1,
+                  target_kl: null,
+                  tensorboard_log: null,
+                  create_eval_env:  False,
+                  policy_kwargs: null,
+                  verbose:  0,
+                  seed: null,
+                  device: "auto",
+                  _init_setup_model: True}
