@@ -10,7 +10,10 @@ import pandas as pd
 import yaml
 import gym
 from AgentLayer.RLAgents.RLAgent import RLAgent
-
+from stable_baselines3.common.buffers import ReplayBuffer
+from stable_baselines3.common.type_aliases import Schedule
+from typing import Any, Dict, Optional, Tuple, Type, Union
+import torch as th
 class PPO(RLAgent):
     def __init__(self,
                 policy: "MlpPolicy",
@@ -21,21 +24,21 @@ class PPO(RLAgent):
                 n_epochs: int = 10,
                 gamma: float = 0.99,
                 gae_lambda: float = 0.95,
-                clip_range: float = 0.2,
-                clip_range_vf = None,
+                clip_range: Union[float, Schedule] = 0.2,
+                clip_range_vf: Union[None, float, Schedule] = None,
                 normalize_advantage: bool = True,
                 ent_coef: float = 0.0,
                 vf_coef: float = 0.5,
                 max_grad_norm: float = 0.5,
                 use_sde: bool = False,
                 sde_sample_freq: int = -1,
-                target_kl = None,
-                tensorboard_log = None,
+                target_kl: Optional[float] = None,
+                tensorboard_log: Optional[str] = None,
                 create_eval_env: bool = False,
-                policy_kwargs = None,
+                policy_kwargs: Optional[Dict[str, Any]] = None,
                 verbose: int = 0,
-                seed= None,
-                device: str = "auto",
+                seed: Optional[int] = None,
+                device: Union[th.device, str] = "auto",
                 _init_setup_model: bool = True):
 
         self.env = env

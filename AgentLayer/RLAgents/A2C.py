@@ -1,20 +1,22 @@
 from abc import ABC, abstractmethod
 from stable_baselines3 import A2C
-from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3 import A2C as sb_A2C
 from gym import spaces
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import yaml
-import gym
-from datetime import datetime
 from AgentLayer.RLAgents.RLAgent import RLAgent
+from typing import Any, Dict, Optional, Tuple, Type, Union
+from stable_baselines3.common.noise import ActionNoise
+from stable_baselines3.common.buffers import ReplayBuffer
+from stable_baselines3.common.type_aliases import Schedule
+import torch as th
+
 class A2C(RLAgent):
 
     def __init__(self,
-                 policy= "MlpPolicy",
-                 env= None,
+                 policy: "MlpPolicy",
+                 env: None,
                  learning_rate: float = 7e-4,
                  n_steps: int = 5,
                  gamma: float = 0.99,
@@ -27,16 +29,16 @@ class A2C(RLAgent):
                  use_sde: bool = False,
                  sde_sample_freq: int = -1,
                  normalize_advantage: bool = False,
-                 tensorboard_log=None,
+                 tensorboard_log: Optional[str] = None,
                  create_eval_env: bool = False,
-                 policy_kwargs=None,
+                 policy_kwargs: Optional[Dict[str, Any]] = None,
                  verbose: int = 0,
-                 seed=None,
-                 device="auto",
+                 seed: Optional[int] = None,
+                 device: Union[th.device, str] = "auto",
                  _init_setup_model: bool = True):
 
         self.env = env
-        # self.model = A2C(model_params["policy"], model_params["environment"], model_params["verbose"])
+
         self.model = sb_A2C(policy = policy,
                             env=self.env,
                             learning_rate = learning_rate,
