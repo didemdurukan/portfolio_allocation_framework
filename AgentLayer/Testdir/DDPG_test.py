@@ -49,16 +49,16 @@ if __name__ == '__main__':
     env = PortfolioEnv(df=df_processed, **env_kwargs) 
     env_train, _ = env.get_env()
 
-    #CREATE A2C AGENT
+    #CREATE DDPG AGENT
     ddpg = DDPG(env = env_train, **policy_params["DDPG_PARAMS"])
 
-    #TRAIN A2C AGENT
+    #TRAIN DDPG AGENT
     ddpg.train_model(**train_params["DDPG_PARAMS"])
 
     #CREATE TEST ENV
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
-    #TEST A2C AGENT
+    #TEST DDPG AGENT
     ddpg.predict(environment = env_test, **test_params["DDPG_PARAMS"])
 
     #SAVE AGENT

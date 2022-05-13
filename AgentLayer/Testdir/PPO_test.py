@@ -51,13 +51,13 @@ if __name__ == '__main__':
     #CREATE PPO AGENT
     ppo = PPO(env = env_train, **policy_params["PPO_PARAMS"])
 
-    #TRAIN A2C AGENT
+    #TRAIN PPO AGENT
     ppo.train_model(**train_params["PPO_PARAMS"])
 
     #CREATE TEST ENV
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
-    #TEST A2C AGENT
+    #TEST PPO AGENT
     ppo.predict(environment = env_test, **test_params["PPO_PARAMS"])
 
     #SAVE AGENT

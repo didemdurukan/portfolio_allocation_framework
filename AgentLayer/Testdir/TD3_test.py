@@ -50,16 +50,16 @@ if __name__ == '__main__':
     env = PortfolioEnv(df=df_processed, **env_kwargs) 
     env_train, _ = env.get_env()
 
-    #CREATE A2C AGENT
+    #CREATE TD3 AGENT
     td3 = TD3(env = env_train, **policy_params["TD3_PARAMS"])
 
-    #TRAIN A2C AGENT
+    #TRAIN TD3 AGENT
     td3.train_model(**train_params["TD3_PARAMS"])
 
     #CREATE TEST ENV
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
-    #TEST A2C AGENT
+    #TEST TD3 AGENT
     td3.predict(environment = env_test, **test_params["TD3_PARAMS"])
 
     #SAVE AGENT
