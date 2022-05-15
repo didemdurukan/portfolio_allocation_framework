@@ -1,24 +1,29 @@
 from AgentLayer.ConventionalAgents.Conventional_Models import ConventionalModel
-from finrl.plot import backtest_stats, backtest_plot, get_daily_return, get_baseline, convert_daily_return_to_pyfolio_ts
+#from finrl.plot import backtest_stats, backtest_plot, get_daily_return, get_baseline, convert_daily_return_to_pyfolio_ts
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 from sklearn.model_selection import cross_val_score
-import pypfopt
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models
+#import pypfopt
+#from pypfopt.efficient_frontier import EfficientFrontier
+#from pypfopt import risk_models
 import pandas as pd
-from pypfopt import EfficientFrontier
-from pypfopt import risk_models
-from pypfopt import expected_returns
-from pypfopt import objective_functions
+import pickle
+import sys
+import traceback
+#from pypfopt import EfficientFrontier
+#from pypfopt import risk_models
+#from pypfopt import expected_returns
+#from pypfopt import objective_functions
 
 
 class LinearRegression(ConventionalModel):
 
     def __init__(self) -> None:
         super().__init__()
+        reg = LinearRegression()
+        self.model = reg
 
     def train_model(self, train_x, train_y):
         '''
@@ -27,8 +32,7 @@ class LinearRegression(ConventionalModel):
         Output: Linear Regression Model
         '''
 
-        reg = LinearRegression().fit(train_x, train_y)
-        self.model = reg
+        reg = self.model.fit(train_x, train_y)
         return reg
 
     def predict(self, model, initial_capital, df, unique_trade_date, tech_indicator_list):
@@ -123,3 +127,21 @@ class LinearRegression(ConventionalModel):
         self.portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
         return self.portfolio
+
+    def save_model(model, file_name):
+        try:
+            with open(file_name, 'wb') as files:
+                pickle.dump(model, files)
+            print("Model saved succesfully.")
+        except (AttributeError,  EOFError, ImportError, IndexError) as e:
+            print(traceback.format_exc(e))
+
+    def load_model(file_name):
+        try:
+            with open(file_name, 'rb') as f:
+                lr = pickle.load(f)
+                print("Model loaded succesfully.")
+        except (AttributeError,  EOFError, ImportError, IndexError) as e:
+            print(traceback.format_exc(e))
+
+        return lr

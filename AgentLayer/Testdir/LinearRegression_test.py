@@ -17,23 +17,9 @@ if __name__ == "main":
     tickers = user_params["tickers"]
     env_kwargs = user_params["env_params"]
 
-    # FETCH DATA
-    print("\nTest 3: Downloading from Yahoo.........")
-    downloaded_df = DataDownloader(start_date='2009-01-01',
-                                   end_date='2021-10-31',
-                                   ticker_list=tickers).download_from_yahoo()
+    x_train = [1, 2, 4.5, 6, 7]
+    y_train = [0.3, 3.5, 2.6, 4.6, 8]
 
-    print(downloaded_df.head())
-
-    # PREPROCESS DATA
-    print("\nTest 4: Feature engineer.........")
-
-    df_processed = DefaultFeatureEngineer(use_default=False,
-                                          tech_indicator_list=env_kwargs["tech_indicator_list"],
-                                          use_vix=True,
-                                          use_turbulence=True,
-                                          use_covar=False).extend_data(downloaded_df)  # included technical indicators as features
-
-    print(df_processed.head())
-
-    # TRAIN-TEST SPLIT
+    lr = LinearRegression()
+    trained_lr = lr.train_model(x_train, y_train)
+    lr.save_model(trained_lr, "test")
