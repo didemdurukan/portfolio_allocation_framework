@@ -18,7 +18,7 @@ import traceback
 #from pypfopt import objective_functions
 
 
-class LinearRegression(ConventionalModel):
+class LinearRegressionModel(ConventionalModel):
 
     def __init__(self) -> None:
         super().__init__()
@@ -31,9 +31,12 @@ class LinearRegression(ConventionalModel):
         Input: Train data x and train data y
         Output: Linear Regression Model
         '''
-
-        reg = self.model.fit(train_x, train_y)
-        return reg
+        try:
+            trained_reg = self.model.fit(train_x, train_y)
+            print("Model trained succesfully")
+            return trained_reg
+        except Exception as e:
+            print("ops")
 
     def predict(self, model, initial_capital, df, unique_trade_date, tech_indicator_list):
 
@@ -128,7 +131,7 @@ class LinearRegression(ConventionalModel):
 
         return self.portfolio
 
-    def save_model(model, file_name):
+    def save_model(self,model, file_name):
         try:
             with open(file_name, 'wb') as files:
                 pickle.dump(model, files)
@@ -136,7 +139,7 @@ class LinearRegression(ConventionalModel):
         except (AttributeError,  EOFError, ImportError, IndexError) as e:
             print(traceback.format_exc(e))
 
-    def load_model(file_name):
+    def load_model(self,file_name):
         try:
             with open(file_name, 'rb') as f:
                 lr = pickle.load(f)
