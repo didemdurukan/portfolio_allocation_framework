@@ -5,17 +5,17 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 from sklearn.model_selection import cross_val_score
-#import pypfopt
-#from pypfopt.efficient_frontier import EfficientFrontier
-#from pypfopt import risk_models
+import pypfopt
+from pypfopt.efficient_frontier import EfficientFrontier
+from pypfopt import risk_models
 import pandas as pd
 import pickle
 import sys
 import traceback
-#from pypfopt import EfficientFrontier
-#from pypfopt import risk_models
-#from pypfopt import expected_returns
-#from pypfopt import objective_functions
+from pypfopt import EfficientFrontier
+from pypfopt import risk_models
+from pypfopt import expected_returns
+from pypfopt import objective_functions
 
 
 class LinearRegressionModel(ConventionalModel):
@@ -131,7 +131,7 @@ class LinearRegressionModel(ConventionalModel):
 
         return self.portfolio
 
-    def save_model(self,model, file_name):
+    def save_model(self, model, file_name):
         try:
             with open(file_name, 'wb') as files:
                 pickle.dump(model, files)
@@ -139,7 +139,7 @@ class LinearRegressionModel(ConventionalModel):
         except (AttributeError,  EOFError, ImportError, IndexError) as e:
             print(traceback.format_exc(e))
 
-    def load_model(self,file_name):
+    def load_model(self, file_name):
         try:
             with open(file_name, 'rb') as f:
                 lr = pickle.load(f)
@@ -148,3 +148,28 @@ class LinearRegressionModel(ConventionalModel):
             print(traceback.format_exc(e))
 
         return lr
+
+    # test function for regression metrics
+    def predict_test(self, model, x_test):
+        return model.predict(x_test)
+
+    # TODO: Work on this.
+    def split_x_y(self, data, tech_indicator_list, tickers):
+
+        train_date = sorted(set(data.date.values))
+        X = []
+        for i in range(0, len(data) - 1):
+            d = train_date[i]
+            d_next = train_date[i+1]
+            y = data.loc[data['date'] ==
+                         d_next].return_list.iloc[0].loc[d_next].reset_index()
+            y.columns = ['tic', 'return']
+            x = data.loc[data['date'] == d][[tickers]]
+            train_piece = pd.merge(x, y, on='tic')
+            train_piece['date'] = [d] * len(train_piece)
+            X += [train_piece]
+        trainDataML = pd.concat(X)
+        X = trainDataML[tech_indicator_list].values
+        Y = trainDataML[['return']].values
+
+        return X, Y

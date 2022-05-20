@@ -4,7 +4,8 @@ import yfinance as yf
 from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 
 
-class DataDownloader(DatasetCollector):  # TODO: add functionality to download minute data
+# TODO: add functionality to download minute data
+class DataDownloader(DatasetCollector):
     """
     Provides methods for retrieving daily security data from Yahoo Finance API
 
@@ -78,6 +79,7 @@ class DataDownloader(DatasetCollector):  # TODO: add functionality to download m
         print("Shape of DataFrame: ", data_df.shape)
         # print("Display DataFrame: ", data_df.head())
 
-        data_df = data_df.sort_values(by=["date", "tic"]).reset_index(drop=True)
+        data_df = data_df.sort_values(
+            by=["date", "tic"]).reset_index(drop=True)
 
         return data_df
