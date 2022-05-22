@@ -38,9 +38,7 @@ if __name__ == '__main__':
 
 
     '''
-    
-    
-    
+
     # FETCH DATA
     print("\nTest 3: Downloading from Yahoo.........")
     downloaded_df = DataDownloader(start_date='2009-01-01',
@@ -56,28 +54,27 @@ if __name__ == '__main__':
     # PREPROCESS DATA
     print("\nTest 4: Feature engineer.........")
     data_processor = DefaultFeatureEngineer(use_default=False,
-                                          tech_indicator_list=tech_indicator_list,
-                                          use_vix=True,
-                                          use_turbulence=True,
-                                          use_covar=True)
+                                            tech_indicator_list=tech_indicator_list,
+                                            use_vix=True,
+                                            use_turbulence=True,
+                                            use_covar=True)
     df_processed = data_processor.extend_data(downloaded_df)  # included technical indicators as features
-                                          #use covar = True
+    # use covar = True
     print("Preprocessed Data: ", df_processed.head())
 
-    x_train,y_train =  data_processor.prepare_ml_data(df_processed)
-    print("ml x:",x_train.head())
+    x_train, y_train = data_processor.prepare_ml_data(df_processed)
+    print("ml x:", x_train.head())
     print("ml Y: ", y_train.head())
 
     # SPLIT TO X AND Y
 
     # TODO: add return value to the imported data
 
-    #lr = LinearRegressionModel()
-    #df_processed_X, df_processed_Y = lr.split_x_y(
+    # lr = LinearRegressionModel()
+    # df_processed_X, df_processed_Y = lr.split_x_y(
     #    df_processed, tech_indicator_list, tickers)
-    #print(df_processed_Y.head())
+    # print(df_processed_Y.head())
 
-  
     '''
     lr = LinearRegressionModel()
     trained_lr = lr.train_model(train_x, train_y)
@@ -121,4 +118,3 @@ if __name__ == '__main__':
     print("Mean gamma devaince: ", mgd)
 
     '''
-    
