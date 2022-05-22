@@ -294,7 +294,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
             # TODO: if check for existence of return_list, if doesnt exist add by default then continue
             y = train_data.loc[train_data['date'] == d_next].return_list.iloc[0].loc[d_next].reset_index()
             y.columns = ['tic', 'return']
-            x = train_data.loc[train_data['date'] == d][self.tech_indicator_list]
+            x = train_data.loc[train_data['date'] == d][self.tech_indicator_list.append("tic")]
             train_piece = pd.merge(x, y, on='tic')
             train_piece['date'] = [d] * len(train_piece)
             X += [train_piece]
