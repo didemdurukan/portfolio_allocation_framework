@@ -182,7 +182,9 @@ class DefaultFeatureEngineer(FeatureEngineer):
         return df
 
     def _calculate_turbulence(self):
-        """calculate turbulence index based on dow 30"""
+        """calculate turbulence index based on dow 30
+        @return:
+        """
         # can add other market assets
         df = self.df_processed.copy()
         df_price_pivot = df.pivot(index="date", columns="tic", values="close")
@@ -235,6 +237,10 @@ class DefaultFeatureEngineer(FeatureEngineer):
 
     # TODO: add lookback as parameter
     def _add_covariances(self):
+        """
+
+        @return:
+        """
         df = self.df_processed.copy()
         # TODO: Check if some of these preprocessing steps are necessary
         df['date'] = df['date'].astype(str)  # convert to string temporarily for concatenation purposes
@@ -273,3 +279,28 @@ class DefaultFeatureEngineer(FeatureEngineer):
         df_processed_full = df_processed_full.merge(df_cov, on='date')
         df_processed_full = df_processed_full.sort_values(['date', 'tic']).reset_index(drop=True)
         return df_processed_full
+
+    def prepare_ml_data(self, train_data):
+        """
+
+        @param train_data:
+        @return:
+        """
+        train_date = sorted(set(train_data.date.values))
+        X = []
+        for i in range(0, len(train_date) - 1):
+            d = train_date[i]
+            d_next = train_date[i + 1]
+            # TODO: if check for existence of return_list, if doesnt exist add by default then continue
+            y = train_data.loc[train_data['date'] == d_next].return_list.iloc[0].loc[d_next].reset_index()
+            y.columns = ['tic', 'return']
+            x = train_data.loc[train_data['date'] == d][self.tech_indicator_list]
+            train_piece = pd.merge(x, y, on='tic')
+            train_piece['date'] = [d] * len(train_piece)
+            X += [train_piece]
+        train_data_ml = pd.concat(X)
+        X = train_data_ml[self.tech_indicator_list].values
+        Y = train_data_ml[['return']].values
+
+        return X, Y
+

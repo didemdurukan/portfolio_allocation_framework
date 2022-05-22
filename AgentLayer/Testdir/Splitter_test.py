@@ -1,5 +1,5 @@
 import numpy as np
-from datasplitter import ExpandingWindowSplitter, BlockingTimeSeriesSplitter
+from AgentLayer.DataSplitter.datasplitter import ExpandingWindowSplitter, BlockingTimeSeriesSplitter
 
 X = np.random.randn(15, 2)
 y = np.random.randint(0, 2, 15)
