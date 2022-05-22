@@ -152,24 +152,3 @@ class LinearRegressionModel(ConventionalModel):
     # test function for regression metrics
     def predict_test(self, model, x_test):
         return model.predict(x_test)
-
-    # TODO: Work on this.
-    def split_x_y(self, data, tech_indicator_list, tickers):
-
-        train_date = sorted(set(data.date.values))
-        X = []
-        for i in range(0, len(data) - 1):
-            d = train_date[i]
-            d_next = train_date[i+1]
-            y = data.loc[data['date'] ==
-                         d_next].return_list.iloc[0].loc[d_next].reset_index()
-            y.columns = ['tic', 'return']
-            x = data.loc[data['date'] == d][[tickers]]
-            train_piece = pd.merge(x, y, on='tic')
-            train_piece['date'] = [d] * len(train_piece)
-            X += [train_piece]
-        trainDataML = pd.concat(X)
-        X = trainDataML[tech_indicator_list].values
-        Y = trainDataML[['return']].values
-
-        return X, Y

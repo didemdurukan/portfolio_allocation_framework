@@ -20,6 +20,7 @@ if __name__ == '__main__':
     env_kwargs = user_params["env_params"]
     tech_indicator_list = env_kwargs["tech_indicator_list"]
 
+    '''
     x = np.random.normal(3, 1, 100)
     y = np.random.normal(150, 40, 100) / x
 
@@ -35,7 +36,9 @@ if __name__ == '__main__':
     test_x = test_x.reshape(-1, 1)
     test_y = test_y.reshape(-1, 1)
 
+
     '''
+    
     
     
     # FETCH DATA
@@ -57,21 +60,21 @@ if __name__ == '__main__':
                                           tech_indicator_list=tech_indicator_list,
                                           use_vix=True,
                                           use_turbulence=True,
-                                          use_covar=False).extend_data(downloaded_df)  # included technical indicators as features
-
+                                          use_covar=True).extend_data(downloaded_df)  # included technical indicators as features
+                                          #use covar = True
     print("Preprocessed Data: ", df_processed.head())
 
     # SPLIT TO X AND Y
 
     # TODO: add return value to the imported data
 
-    lr = LinearRegressionModel()
-    df_processed_X, df_processed_Y = lr.split_x_y(
-        df_processed, tech_indicator_list, tickers)
-    print(df_processed_Y.head())
+    #lr = LinearRegressionModel()
+    #df_processed_X, df_processed_Y = lr.split_x_y(
+    #    df_processed, tech_indicator_list, tickers)
+    #print(df_processed_Y.head())
 
+  
     '''
-
     lr = LinearRegressionModel()
     trained_lr = lr.train_model(train_x, train_y)
     y_pred = lr.predict_test(trained_lr, test_x)
@@ -112,3 +115,6 @@ if __name__ == '__main__':
     # Mean Gamma Deviance
     mgd = mean_gamma_deviance(test_y, y_pred)
     print("Mean gamma devaince: ", mgd)
+
+    '''
+    
