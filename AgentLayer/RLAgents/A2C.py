@@ -16,8 +16,8 @@ import torch as th
 class A2C(RLAgent):
 
     def __init__(self,
-                 policy: "MlpPolicy",
-                 env: None,
+                 policy="MlpPolicy",
+                 env=None,
                  learning_rate: float = 7e-4,
                  n_steps: int = 5,
                  gamma: float = 0.99,
@@ -92,3 +92,5 @@ class A2C(RLAgent):
     def load_model(self, path):
         self.model = self.model.load(path)
         return self.model
+
+

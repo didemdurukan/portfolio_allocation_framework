@@ -14,44 +14,46 @@ from stable_baselines3.common.buffers import ReplayBuffer
 from stable_baselines3.common.type_aliases import Schedule
 from typing import Any, Dict, Optional, Tuple, Type, Union
 import torch as th
+
+
 class PPO(RLAgent):
     def __init__(self,
-                policy: "MlpPolicy",
-                env: None,
-                learning_rate:  3e-4,
-                n_steps: int = 2048,
-                batch_size: int = 64,
-                n_epochs: int = 10,
-                gamma: float = 0.99,
-                gae_lambda: float = 0.95,
-                clip_range: Union[float, Schedule] = 0.2,
-                clip_range_vf: Union[None, float, Schedule] = None,
-                normalize_advantage: bool = True,
-                ent_coef: float = 0.0,
-                vf_coef: float = 0.5,
-                max_grad_norm: float = 0.5,
-                use_sde: bool = False,
-                sde_sample_freq: int = -1,
-                target_kl: Optional[float] = None,
-                tensorboard_log: Optional[str] = None,
-                create_eval_env: bool = False,
-                policy_kwargs: Optional[Dict[str, Any]] = None,
-                verbose: int = 0,
-                seed: Optional[int] = None,
-                device: Union[th.device, str] = "auto",
-                _init_setup_model: bool = True):
+                 policy="MlpPolicy",
+                 env=None,
+                 learning_rate=3e-4,
+                 n_steps: int = 2048,
+                 batch_size: int = 64,
+                 n_epochs: int = 10,
+                 gamma: float = 0.99,
+                 gae_lambda: float = 0.95,
+                 clip_range: Union[float, Schedule] = 0.2,
+                 clip_range_vf: Union[None, float, Schedule] = None,
+                 normalize_advantage: bool = True,
+                 ent_coef: float = 0.0,
+                 vf_coef: float = 0.5,
+                 max_grad_norm: float = 0.5,
+                 use_sde: bool = False,
+                 sde_sample_freq: int = -1,
+                 target_kl: Optional[float] = None,
+                 tensorboard_log: Optional[str] = None,
+                 create_eval_env: bool = False,
+                 policy_kwargs: Optional[Dict[str, Any]] = None,
+                 verbose: int = 0,
+                 seed: Optional[int] = None,
+                 device: Union[th.device, str] = "auto",
+                 _init_setup_model: bool = True):
 
         self.env = env
-        self.model = sb_PPO(policy = policy,
+        self.model = sb_PPO(policy=policy,
                             env=self.env,
-                            learning_rate = learning_rate,
-                            n_steps = n_steps,
-                            gamma = gamma,
-                            batch_size = batch_size,
-                            n_epochs = n_epochs,
+                            learning_rate=learning_rate,
+                            n_steps=n_steps,
+                            gamma=gamma,
+                            batch_size=batch_size,
+                            n_epochs=n_epochs,
                             gae_lambda=gae_lambda,
-                            clip_range = clip_range,
-                            clip_range_vf = clip_range_vf,
+                            clip_range=clip_range,
+                            clip_range_vf=clip_range_vf,
                             normalize_advantage=normalize_advantage,
                             ent_coef=ent_coef,
                             vf_coef=vf_coef,
@@ -65,12 +67,12 @@ class PPO(RLAgent):
                             verbose=verbose,
                             seed=seed,
                             device=device,
-                            _init_setup_model = _init_setup_model)
-    
+                            _init_setup_model=_init_setup_model)
+
     def train_model(self, **train_params):
         self.model = self.model.learn(**train_params)
         return self.model
-    
+
     def predict(self, environment, **test_params):
         env_test, obs_test = environment.get_env()
         """make a prediction"""
@@ -89,10 +91,10 @@ class PPO(RLAgent):
                 break
 
         return account_memory[0], actions_memory[0]
-    
+
     def load_model(self, path):
         self.model = self.model.load(path)
         return self.model
-    
+
     def save_model(self, path):
         self.model.save(path)
