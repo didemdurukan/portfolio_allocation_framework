@@ -58,13 +58,14 @@ if __name__ == '__main__':
                                             use_vix=True,
                                             use_turbulence=True,
                                             use_covar=True)
-    df_processed = data_processor.extend_data(downloaded_df)  # included technical indicators as features
+    # included technical indicators as features
+    df_processed = data_processor.extend_data(downloaded_df)
     # use covar = True
     print("Preprocessed Data: ", df_processed.head())
 
     x_train, y_train = data_processor.prepare_ml_data(df_processed)
-    print("ml x:", x_train.head())
-    print("ml Y: ", y_train.head())
+    print("ml x:", x_train)
+    print("ml Y: ", y_train)
 
     # SPLIT TO X AND Y
 

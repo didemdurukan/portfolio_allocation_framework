@@ -38,7 +38,7 @@ class LinearRegressionAgent(ConventionalAgent):
         except Exception as e:
             print("ops")
 
-    def predict(self, model, initial_capital, df, unique_trade_date, tech_indicator_list):
+    def predict(self, initial_capital, df, unique_trade_date, tech_indicator_list):
 
         self.initial_capital = initial_capital
         self.df = df
