@@ -1,5 +1,6 @@
 from statistics import median
 from AgentLayer.ConventionalAgents.LinearRegression import LinearRegressionAgent
+from AgentLayer.DataSplitter.TimeSeriesSplitter import TimeSeriesSplitter
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
 import yaml
@@ -7,7 +8,7 @@ import numpy as np
 from AgentLayer.metrics import *
 
 if __name__ == '__main__':
-    print("main")
+
     # IMPORT .yaml FILE
     # Gather user parameters
     with open("user_params.yaml", "r") as stream:
@@ -19,25 +20,6 @@ if __name__ == '__main__':
     tickers = user_params["tickers"]
     env_kwargs = user_params["env_params"]
     tech_indicator_list = env_kwargs["tech_indicator_list"]
-
-    '''
-    x = np.random.normal(3, 1, 100)
-    y = np.random.normal(150, 40, 100) / x
-
-    train_x = x[:80]
-    train_y = y[:80]
-
-    train_x = train_x.reshape(-1, 1)
-    train_y = train_y.reshape(-1, 1)
-
-    test_x = x[80:]
-    test_y = y[80:]
-
-    test_x = test_x.reshape(-1, 1)
-    test_y = test_y.reshape(-1, 1)
-
-
-    '''
 
     # FETCH DATA
     print("\nTest 3: Downloading from Yahoo.........")
@@ -60,25 +42,31 @@ if __name__ == '__main__':
                                             use_covar=True)
     # included technical indicators as features
     df_processed = data_processor.extend_data(downloaded_df)
-    # use covar = True
-    print("Preprocessed Data: ", df_processed.head())
 
-    x_train, y_train = data_processor.prepare_ml_data(df_processed)
-    print("ml x:", x_train)
-    print("ml Y: ", y_train)
+    # split data to train and test
+    splitter = TimeSeriesSplitter()
+    train = splitter.get_split_data(df_processed, '2009-01-01', '2020-06-30')
+    trade = splitter.get_split_data(df_processed, '2020-07-01', '2021-09-02')
 
-    # SPLIT TO X AND Y
+    # Get unique tic and trade
+    unique_tic = trade.tic.unique()
+    unique_trade_date = trade.date.unique()
 
-    # TODO: add return value to the imported data
+    x_train, y_train = data_processor.prepare_ml_data(train)
 
-    # lr = LinearRegressionAgent()
-    # df_processed_X, df_processed_Y = lr.split_x_y(
-    #    df_processed, tech_indicator_list, tickers)
-    # print(df_processed_Y.head())
+    # Create Linear Regression model and train it
+    lr = LinearRegressionAgent()
+    trained_lr = lr.train_model(x_train, y_train)
+
+    # Predict
+    portfolio, portfolio_cumprod, meta_coefficient = lr.predict(
+        trained_lr, 1000000, df_processed, unique_trade_date, tech_indicator_list)
+
+    print("portfolio: \n", portfolio)
+    print("portfolio_cumprod: \n", portfolio_cumprod)
+    print("Meta Coefficient: \n", meta_coefficient)
 
     '''
-    lr = LinearRegressionAgent()
-    trained_lr = lr.train_model(train_x, train_y)
     y_pred = lr.predict_test(trained_lr, test_x)
     print("y pred: ", y_pred)
 

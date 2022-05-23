@@ -38,12 +38,7 @@ class LinearRegressionAgent(ConventionalAgent):
         except Exception as e:
             print("ops")
 
-    def predict(self, initial_capital, df, unique_trade_date, tech_indicator_list):
-
-        self.initial_capital = initial_capital
-        self.df = df
-        self.uniqute_trade_date = unique_trade_date
-        self.tech_indicator_list = tech_indicator_list
+    def predict(self, trained_model, initial_capital, df_processed, unique_trade_date, tech_indicator_list):
 
         meta_coefficient = {"date": [], "weights": []}
         self.meta_coefficient = meta_coefficient
@@ -54,32 +49,35 @@ class LinearRegressionAgent(ConventionalAgent):
 
         for i in range(len(unique_trade_date) - 1):
             mu, sigma, tics, df_current, df_next = self._return_predict(
-                i, self, reference_model=False)
+                unique_trade_date, df_processed, i, tech_indicator_list, trained_model, reference_model=False)
             portfolio_value = self._weight_optimization(
-                self, i, mu, sigma, tics, df_current, df_next)
+                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
 
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
-        stats = backtest_stats(portfolio, value_col_name='account_value')
+
+        '''Backtest hasn't been implemented yet, hence commented.'''
+        #stats = backtest_stats(portfolio, value_col_name='account_value')
         portfolio_cumprod = (
             portfolio.account_value.pct_change()+1).cumprod()-1
 
-        return portfolio, stats, portfolio_cumprod, pd.DataFrame(meta_coefficient)
+        return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 
-    def _return_predict(i, self, reference_model=False):
+    def _return_predict(self, unique_trade_date, df_processed, i, tech_indicator_list, trained_model, reference_model=False):
 
-        current_date = self.unique_trade_date[i]
-        next_date = self.unique_trade_date[i+1]
-        df_current = self.df[self.df.date ==
-                             current_date].reset_index(drop=True)
+        current_date = unique_trade_date[i]
+        next_date = unique_trade_date[i+1]
+        df_current = df_processed[df_processed.date ==
+                                  current_date].reset_index(drop=True)
         tics = df_current['tic'].values
-        features = df_current[self.tech_indicator_list].values
-        df_next = self.df[self.df.date == next_date].reset_index(drop=True)
+        features = df_current[tech_indicator_list].values
+        df_next = df_processed[df_processed.date ==
+                               next_date].reset_index(drop=True)
         if not reference_model:
-            predicted_y = self.model.predict(features)
+            predicted_y = trained_model.predict(features)
             mu = predicted_y
             Sigma = risk_models.sample_cov(
                 df_current.return_list[0], returns_data=True)
@@ -90,9 +88,9 @@ class LinearRegressionAgent(ConventionalAgent):
 
         return mu, Sigma, tics, df_current, df_next
 
-    def _weight_optimization(self, i, mu, sigma, tics, df_current, df_next):
+    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next):
 
-        current_date = self.unique_trade_date[i]
+        current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
             {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
         min_weight, max_weight = 0, 1
@@ -111,15 +109,15 @@ class LinearRegressionAgent(ConventionalAgent):
         )
 
         weight_df = {"tic": [], "weight": []}
-        self.meta_coefficient["date"] += [current_date]
+        meta_coefficient["date"] += [current_date]
         # it = 0
         for item in weights:
             weight_df['tic'] += [item]
             weight_df['weight'] += [weights[item]]
 
         weight_df = pd.DataFrame(weight_df).merge(predicted_y_df, on=['tic'])
-        self.meta_coefficient["weights"] += [weight_df]
-        cap = self.portfolio.iloc[0, i]
+        meta_coefficient["weights"] += [weight_df]
+        cap = portfolio.iloc[0, i]
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
@@ -127,9 +125,9 @@ class LinearRegressionAgent(ConventionalAgent):
                               np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
-        self.portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
+        portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return self.portfolio
+        return portfolio
 
     def save_model(self, model, file_name):
         try:
@@ -148,7 +146,3 @@ class LinearRegressionAgent(ConventionalAgent):
             print(traceback.format_exc(e))
 
         return lr
-
-    # test function for regression metrics
-    def predict_test(self, model, x_test):
-        return model.predict(x_test)
