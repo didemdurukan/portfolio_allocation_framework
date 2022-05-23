@@ -12,6 +12,7 @@ from stable_baselines3.common.buffers import ReplayBuffer
 from stable_baselines3.common.type_aliases import Schedule
 import torch as th
 
+
 class A2C(RLAgent):
 
     def __init__(self,
@@ -39,27 +40,27 @@ class A2C(RLAgent):
 
         self.env = env
 
-        self.model = sb_A2C(policy = policy,
+        self.model = sb_A2C(policy=policy,
                             env=self.env,
-                            learning_rate = learning_rate,
-                            n_steps = n_steps,
-                            gamma = gamma,
-                            gae_lambda= gae_lambda,
-                            ent_coef = ent_coef,
-                            vf_coef = vf_coef,
-                            max_grad_norm = max_grad_norm,
-                            rms_prop_eps= rms_prop_eps,
-                            use_rms_prop= use_rms_prop,
-                            use_sde= use_sde,
-                            sde_sample_freq= sde_sample_freq,
-                            normalize_advantage= normalize_advantage,
-                            tensorboard_log=tensorboard_log,  
-                            create_eval_env= create_eval_env,
+                            learning_rate=learning_rate,
+                            n_steps=n_steps,
+                            gamma=gamma,
+                            gae_lambda=gae_lambda,
+                            ent_coef=ent_coef,
+                            vf_coef=vf_coef,
+                            max_grad_norm=max_grad_norm,
+                            rms_prop_eps=rms_prop_eps,
+                            use_rms_prop=use_rms_prop,
+                            use_sde=use_sde,
+                            sde_sample_freq=sde_sample_freq,
+                            normalize_advantage=normalize_advantage,
+                            tensorboard_log=tensorboard_log,
+                            create_eval_env=create_eval_env,
                             policy_kwargs=policy_kwargs,
                             verbose=verbose,
                             seed=seed,
-                            device= device,
-                            _init_setup_model = _init_setup_model)
+                            device=device,
+                            _init_setup_model=_init_setup_model)
 
     def train_model(self, **train_params):
         self.model = self.model.learn(**train_params)

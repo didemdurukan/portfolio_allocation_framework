@@ -1,4 +1,4 @@
-from AgentLayer.ConventionalAgents.Conventional_Models import ConventionalModel
+from AgentLayer.ConventionalAgents.ConventionalAgent import ConventionalAgent
 #from finrl.plot import backtest_stats, backtest_plot, get_daily_return, get_baseline, convert_daily_return_to_pyfolio_ts
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -18,7 +18,7 @@ from pypfopt import expected_returns
 from pypfopt import objective_functions
 
 
-class LinearRegressionModel(ConventionalModel):
+class LinearRegressionAgent(ConventionalAgent):
 
     def __init__(self) -> None:
         super().__init__()

@@ -1,20 +1,21 @@
 from abc import ABC, abstractmethod
 from AgentLayer.Agent import Agent
+
+
 class RLAgent(Agent, ABC):
 
     @abstractmethod
-    def train_model():
+    def train_model(self, *args, **kwargs):
         pass
 
     @abstractmethod
-    def predict():
-        
+    def predict(self, *args, **kwargs):
         pass
 
     @abstractmethod
-    def save_model():
+    def save_model(self, *args, **kwargs):
         pass
 
     @abstractmethod
-    def load_model():
+    def load_model(self, *args, **kwargs):
         pass

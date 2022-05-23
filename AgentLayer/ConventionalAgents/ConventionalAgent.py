@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
+from AgentLayer.Agent import Agent
 
 
-class Agent(ABC):
+class ConventionalAgent(Agent, ABC):
 
     @abstractmethod
     def train_model(self, *args, **kwargs):
@@ -18,3 +19,12 @@ class Agent(ABC):
     @abstractmethod
     def load_model(self, *args, **kwargs):
         pass
+
+    @abstractmethod
+    def _return_predict(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def _weight_optimization(self, *args, **kwargs):
+        pass
+

@@ -1,5 +1,5 @@
 from statistics import median
-from AgentLayer.ConventionalAgents.LinearRegression import LinearRegressionModel
+from AgentLayer.ConventionalAgents.LinearRegression import LinearRegressionAgent
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
 import yaml
@@ -70,13 +70,13 @@ if __name__ == '__main__':
 
     # TODO: add return value to the imported data
 
-    # lr = LinearRegressionModel()
+    # lr = LinearRegressionAgent()
     # df_processed_X, df_processed_Y = lr.split_x_y(
     #    df_processed, tech_indicator_list, tickers)
     # print(df_processed_Y.head())
 
     '''
-    lr = LinearRegressionModel()
+    lr = LinearRegressionAgent()
     trained_lr = lr.train_model(train_x, train_y)
     y_pred = lr.predict_test(trained_lr, test_x)
     print("y pred: ", y_pred)
