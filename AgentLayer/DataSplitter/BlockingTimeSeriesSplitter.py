@@ -4,29 +4,6 @@ from sklearn.utils import indexable
 from sklearn.utils.validation import _num_samples
 
 
-class ExpandingWindowSplitter(TimeSeriesSplit):
-
-    def _iter_test_indices(self, X=None, y=None, groups=None):
-        super()._iter_test_indices(X, y, groups)
-
-    def __init__(self, n_splits=5, max_train_size=None, test_size=None, gap=0):
-        super().__init__(n_splits, max_train_size=max_train_size, test_size=test_size, gap=gap)
-
-    def split(self, X, y=None, groups=None):
-        """Generate indices to split data into training and test set.
-          Parameters
-        ----------
-        X : array-like of shape (n_samples, n_features)
-            Training data, where `n_samples` is the number of samples
-            and `n_features` is the number of features.
-        y : array-like of shape (n_samples,)
-            Always ignored, exists for compatibility.
-        groups : array-like of shape (n_samples,)
-            Always ignored, exists for compatibility.
-        """
-        return super().split(X, y, groups)
-
-
 class BlockingTimeSeriesSplitter(TimeSeriesSplit):
     def _iter_test_indices(self, X=None, y=None, groups=None):
         super()._iter_test_indices(X, y, groups)

@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+
+from gym.utils import seeding
 from stable_baselines3 import A2C
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3 import A2C as sb_A2C
@@ -10,6 +12,7 @@ import yaml
 import gym
 from datetime import datetime
 from AgentLayer.Environment.Environment import Environment
+
 
 class PortfolioEnv(Environment):
 
@@ -43,18 +46,18 @@ class PortfolioEnv(Environment):
         self.action_space = spaces.Box(low=0, high=1, shape=(self.action_space,))
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf,
                                             shape=(self.state_space + len(self.tech_indicator_list), self.state_space))
-        
 
         # load data from a pandas dataframe
-        
+
         ##FINRL APPROACH
-        #self.df.set_index("date", drop = True, inplace=True)
-        
-        self.data = self.df.loc[self.day,:]
+        # self.df.set_index("date", drop = True, inplace=True)
+
+        self.data = self.df.loc[self.day, :]
         self.covs = self.data['cov_list'].values[0]
-        self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)
+        self.state = np.append(np.array(self.covs),
+                               [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
         self.terminal = False
-        #self.turbulence_threshold = turbulence_threshold
+        # self.turbulence_threshold = turbulence_threshold
         # initalize state: initial portfolio return + individual stock return + individual weights
         self.portfolio_value = self.initial_amount
 
@@ -63,23 +66,24 @@ class PortfolioEnv(Environment):
         # memorize portfolio return each step
         self.portfolio_return_memory = [0]
         self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
-        self.date_memory=[self.data.date.unique()[0]]
+        self.date_memory = [self.data.date.unique()[0]]
 
     def reset(self):
         self.asset_memory = [self.initial_amount]
         self.day = 0
-        self.data = self.df.loc[self.day,:]
+        self.data = self.df.loc[self.day, :]
         # load states
         self.covs = self.data['cov_list'].values[0]
-        self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)
-                
+        self.state = np.append(np.array(self.covs),
+                               [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
+
         self.portfolio_value = self.initial_amount
-        #self.cost = 0
-        #self.trades = 0
-        self.terminal = False 
+        # self.cost = 0
+        # self.trades = 0
+        self.terminal = False
         self.portfolio_return_memory = [0]
-        self.actions_memory=[[1/self.stock_dim] * self.stock_dim]
-        self.date_memory=[self.data.date.unique()[0]] 
+        self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
+        self.date_memory = [self.data.date.unique()[0]]
         return self.state
 
     def step(self, actions):
@@ -89,11 +93,11 @@ class PortfolioEnv(Environment):
             print(df)
             df.columns = ['daily_return']
             plt.plot(df.daily_return.cumsum(), 'r')
-            #plt.savefig('results/cumulative_reward.png')
+            # plt.savefig('results/cumulative_reward.png')
             plt.close()
 
             plt.plot(self.portfolio_return_memory, 'r')
-            #plt.savefig('results/rewards.png')
+            # plt.savefig('results/rewards.png')
             plt.close()
 
             print("=================================")
@@ -119,7 +123,8 @@ class PortfolioEnv(Environment):
             self.day += 1
             self.data = self.df.loc[self.day, :]
             self.covs = self.data['cov_list'].values[0]
-            self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)         
+            self.state = np.append(np.array(self.covs),
+                                   [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
             portfolio_return = sum(((self.data.close.values / last_day_memory.close.values) - 1) * weights)
             log_portfolio_return = np.log(sum((self.data.close.values / last_day_memory.close.values) * weights))
             # update portfolio value

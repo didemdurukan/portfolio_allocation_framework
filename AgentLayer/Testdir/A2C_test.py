@@ -58,7 +58,12 @@ if __name__ == '__main__':
     env_test = PortfolioEnv(df=df_processed, **env_kwargs)
 
     # TEST A2C AGENT
-    a2c.predict(environment=env_test, **test_params["A2C_PARAMS"])
+    df_daily_return_a2c, df_actions_a2c = a2c.predict(environment=env_test, **test_params["A2C_PARAMS"])
+
+    a2c_weights = a2c.extract_weights(df_actions_a2c)
+    print("Portfolio weights per day:\n")
+    print(a2c_weights)
+    # ppo_weights = extract_weights(df_actions_ppo)
 
     # SAVE AGENT
     a2c.save_model("AgentLayer/RLAgents/a2c_model")
