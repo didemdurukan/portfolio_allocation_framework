@@ -52,7 +52,6 @@ class LinearRegressionAgent(ConventionalAgent):
                 unique_trade_date, df_processed, i, tech_indicator_list, trained_model, reference_model=False)
             portfolio_value = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
-
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
