@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from stable_baselines3.common.vec_env import DummyVecEnv
-from stable_baselines3 import DDPG as sb_TD3
+from stable_baselines3 import TD3 as sb_TD3
 from stable_baselines3.common.noise import ActionNoise
 from stable_baselines3.common.buffers import ReplayBuffer
 from stable_baselines3.common.type_aliases import Schedule
