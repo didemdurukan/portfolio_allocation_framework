@@ -1,9 +1,8 @@
 import yaml
-from AgentLayer.ConventionalAgents.LinearRegressionAgent import LinearRegressionAgent
+from AgentLayer.ConventionalAgents.SVRAgent import SVRAgent
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
 from AgentLayer.DataSplitter.TimeSeriesSplitter import TimeSeriesSplitter
-
 
 if __name__ == '__main__':
 
@@ -52,17 +51,17 @@ if __name__ == '__main__':
     train_x, train_y = data_processor.prepare_ml_data(train)
 
     # create agent
-    lr = LinearRegressionAgent(**policy_params["LR_PARAMS"])
+    svr = SVRAgent(**policy_params["SVR_PARAMS"])
 
     #train agent
-    lr.train_model(train_x, train_y, **train_params["LR_PARAMS"])
+    svr.train_model(train_x, train_y, **train_params["SVR_PARAMS"])
 
     #predict 
-    portfolio, portfolio_cumprod, meta_coefficient = lr.predict(trade, **test_params["LR_PARAMS"])
+    portfolio, portfolio_cumprod, meta_coefficient = svr.predict(trade, **test_params["SVR_PARAMS"])
     print(portfolio)
 
     #save model
-    lr.save_model("AgentLayer/ConventionalAgents/lr_model")
+    svr.save_model("AgentLayer/ConventionalAgents/svr_model")
 
     #load model
-    lr_loaded = lr.load_model("AgentLayer/ConventionalAgents/lr_model")
+    svr_loaded = svr.load_model("AgentLayer/ConventionalAgents/svr_model")
