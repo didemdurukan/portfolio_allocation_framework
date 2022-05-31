@@ -171,12 +171,14 @@ class LinearRegressionAgent(ConventionalAgent):
         try:
             trained_reg = self.model.fit(train_x, train_y)
             print("Model trained succesfully")
+            self.model = trained_reg
             return trained_reg
         except Exception as e:
             print("ops")
 
-    def predict(self, trained_model, initial_capital, df_processed, unique_trade_date, tech_indicator_list):
+    def predict(self, initial_capital, trade_df, tech_indicator_list):
 
+        unique_trade_date = trade_df.date.unique()
         meta_coefficient = {"date": [], "weights": []}
         self.meta_coefficient = meta_coefficient
 
@@ -186,7 +188,7 @@ class LinearRegressionAgent(ConventionalAgent):
 
         for i in range(len(unique_trade_date) - 1):
             mu, sigma, tics, df_current, df_next = self._return_predict(
-                unique_trade_date, df_processed, i, tech_indicator_list, trained_model, reference_model=False)
+                unique_trade_date, trade_df, i, tech_indicator_list, self.model, reference_model=False)
             portfolio_value = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
         portfolio = portfolio_value

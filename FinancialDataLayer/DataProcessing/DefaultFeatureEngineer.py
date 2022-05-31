@@ -29,11 +29,12 @@ class DefaultFeatureEngineer(FeatureEngineer):
     def __init__(self,
                  tech_indicator_list=None,
                  use_default=True,
-                 use_covar=False,
+                 use_covar=True,
+                 use_return=True,
                  lookback=252,
                  use_vix=False,
                  use_turbulence=False
-                 ):  # TODO: add instance variables here and make other functions member functions (not staticmethods), get rid of __ and instead use _
+                 ):
 
         if tech_indicator_list is not None and use_default is True:
             raise ValueError("Use default cannot be True if technical indicator list is supplied.")
@@ -43,6 +44,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
             self.tech_indicator_list = tech_indicator_list
         self.use_default = use_default
         self.use_covar = use_covar
+        self.use_return = use_return
         self.lookback = lookback
         self.use_vix = use_vix
         self.use_turbulence = use_turbulence
@@ -84,6 +86,11 @@ class DefaultFeatureEngineer(FeatureEngineer):
         if self.use_covar:
             self.df_processed = self._add_covariances()
             print("Successfully added covariances")
+
+        # add covariances
+        if self.use_return:
+            self.df_processed = self._add_returns()
+            print("Successfully added returns")
 
         # fill the missing values at the beginning and the end
         self.df_processed = self.df_processed.fillna(method="ffill").fillna(method="bfill")
@@ -269,20 +276,61 @@ class DefaultFeatureEngineer(FeatureEngineer):
             data_lookback = df_processed_full.loc[i - lookback:i, :]
             price_lookback = data_lookback.pivot_table(index='date', columns='tic', values='close')
             return_lookback = price_lookback.pct_change().dropna()
-            return_list.append(return_lookback)
+            # return_list.append(return_lookback)
             covs = return_lookback.cov().values
             cov_list.append(covs)
 
+        # df_cov = pd.DataFrame(
+        #     {'date': df_processed_full.date.unique()[lookback:], 'cov_list': cov_list, 'return_list': return_list})
         df_cov = pd.DataFrame(
-            {'date': df_processed_full.date.unique()[lookback:], 'cov_list': cov_list, 'return_list': return_list})
+            {'date': df_processed_full.date.unique()[lookback:], 'cov_list': cov_list})
 
         df_processed_full = df_processed_full.merge(df_cov, on='date')
         df_processed_full = df_processed_full.sort_values(['date', 'tic']).reset_index(drop=True)
         return df_processed_full
 
-    def prepare_ml_data(self, train_data):
+    def _add_returns(self):
         """
 
+        @return:
+        """
+        df = self.df_processed.copy()
+        # TODO: Check if some of these preprocessing steps are necessary
+        df['date'] = df['date'].astype(str)  # convert to string temporarily for concatenation purposes
+        ticker_list = df["tic"].unique().tolist()  # get ticker types
+        date_list = list(pd.date_range(df['date'].min(), df['date'].max()).astype(str))  # get dates
+        date_ticker_list = list(itertools.product(date_list, ticker_list))  # combine them
+        df_processed_full = pd.DataFrame(date_ticker_list, columns=["date", "tic"]).merge(df,
+                                                                                          on=["date", "tic"],
+                                                                                          how="left")  # apply left join with that combination
+        df_processed_full['date'] = pd.to_datetime(df_processed_full['date'],
+                                                   format='%Y-%m-%d')  # back to datetime format
+        df_processed_full = df_processed_full[
+            df_processed_full['date'].isin(df['date'])]  # keep only actual data by matching the dates
+        df_processed_full = df_processed_full.sort_values(['date', 'tic'])  # sort by date-ticker combination
+        df_processed_full = df_processed_full.fillna(
+            0)  # fill the missing data with 0 # TODO: Check if this is a good idea
+
+        # include covariance of stocks as feature depending on 1 year data
+        df_processed_full = df_processed_full.sort_values(['date', 'tic'], ignore_index=True)
+        df_processed_full.index = df_processed_full.date.factorize()[0]
+        return_list = []
+        # look back is one year
+        lookback = self.lookback
+        for i in range(lookback, len(df_processed_full.index.unique())):
+            data_lookback = df_processed_full.loc[i - lookback:i, :]
+            price_lookback = data_lookback.pivot_table(index='date', columns='tic', values='close')
+            return_lookback = price_lookback.pct_change().dropna()
+            return_list.append(return_lookback)
+        df_ret = pd.DataFrame(
+            {'date': df_processed_full.date.unique()[lookback:], 'return_list': return_list})
+
+        df_processed_full = df_processed_full.merge(df_ret, on='date')
+        df_processed_full = df_processed_full.sort_values(['date', 'tic']).reset_index(drop=True)
+        return df_processed_full
+
+    def prepare_ml_data(self, train_data):
+        """
         @param train_data:
         @return:
         """
@@ -291,7 +339,8 @@ class DefaultFeatureEngineer(FeatureEngineer):
         for i in range(0, len(train_date) - 1):
             d = train_date[i]
             d_next = train_date[i + 1]
-            # TODO: if check for existence of return_list, if doesnt exist add by default then continue
+            if train_data.get("return_list") is None:
+                raise Exception("return_list not found on train data, please add returns by setting use_return=True")
             y = train_data.loc[train_data['date'] == d_next].return_list.iloc[0].loc[d_next].reset_index()
             y.columns = ['tic', 'return']
             x = train_data.loc[train_data['date'] == d][["tic"] + self.tech_indicator_list]
@@ -303,4 +352,3 @@ class DefaultFeatureEngineer(FeatureEngineer):
         Y = train_data_ml[['return']].values
 
         return X, Y
-
