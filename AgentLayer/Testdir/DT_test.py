@@ -1,5 +1,5 @@
 import yaml
-from AgentLayer.ConventionalAgents.DecisionTreeAgent import DecisionTreeAgent
+from AgentLayer.ConventionalAgents.DTAgent import DTAgent
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
 from AgentLayer.DataSplitter.TimeSeriesSplitter import TimeSeriesSplitter
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     train_x, train_y = data_processor.prepare_ml_data(train)
 
     # create agent
-    dt = DecisionTreeAgent(**policy_params["DT_PARAMS"])
+    dt = DTAgent(**policy_params["DT_PARAMS"])
 
     #train agent
     dt.train_model(train_x, train_y, **train_params["DT_PARAMS"])

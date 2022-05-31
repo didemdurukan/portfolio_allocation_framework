@@ -16,7 +16,7 @@ from pypfopt import objective_functions
 
 
 
-class LinearRegressionAgent(ConventionalAgent):
+class LRAgent(ConventionalAgent):
 
    def __init__(self,
                 fit_intercept = True,

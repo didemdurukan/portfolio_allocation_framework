@@ -1,5 +1,5 @@
 import yaml
-from AgentLayer.ConventionalAgents.LinearRegressionAgent import LinearRegressionAgent
+from AgentLayer.ConventionalAgents.LRAgent import LRAgent
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.DefaultFeatureEngineer import DefaultFeatureEngineer
 from AgentLayer.DataSplitter.TimeSeriesSplitter import TimeSeriesSplitter
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     train_x, train_y = data_processor.prepare_ml_data(train)
 
     # create agent
-    lr = LinearRegressionAgent(**policy_params["LR_PARAMS"])
+    lr = LRAgent(**policy_params["LR_PARAMS"])
 
     #train agent
     lr.train_model(train_x, train_y, **train_params["LR_PARAMS"])

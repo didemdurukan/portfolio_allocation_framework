@@ -10,7 +10,7 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 
 
-class DecisionTreeAgent(ConventionalAgent):
+class DTAgent(ConventionalAgent):
     
     def __init__(self,
                 criterion = "squared_error",
