@@ -24,6 +24,9 @@ train_params:
 
   LR_PARAMS : { sample_weight : null}
 
+  DT_PARAMS : { sample_weight : null,
+                check_input : True}
+
   A2C_PARAMS: { total_timesteps: 1000,
                 callback: null,
                 log_interval:  100,
@@ -65,7 +68,19 @@ train_params:
                 reset_num_timesteps: True}
 
 test_params:
-
+  DT_PARAMS : {
+                initial_capital : 1000000,
+                tech_indicator_list: [
+                    "macd",
+                    "boll_ub",
+                    "boll_lb",
+                    "rsi_30",
+                    "cci_30",
+                    "dx_30",
+                    "close_30_sma",
+                    "close_60_sma",
+                ] 
+  }
   SVR_PARAMS : {
                 initial_capital : 1000000,
                 tech_indicator_list: [
@@ -114,6 +129,19 @@ test_params:
               }
 
 policy_params:
+
+  DT_PARAMS: {
+                criterion : "squared_error",
+                splitter : "best",
+                max_depth : null,
+                min_samples_split : 2,
+                min_samples_leaf : 1,
+                min_weight_fraction_leaf : 0,
+                max_features : null,
+                random_state : null,
+                max_leaf_nodes : null,
+                min_impurity_decrease : 0,
+                ccp_alpha : 0}
 
   SVR_PARAMS : { kernel : 'rbf',
                 degree : 3,
