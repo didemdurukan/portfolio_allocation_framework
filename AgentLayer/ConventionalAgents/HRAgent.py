@@ -31,12 +31,12 @@ class HRAgent(ConventionalAgent):
         '''
         *Trains the model*
         Input: Train data x and train data y
-        Output: Linear Regression Model
+        Output: saves the trained model to class
         '''
         try:
             trained = self.model.fit(train_x, train_y.ravel(), **train_params)
+            self.model = trained
             print("Model trained succesfully")
-            return trained
         except Exception as e:
             print("training unsuccessful")
 

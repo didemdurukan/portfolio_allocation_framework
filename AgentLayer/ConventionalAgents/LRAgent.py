@@ -15,35 +15,34 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 
 
-
 class LRAgent(ConventionalAgent):
 
-   def __init__(self,
-                fit_intercept = True,
-                copy_X = True,
-                positive = False):  
+    def __init__(self,
+                 fit_intercept=True,
+                 copy_X=True,
+                 positive=False):
 
         self.model = LinearRegression(fit_intercept=fit_intercept,
-                                      copy_X= copy_X,
-                                      positive= positive)
+                                      copy_X=copy_X,
+                                      positive=positive)
 
-   def train_model(self, train_x, train_y, **train_params):
+    def train_model(self, train_x, train_y, **train_params):
         '''
         *Trains the model*
         Input: Train data x and train data y
-        Output: Linear Regression Model
+        Output: saves the trained model to class
         '''
         try:
             trained_reg = self.model.fit(train_x, train_y, **train_params)
+            self.model = trained_reg
             print("Model trained succesfully")
-            return trained_reg
         except Exception as e:
             print("training unsuccessful")
-    
-   def predict(self,
-               test_data, 
-               initial_capital = 0,
-               tech_indicator_list = [
+
+    def predict(self,
+                test_data,
+                initial_capital=0,
+                tech_indicator_list=[
                     "macd",
                     "boll_ub",
                     "boll_lb",
@@ -65,7 +64,7 @@ class LRAgent(ConventionalAgent):
 
             portfolio_value = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
-    
+
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
@@ -74,21 +73,21 @@ class LRAgent(ConventionalAgent):
 
         '''Backtest hasn't been implemented yet, hence commented.'''
         #stats = backtest_stats(portfolio, value_col_name='account_value')
-        
+
         portfolio_cumprod = (
             portfolio.account_value.pct_change()+1).cumprod()-1
 
         return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 
-   def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
+    def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
 
         current_date = unique_trade_date[i]
         next_date = unique_trade_date[i+1]
 
         df_current = test_data[test_data.date ==
-                                  current_date].reset_index(drop=True)
+                               current_date].reset_index(drop=True)
         df_next = test_data[test_data.date ==
-                               next_date].reset_index(drop=True)
+                            next_date].reset_index(drop=True)
 
         tics = df_current['tic'].values
         features = df_current[tech_indicator_list].values
@@ -100,7 +99,7 @@ class LRAgent(ConventionalAgent):
 
         return mu, sigma, tics, df_current, df_next
 
-   def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next):
+    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next):
 
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
@@ -133,20 +132,20 @@ class LRAgent(ConventionalAgent):
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
-        current_shares = list(np.array(current_cash) / np.array(df_current.close))
+        current_shares = list(np.array(current_cash) /
+                              np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio 
+        return portfolio
 
-   def save_model(self,  file_name):
+    def save_model(self,  file_name):
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")
 
-
-   def load_model(self, file_name):
+    def load_model(self, file_name):
         with open(file_name, 'rb') as f:
             self.model = pickle.load(f)
         print("Model loaded succesfully.")

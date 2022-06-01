@@ -11,95 +11,94 @@ from pypfopt import objective_functions
 
 
 class DTAgent(ConventionalAgent):
-    
-    def __init__(self,
-                criterion = "squared_error",
-                splitter = "best",
-                max_depth = None,
-                min_samples_split = 2,
-                min_samples_leaf = 1,
-                min_weight_fraction_leaf = 0,
-                max_features = None,
-                random_state = None,
-                max_leaf_nodes = None,
-                min_impurity_decrease = 0,
-                ccp_alpha = 0):
-                
 
-        self.model = DecisionTreeRegressor( criterion = criterion,
-                                            splitter = splitter,
-                                            max_depth = max_depth,
-                                            min_samples_split = min_samples_split,
-                                            min_samples_leaf = min_samples_leaf,
-                                            min_weight_fraction_leaf = min_weight_fraction_leaf,
-                                            max_features = max_features,
-                                            random_state = random_state,
-                                            max_leaf_nodes = max_leaf_nodes,
-                                            min_impurity_decrease = min_impurity_decrease,
-                                            ccp_alpha = ccp_alpha)
-                                            
+    def __init__(self,
+                 criterion="squared_error",
+                 splitter="best",
+                 max_depth=None,
+                 min_samples_split=2,
+                 min_samples_leaf=1,
+                 min_weight_fraction_leaf=0,
+                 max_features=None,
+                 random_state=None,
+                 max_leaf_nodes=None,
+                 min_impurity_decrease=0,
+                 ccp_alpha=0):
+
+        self.model = DecisionTreeRegressor(criterion=criterion,
+                                           splitter=splitter,
+                                           max_depth=max_depth,
+                                           min_samples_split=min_samples_split,
+                                           min_samples_leaf=min_samples_leaf,
+                                           min_weight_fraction_leaf=min_weight_fraction_leaf,
+                                           max_features=max_features,
+                                           random_state=random_state,
+                                           max_leaf_nodes=max_leaf_nodes,
+                                           min_impurity_decrease=min_impurity_decrease,
+                                           ccp_alpha=ccp_alpha)
+
     def train_model(self, train_x, train_y, **train_params):
         '''
         *Trains the model*
         Input: Train data x and train data y
-        Output: Linear Regression Model
+        Output: saves the trained model to class
         '''
         try:
             trained = self.model.fit(train_x, train_y, **train_params)
+            self.model = trained
             print("Model trained succesfully")
-            return trained
         except Exception as e:
-            print("training unsuccessful")    
-    
+            print("training unsuccessful")
+
     def predict(self,
-                test_data, 
-                initial_capital = 0,
-                tech_indicator_list = [
-                        "macd",
-                        "boll_ub",
-                        "boll_lb",
-                        "rsi_30",
-                        "cci_30",
-                        "dx_30",
-                        "close_30_sma",
-                        "close_60_sma",
-                    ]):
+                test_data,
+                initial_capital=0,
+                tech_indicator_list=[
+                    "macd",
+                    "boll_ub",
+                    "boll_lb",
+                    "rsi_30",
+                    "cci_30",
+                    "dx_30",
+                    "close_30_sma",
+                    "close_60_sma",
+                ]):
 
-            meta_coefficient = {"date": [], "weights": []}
-            unique_trade_date = test_data.date.unique()
-            portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
-            portfolio.loc[0, unique_trade_date[0]] = initial_capital
+        meta_coefficient = {"date": [], "weights": []}
+        unique_trade_date = test_data.date.unique()
+        portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
+        portfolio.loc[0, unique_trade_date[0]] = initial_capital
 
-            for i in range(len(unique_trade_date) - 1):
-                mu, sigma, tics, df_current, df_next = self._return_predict(
-                    unique_trade_date, test_data, i, tech_indicator_list)
+        for i in range(len(unique_trade_date) - 1):
+            mu, sigma, tics, df_current, df_next = self._return_predict(
+                unique_trade_date, test_data, i, tech_indicator_list)
 
-                portfolio_value = self._weight_optimization(
-                    i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
-        
-            portfolio = portfolio_value
-            portfolio = portfolio.T
-            portfolio.columns = ['account_value']
-            portfolio = portfolio.reset_index()
-            portfolio.columns = ['date', 'account_value']
+            portfolio_value = self._weight_optimization(
+                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
 
-            '''Backtest hasn't been implemented yet, hence commented.'''
-            #stats = backtest_stats(portfolio, value_col_name='account_value')
-            
-            portfolio_cumprod = (
-                portfolio.account_value.pct_change()+1).cumprod()-1
+        portfolio = portfolio_value
+        portfolio = portfolio.T
+        portfolio.columns = ['account_value']
+        portfolio = portfolio.reset_index()
+        portfolio.columns = ['date', 'account_value']
 
-            return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
-            
+        '''Backtest hasn't been implemented yet, hence commented.'''
+        #stats = backtest_stats(portfolio, value_col_name='account_value')
+
+        portfolio_cumprod = (
+            portfolio.account_value.pct_change()+1).cumprod()-1
+
+        return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
+
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
 
         current_date = unique_trade_date[i]
         next_date = unique_trade_date[i+1]
 
         df_current = test_data[test_data.date ==
-                                  current_date].reset_index(drop=True)
+                               current_date].reset_index(drop=True)
         df_next = test_data[test_data.date ==
-                               next_date].reset_index(drop=True)
+                            next_date].reset_index(drop=True)
 
         tics = df_current['tic'].values
         features = df_current[tech_indicator_list].values
@@ -144,18 +143,18 @@ class DTAgent(ConventionalAgent):
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
-        current_shares = list(np.array(current_cash) / np.array(df_current.close))
+        current_shares = list(np.array(current_cash) /
+                              np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio 
-    
+        return portfolio
+
     def save_model(self,  file_name):
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")
-
 
     def load_model(self, file_name):
         with open(file_name, 'rb') as f:
