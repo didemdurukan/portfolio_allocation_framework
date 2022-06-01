@@ -8,6 +8,9 @@ import pickle
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import objective_functions
+import yaml
+
+config = yaml.safe_load(open("../user_params.yaml"))
 
 
 class RFAgent(ConventionalAgent):
@@ -65,16 +68,8 @@ class RFAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=0,
-                tech_indicator_list=[
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ]):
+                tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
+                ):
 
         meta_coefficient = {"date": [], "weights": []}
         unique_trade_date = test_data.date.unique()

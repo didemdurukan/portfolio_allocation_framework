@@ -1,5 +1,5 @@
 from AgentLayer.ConventionalAgents.ConventionalAgent import ConventionalAgent
-#from finrl.plot import backtest_stats, backtest_plot, get_daily_return, get_baseline, convert_daily_return_to_pyfolio_ts
+from EvaluationLayer.PortfolioEvaluator import PortfolioEvaluator
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
@@ -13,6 +13,9 @@ import pickle
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import objective_functions
+import yaml
+
+config = yaml.safe_load(open("../user_params.yaml"))
 
 
 class LRAgent(ConventionalAgent):
@@ -42,16 +45,8 @@ class LRAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=0,
-                tech_indicator_list=[
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ]):
+                tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
+                ):
 
         meta_coefficient = {"date": [], "weights": []}
         unique_trade_date = test_data.date.unique()
@@ -71,18 +66,18 @@ class LRAgent(ConventionalAgent):
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
 
-        '''Backtest hasn't been implemented yet, hence commented.'''
-        #stats = backtest_stats(portfolio, value_col_name='account_value')
+        # '''Backtest hasn't been implemented yet, hence commented.'''
+        # stats = backtest_stats(portfolio, value_col_name='account_value')
 
         portfolio_cumprod = (
-            portfolio.account_value.pct_change()+1).cumprod()-1
+                                    portfolio.account_value.pct_change() + 1).cumprod() - 1
 
         return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
 
         current_date = unique_trade_date[i]
-        next_date = unique_trade_date[i+1]
+        next_date = unique_trade_date[i + 1]
 
         df_current = test_data[test_data.date ==
                                current_date].reset_index(drop=True)
@@ -99,11 +94,12 @@ class LRAgent(ConventionalAgent):
 
         return mu, sigma, tics, df_current, df_next
 
-    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next):
+    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current,
+                             df_next):
 
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
-            {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
+            {"tic": tics.reshape(-1, ), "predicted_y": mu.reshape(-1, )})
         min_weight, max_weight = 0, 1
 
         ef = EfficientFrontier(mu, sigma)
@@ -136,11 +132,11 @@ class LRAgent(ConventionalAgent):
                               np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
-        portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
+        portfolio.iloc[0, i + 1] = np.dot(current_shares, next_price)
 
         return portfolio
 
-    def save_model(self,  file_name):
+    def save_model(self, file_name):
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")

@@ -17,7 +17,8 @@ def get_daily_return(df, value_col_name="account_value"):
     df["date"] = pd.to_datetime(df["date"])
     df.set_index("date", inplace=True, drop=True)
     df.index = df.index.tz_localize("UTC")
-    return pd.Series(df["daily_return"], index=df.index)
+    return pd.Series(df["daily_return"], index=df.index, dtype='float64')
+
 
 
 def convert_daily_return_to_pyfolio_ts(df):
@@ -26,7 +27,7 @@ def convert_daily_return_to_pyfolio_ts(df):
     strategy_ret.set_index("date", drop=False, inplace=True)
     strategy_ret.index = strategy_ret.index.tz_localize("UTC")
     del strategy_ret["date"]
-    return pd.Series(strategy_ret["daily_return"].values, index=strategy_ret.index)
+    return pd.Series(strategy_ret["daily_return"].values, index=strategy_ret.index, dtype='float64')
 
 
 def backtest_stats(account_value, value_col_name="account_value"):

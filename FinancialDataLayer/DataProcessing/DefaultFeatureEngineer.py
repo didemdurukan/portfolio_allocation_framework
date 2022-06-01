@@ -3,10 +3,11 @@ import itertools
 import numpy as np
 import pandas as pd
 from stockstats import StockDataFrame as Sdf
-
-import config
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.FeatureEngineer import FeatureEngineer
+import yaml
+
+config = yaml.safe_load(open("../user_params.yaml"))
 
 
 class DefaultFeatureEngineer(FeatureEngineer):
@@ -39,7 +40,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
         if tech_indicator_list is not None and use_default is True:
             raise ValueError("Use default cannot be True if technical indicator list is supplied.")
         if use_default is True:
-            self.tech_indicator_list = config.IMPLEMENTED_TECH_INDICATORS_LIST
+            self.tech_indicator_list = config["feature_eng_params"]["tech_indicator_list"]
         else:
             self.tech_indicator_list = tech_indicator_list
         self.use_default = use_default
