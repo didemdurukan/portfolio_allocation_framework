@@ -20,8 +20,6 @@ if __name__ == '__main__':
     policy_params = user_params["policy_params"]
     test_params = user_params["test_params"]
 
-    print(policy_params)
-
     # FETCH DATA
     print("\nTest 3: Downloading from Yahoo.........")
     downloaded_df = DataDownloader(start_date='2009-01-01',

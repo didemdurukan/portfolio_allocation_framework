@@ -14,7 +14,7 @@ class HRAgent(ConventionalAgent):
 
     def __init__(self, *,
                  epsilon=1.35,
-                 max_iter=100,
+                 max_iter=1000,
                  alpha=0.0001,
                  warm_start=False,
                  fit_intercept=True,
@@ -34,7 +34,7 @@ class HRAgent(ConventionalAgent):
         Output: Linear Regression Model
         '''
         try:
-            trained = self.model.fit(train_x, train_y, **train_params)
+            trained = self.model.fit(train_x, train_y.ravel(), **train_params)
             print("Model trained succesfully")
             return trained
         except Exception as e:

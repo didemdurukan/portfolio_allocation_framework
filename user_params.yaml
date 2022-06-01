@@ -1,284 +1,323 @@
 tickers: ["AAPL", "BA", "CAT", "CVX"]
 
-env_params :
-    hmax: 100  # maximum number of shares to trade
-    initial_amount: 1000000 # initial cash
-    transaction_cost_pct: 0.001  # transaction cost percentage
-    state_space: 4  # number of unique stocks
-    stock_dim: 4  # number of unique stocks
-    tech_indicator_list: [
-        "macd",
-        "boll_ub",
-        "boll_lb",
-        "rsi_30",
-        "cci_30",
-        "dx_30",
-        "close_30_sma",
-        "close_60_sma",
-    ]  # technical indicators
-    action_space: 4  # number of stocks in training data
-    reward_scaling: 0.1  # hyperparameter
+env_params:
+  hmax: 100 # maximum number of shares to trade
+  initial_amount: 1000000 # initial cash
+  transaction_cost_pct: 0.001 # transaction cost percentage
+  state_space: 4 # number of unique stocks
+  stock_dim: 4 # number of unique stocks
+  tech_indicator_list: [
+      "macd",
+      "boll_ub",
+      "boll_lb",
+      "rsi_30",
+      "cci_30",
+      "dx_30",
+      "close_30_sma",
+      "close_60_sma",
+    ] # technical indicators
+  action_space: 4 # number of stocks in training data
+  reward_scaling: 0.1 # hyperparameter
 
 train_params:
-  SVR_PARAMS : { sample_weight : null}
+  SVR_PARAMS: { sample_weight: null }
 
-  LR_PARAMS : { sample_weight : null}
+  LR_PARAMS: { sample_weight: null }
 
-  DT_PARAMS : { sample_weight : null,
-                check_input : True}
+  DT_PARAMS: { sample_weight: null, check_input: True }
 
-  RF_PARAMS : { sample_weight : null}
+  HR_PARAMS: { sample_weight: null }
 
-  A2C_PARAMS: { total_timesteps: 1000,
-                callback: null,
-                log_interval:  100,
-                eval_env: null,
-                eval_freq: -1,
-                n_eval_episodes: 5,
-                tb_log_name: "A2C",
-                eval_log_path: null,
-                reset_num_timesteps: True}
+  RF_PARAMS: { sample_weight: null }
 
-  PPO_PARAMS: { total_timesteps: 1000,
-                callback: null,
-                log_interval: 1,
-                eval_env: null,
-                eval_freq: -1,
-                n_eval_episodes:  5,
-                tb_log_name: "PPO",
-                eval_log_path: null,
-                reset_num_timesteps: True}
-  DDPG_PARAMS: {
-                total_timesteps: 1000,
-                callback: null,
-                log_interval: 4,
-                eval_env: null,
-                eval_freq: -1,
-                n_eval_episodes: 5,
-                tb_log_name: "DDPG",
-                eval_log_path: null,
-                reset_num_timesteps: True}
-  TD3_PARAMS : {
-                total_timesteps: 1000,
-                callback: null,
-                log_interval: 4,
-                eval_env: null,
-                eval_freq: -1,
-                n_eval_episodes: 5,
-                tb_log_name: "TD3",
-                eval_log_path: null,
-                reset_num_timesteps: True}
+  A2C_PARAMS:
+    {
+      total_timesteps: 1000,
+      callback: null,
+      log_interval: 100,
+      eval_env: null,
+      eval_freq: -1,
+      n_eval_episodes: 5,
+      tb_log_name: "A2C",
+      eval_log_path: null,
+      reset_num_timesteps: True,
+    }
+
+  PPO_PARAMS:
+    {
+      total_timesteps: 1000,
+      callback: null,
+      log_interval: 1,
+      eval_env: null,
+      eval_freq: -1,
+      n_eval_episodes: 5,
+      tb_log_name: "PPO",
+      eval_log_path: null,
+      reset_num_timesteps: True,
+    }
+  DDPG_PARAMS:
+    {
+      total_timesteps: 1000,
+      callback: null,
+      log_interval: 4,
+      eval_env: null,
+      eval_freq: -1,
+      n_eval_episodes: 5,
+      tb_log_name: "DDPG",
+      eval_log_path: null,
+      reset_num_timesteps: True,
+    }
+  TD3_PARAMS:
+    {
+      total_timesteps: 1000,
+      callback: null,
+      log_interval: 4,
+      eval_env: null,
+      eval_freq: -1,
+      n_eval_episodes: 5,
+      tb_log_name: "TD3",
+      eval_log_path: null,
+      reset_num_timesteps: True,
+    }
 
 test_params:
-
-  RF_PARAMS : {
-                initial_capital : 1000000,
-                tech_indicator_list: [
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ]
-  }
-  DT_PARAMS : {
-                initial_capital : 1000000,
-                tech_indicator_list: [
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ] 
-  }
-  SVR_PARAMS : {
-                initial_capital : 1000000,
-                tech_indicator_list: [
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ] 
-  }
-  LR_PARAMS : {
-                initial_capital : 1000000,
-                tech_indicator_list: [
-                    "macd",
-                    "boll_ub",
-                    "boll_lb",
-                    "rsi_30",
-                    "cci_30",
-                    "dx_30",
-                    "close_30_sma",
-                    "close_60_sma",
-                ] 
-  }
-  A2C_PARAMS: {
-                state : null,
-                episode_start: null,
-                deterministic: True
-              }
-  PPO_PARAMS: {
-                state : null,
-                episode_start: null,
-                deterministic: True
-              }
-  DDPG_PARAMS: {
-              state : null,
-              episode_start: null,
-              deterministic: True
-               }
-  TD3_PARAMS: {
-              state : null,
-              episode_start: null,
-              deterministic: True
-              }
+  RF_PARAMS:
+    {
+      initial_capital: 1000000,
+      tech_indicator_list:
+        [
+          "macd",
+          "boll_ub",
+          "boll_lb",
+          "rsi_30",
+          "cci_30",
+          "dx_30",
+          "close_30_sma",
+          "close_60_sma",
+        ],
+    }
+  DT_PARAMS:
+    {
+      initial_capital: 1000000,
+      tech_indicator_list:
+        [
+          "macd",
+          "boll_ub",
+          "boll_lb",
+          "rsi_30",
+          "cci_30",
+          "dx_30",
+          "close_30_sma",
+          "close_60_sma",
+        ],
+    }
+  SVR_PARAMS:
+    {
+      initial_capital: 1000000,
+      tech_indicator_list:
+        [
+          "macd",
+          "boll_ub",
+          "boll_lb",
+          "rsi_30",
+          "cci_30",
+          "dx_30",
+          "close_30_sma",
+          "close_60_sma",
+        ],
+    }
+  LR_PARAMS:
+    {
+      initial_capital: 1000000,
+      tech_indicator_list:
+        [
+          "macd",
+          "boll_ub",
+          "boll_lb",
+          "rsi_30",
+          "cci_30",
+          "dx_30",
+          "close_30_sma",
+          "close_60_sma",
+        ],
+    }
+  HR_PARAMS:
+    {
+      initial_capital: 1000000,
+      tech_indicator_list:
+        [
+          "macd",
+          "boll_ub",
+          "boll_lb",
+          "rsi_30",
+          "cci_30",
+          "dx_30",
+          "close_30_sma",
+          "close_60_sma",
+        ],
+    }
+  A2C_PARAMS: { state: null, episode_start: null, deterministic: True }
+  PPO_PARAMS: { state: null, episode_start: null, deterministic: True }
+  DDPG_PARAMS: { state: null, episode_start: null, deterministic: True }
+  TD3_PARAMS: { state: null, episode_start: null, deterministic: True }
 
 policy_params:
-  RF_PARAMS: {
-                n_estimators : 100,
-                criterion : "squared_error",
-                max_depth : null,
-                min_samples_split : 2,
-                min_samples_leaf : 1,
-                min_weight_fraction_leaf : 0,
-                max_features : 1,
-                max_leaf_nodes : null,
-                min_impurity_decrease : 0,
-                bootstrap : True,
-                oob_score : False,
-                n_jobs : null,
-                random_state : null,
-                verbose : 0,
-                warm_start : False,
-                ccp_alpha : 0,
-                max_samples : null
-  }
+  RF_PARAMS:
+    {
+      n_estimators: 100,
+      criterion: "squared_error",
+      max_depth: null,
+      min_samples_split: 2,
+      min_samples_leaf: 1,
+      min_weight_fraction_leaf: 0,
+      max_features: 1,
+      max_leaf_nodes: null,
+      min_impurity_decrease: 0,
+      bootstrap: True,
+      oob_score: False,
+      n_jobs: null,
+      random_state: null,
+      verbose: 0,
+      warm_start: False,
+      ccp_alpha: 0,
+      max_samples: null,
+    }
 
-  DT_PARAMS: {
-                criterion : "squared_error",
-                splitter : "best",
-                max_depth : null,
-                min_samples_split : 2,
-                min_samples_leaf : 1,
-                min_weight_fraction_leaf : 0,
-                max_features : null,
-                random_state : null,
-                max_leaf_nodes : null,
-                min_impurity_decrease : 0,
-                ccp_alpha : 0}
+  DT_PARAMS:
+    {
+      criterion: "squared_error",
+      splitter: "best",
+      max_depth: null,
+      min_samples_split: 2,
+      min_samples_leaf: 1,
+      min_weight_fraction_leaf: 0,
+      max_features: null,
+      random_state: null,
+      max_leaf_nodes: null,
+      min_impurity_decrease: 0,
+      ccp_alpha: 0,
+    }
 
-  SVR_PARAMS : { kernel : 'rbf',
-                degree : 3,
-                gamma : 'scale',
-                coef0 : 0,
-                tol : 0.001,
-                C : 1,
-                epsilon : 0.1,
-                shrinking : True,
-                cache_size : 200,
-                verbose : False,
-                max_iter : -1}
+  SVR_PARAMS:
+    {
+      kernel: "rbf",
+      degree: 3,
+      gamma: "scale",
+      coef0: 0,
+      tol: 0.001,
+      C: 1,
+      epsilon: 0.1,
+      shrinking: True,
+      cache_size: 200,
+      verbose: False,
+      max_iter: -1,
+    }
 
-  LR_PARAMS : { fit_intercept : True,
-                copy_X: True,
-                positive : False}
+  HR_PARAMS:
+    {
+      epsilon: 1.35,
+      max_iter: 1000,
+      alpha: 0.0001,
+      warm_start: False,
+      fit_intercept: True,
+      tol: 1e-05,
+    }
 
-  A2C_PARAMS : { policy : "MlpPolicy",
-                 learning_rate:  0.0007,
-                 n_steps:  5,
-                 gamma:  0.99,
-                 gae_lambda: 1.0,
-                 ent_coef:  0.0,
-                 vf_coef:  0.5,
-                 max_grad_norm:  0.5,
-                 rms_prop_eps:  0.00005,
-                 use_rms_prop: True,
-                 use_sde: False,
-                 sde_sample_freq: -1,
-                 normalize_advantage:  False,
-                 tensorboard_log : null,
-                 create_eval_env: False,
-                 policy_kwargs : null,
-                 verbose: 0,
-                 seed : null,
-                 device : "auto",
-                 _init_setup_model:  True}
+  LR_PARAMS: { fit_intercept: True, copy_X: True, positive: False }
 
-  PPO_PARAMS : {  policy: "MlpPolicy",
-                  learning_rate:  0.0003,
-                  n_steps: 2048,
-                  batch_size: 64,
-                  n_epochs: 10,
-                  gamma: 0.99,
-                  gae_lambda: 0.95,
-                  clip_range: 0.2,
-                  clip_range_vf : null,
-                  normalize_advantage: True,
-                  ent_coef: 0.0,
-                  vf_coef: 0.5,
-                  max_grad_norm: 0.5,
-                  use_sde: False,
-                  sde_sample_freq:  -1,
-                  target_kl: null,
-                  tensorboard_log: null,
-                  create_eval_env:  False,
-                  policy_kwargs: null,
-                  verbose:  0,
-                  seed: null,
-                  device: "auto",
-                  _init_setup_model: True}
+  A2C_PARAMS:
+    {
+      policy: "MlpPolicy",
+      learning_rate: 0.0007,
+      n_steps: 5,
+      gamma: 0.99,
+      gae_lambda: 1.0,
+      ent_coef: 0.0,
+      vf_coef: 0.5,
+      max_grad_norm: 0.5,
+      rms_prop_eps: 0.00005,
+      use_rms_prop: True,
+      use_sde: False,
+      sde_sample_freq: -1,
+      normalize_advantage: False,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }
 
-  DDPG_PARAMS : {
-                policy: "MlpPolicy",
-                learning_rate : 0.001,
-                buffer_size: 1_000_000,  # 1e6
-                learning_starts: 100,
-                batch_size:  100,
-                tau:  0.005,
-                gamma:  0.99,
-                train_freq: 1,
-                gradient_steps: -1,
-                action_noise: null,
-                replay_buffer_class: null,
-                replay_buffer_kwargs: null,
-                optimize_memory_usage: False,
-                tensorboard_log: null,
-                create_eval_env: False,
-                policy_kwargs: null,
-                verbose:  0,
-                seed: null,
-                device: "auto",
-                _init_setup_model: True}
+  PPO_PARAMS:
+    {
+      policy: "MlpPolicy",
+      learning_rate: 0.0003,
+      n_steps: 2048,
+      batch_size: 64,
+      n_epochs: 10,
+      gamma: 0.99,
+      gae_lambda: 0.95,
+      clip_range: 0.2,
+      clip_range_vf: null,
+      normalize_advantage: True,
+      ent_coef: 0.0,
+      vf_coef: 0.5,
+      max_grad_norm: 0.5,
+      use_sde: False,
+      sde_sample_freq: -1,
+      target_kl: null,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }
 
-  TD3_PARAMS : {
-                policy: "MlpPolicy",
-                learning_rate : 0.001,
-                buffer_size: 1_000_000,  # 1e6
-                learning_starts: 100,
-                batch_size:  100,
-                tau:  0.005,
-                gamma:  0.99,
-                train_freq: 1,
-                gradient_steps: -1,
-                action_noise: null,
-                replay_buffer_class: null,
-                replay_buffer_kwargs: null,
-                optimize_memory_usage: False,
-                tensorboard_log: null,
-                create_eval_env: False,
-                policy_kwargs: null,
-                verbose:  0,
-                seed: null,
-                device: "auto",
-                _init_setup_model: True}
+  DDPG_PARAMS: {
+      policy: "MlpPolicy",
+      learning_rate: 0.001,
+      buffer_size: 1_000_000, # 1e6
+      learning_starts: 100,
+      batch_size: 100,
+      tau: 0.005,
+      gamma: 0.99,
+      train_freq: 1,
+      gradient_steps: -1,
+      action_noise: null,
+      replay_buffer_class: null,
+      replay_buffer_kwargs: null,
+      optimize_memory_usage: False,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }
+
+  TD3_PARAMS: {
+      policy: "MlpPolicy",
+      learning_rate: 0.001,
+      buffer_size: 1_000_000, # 1e6
+      learning_starts: 100,
+      batch_size: 100,
+      tau: 0.005,
+      gamma: 0.99,
+      train_freq: 1,
+      gradient_steps: -1,
+      action_noise: null,
+      replay_buffer_class: null,
+      replay_buffer_kwargs: null,
+      optimize_memory_usage: False,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }

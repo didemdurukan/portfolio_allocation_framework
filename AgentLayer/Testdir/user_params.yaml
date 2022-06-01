@@ -198,13 +198,14 @@ policy_params:
       ccp_alpha: 0,
     }
 
-  HR_PARAMS: {
+  HR_PARAMS:
+    {
       epsilon: 1.35,
       max_iter: 100,
       alpha: 0.0001,
       warm_start: False,
       fit_intercept: True,
-      #tol: 1e-05,
+      tol: 1e-05,
     }
 
   SVR_PARAMS:
