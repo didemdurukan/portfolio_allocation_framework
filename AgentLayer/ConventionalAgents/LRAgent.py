@@ -15,8 +15,9 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
 
-#config = yaml.safe_load(open("../user_params.yaml"))
-config = yaml.safe_load(open("user_params.yaml")) #bende boyle calisiyor
+# config = yaml.safe_load(open("../user_params.yaml"))
+config = yaml.safe_load(open("user_params.yaml"))  # bende boyle calisiyor
+
 
 class LRAgent(ConventionalAgent):
 
@@ -24,17 +25,25 @@ class LRAgent(ConventionalAgent):
                  fit_intercept=True,
                  copy_X=True,
                  positive=False):
+        """
+
+        @param fit_intercept:
+        @param copy_X:
+        @param positive:
+        """
 
         self.model = LinearRegression(fit_intercept=fit_intercept,
                                       copy_X=copy_X,
                                       positive=positive)
 
     def train_model(self, train_x, train_y, **train_params):
-        '''
-        *Trains the model*
-        Input: Train data x and train data y
-        Output: saves the trained model to class
-        '''
+        """
+
+        @param train_x:
+        @param train_y:
+        @param train_params:
+        @return:
+        """
         try:
             trained_reg = self.model.fit(train_x, train_y, **train_params)
             self.model = trained_reg
@@ -47,6 +56,13 @@ class LRAgent(ConventionalAgent):
                 initial_capital=0,
                 tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
                 ):
+        """
+
+        @param test_data:
+        @param initial_capital:
+        @param tech_indicator_list:
+        @return:
+        """
 
         meta_coefficient = {"date": [], "weights": []}
         unique_trade_date = test_data.date.unique()
@@ -74,7 +90,14 @@ class LRAgent(ConventionalAgent):
         return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
+        """
 
+        @param unique_trade_date:
+        @param test_data:
+        @param i:
+        @param tech_indicator_list:
+        @return:
+        """
         current_date = unique_trade_date[i]
         next_date = unique_trade_date[i + 1]
 
@@ -95,11 +118,24 @@ class LRAgent(ConventionalAgent):
 
     def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current,
                              df_next):
+        """
 
+        @param i:
+        @param unique_trade_date:
+        @param meta_coefficient:
+        @param mu:
+        @param sigma:
+        @param tics:
+        @param portfolio:
+        @param df_current:
+        @param df_next:
+        @return:
+        """
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
             {"tic": tics.reshape(-1, ), "predicted_y": mu.reshape(-1, )})
         min_weight, max_weight = 0, 1
+        # TODO: Add transaction cost here
 
         ef = EfficientFrontier(mu, sigma)
         weights = ef.nonconvex_objective(
@@ -136,11 +172,21 @@ class LRAgent(ConventionalAgent):
         return portfolio
 
     def save_model(self, file_name):
+        """
+
+        @param file_name:
+        @return:
+        """
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")
 
     def load_model(self, file_name):
+        """
+
+        @param file_name:
+        @return:
+        """
         with open(file_name, 'rb') as f:
             self.model = pickle.load(f)
         print("Model loaded succesfully.")
