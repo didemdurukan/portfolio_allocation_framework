@@ -30,6 +30,6 @@ class ConventionalAgent(Agent, ABC):
 
     @staticmethod
     def extract_weights(meta_coefficient):
-        pass
+        return meta_coefficient
 
 
