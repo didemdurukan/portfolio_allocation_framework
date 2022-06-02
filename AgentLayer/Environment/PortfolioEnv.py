@@ -45,16 +45,16 @@ class PortfolioEnv(Environment):
         self.action_space = spaces.Box(low=0, high=1, shape=(self.action_space,))
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf,
                                             shape=(self.state_space + len(self.tech_indicator_list), self.state_space))
+        
 
         # load data from a pandas dataframe
-
-        ##FINRL APPROACH
-
-        self.data = self.df.loc[self.day, :]
+        
+        
+        self.data = self.df.loc[self.day,:]
         self.covs = self.data['cov_list'].values[0]
-        self.state = np.append(np.array(self.covs),
-                               [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
+        self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)
         self.terminal = False
+        #self.turbulence_threshold = turbulence_threshold
         # initalize state: initial portfolio return + individual stock return + individual weights
         self.portfolio_value = self.initial_amount
 
@@ -63,22 +63,21 @@ class PortfolioEnv(Environment):
         # memorize portfolio return each step
         self.portfolio_return_memory = [0]
         self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
-        self.date_memory = [self.data.date.unique()[0]]
+        self.date_memory=[self.data.date.unique()[0]]
 
     def reset(self):
         self.asset_memory = [self.initial_amount]
         self.day = 0
-        self.data = self.df.loc[self.day, :]
+        self.data = self.df.loc[self.day,:]
         # load states
         self.covs = self.data['cov_list'].values[0]
-        self.state = np.append(np.array(self.covs),
-                               [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
-
+        self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)
+                
         self.portfolio_value = self.initial_amount
-        self.terminal = False
+        self.terminal = False 
         self.portfolio_return_memory = [0]
-        self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
-        self.date_memory = [self.data.date.unique()[0]]
+        self.actions_memory=[[1/self.stock_dim] * self.stock_dim]
+        self.date_memory=[self.data.date.unique()[0]] 
         return self.state
 
     def step(self, actions):
@@ -86,7 +85,6 @@ class PortfolioEnv(Environment):
         if self.terminal:
             df = pd.DataFrame(self.portfolio_return_memory)
             df.columns = ['daily_return']
-
             print("=================================")
             print("begin_total_asset:{}".format(self.asset_memory[0]))
             print("end_total_asset:{}".format(self.portfolio_value))
@@ -104,18 +102,16 @@ class PortfolioEnv(Environment):
         else:
             weights = Environment.softmax_normalization(actions)
             self.actions_memory.append(weights)
+            transaction_fee = self.transaction_cost_pct * self.asset_memory[-1] * sum([abs(a_i - b_i) for a_i, b_i in zip(self.actions_memory[-1], self.actions_memory[-2])]) #transaction_fee
             last_day_memory = self.data
-
             # load next state
             self.day += 1
             self.data = self.df.loc[self.day, :]
             self.covs = self.data['cov_list'].values[0]
-            self.state = np.append(np.array(self.covs),
-                                   [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
-            portfolio_return = sum(((self.data.close.values / last_day_memory.close.values) - 1) * weights) 
-
+            self.state =  np.append(np.array(self.covs), [self.data[tech].values.tolist() for tech in self.tech_indicator_list ], axis=0)         
+            portfolio_return = sum(((self.data.close.values / last_day_memory.close.values) - 1) * weights)
             # update portfolio value
-            new_portfolio_value = self.portfolio_value * (1 + portfolio_return)
+            new_portfolio_value = self.portfolio_value * (1 + portfolio_return) - transaction_fee #transaction_fee
             self.portfolio_value = new_portfolio_value
 
             # save into memory
@@ -149,10 +145,6 @@ class PortfolioEnv(Environment):
         df_actions.index = df_date.date
         # df_actions = pd.DataFrame({'date':date_list,'actions':action_list})
         return df_actions
-
-    def _seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
-        return [seed]
 
     def get_env(self):
         e = DummyVecEnv([lambda: self])

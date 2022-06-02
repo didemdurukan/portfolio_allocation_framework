@@ -63,7 +63,7 @@ if __name__ == '__main__':
     a2c_weights = a2c.extract_weights(df_actions_a2c)
     print("Portfolio weights per day:\n")
     print(a2c_weights)
-    # ppo_weights = extract_weights(df_actions_ppo)
+
 
     # SAVE AGENT
     a2c.save_model("AgentLayer/RLAgents/a2c_model")
