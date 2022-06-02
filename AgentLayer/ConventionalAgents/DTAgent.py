@@ -55,7 +55,7 @@ class DTAgent(ConventionalAgent):
 
     def predict(self,
                 test_data,
-                initial_capital=0,
+                initial_capital=1000000,
                 tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
                 ):
 
