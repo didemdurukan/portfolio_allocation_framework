@@ -10,8 +10,8 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
 
-config = yaml.safe_load(open("../user_params.yaml"))
-
+#config = yaml.safe_load(open("../user_params.yaml"))
+config = yaml.safe_load(open("user_params.yaml")) #bende boyle calisiyor
 
 class HRAgent(ConventionalAgent):
 

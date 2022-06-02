@@ -26,7 +26,6 @@ class PortfolioEnv(Environment):
                  state_space: int,  # the dimension of input features (state space)
                  action_space: int,  # number of actions, which is equal to portfolio dimension
                  tech_indicator_list: list,  # a list of technical indicator names
-                 turbulence_threshold=None,  # a threshold to control risk aversion
                  lookback=252,  #
                  day=0):  # an increment number to control date
 
@@ -50,14 +49,12 @@ class PortfolioEnv(Environment):
         # load data from a pandas dataframe
 
         ##FINRL APPROACH
-        # self.df.set_index("date", drop = True, inplace=True)
 
         self.data = self.df.loc[self.day, :]
         self.covs = self.data['cov_list'].values[0]
         self.state = np.append(np.array(self.covs),
                                [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
         self.terminal = False
-        # self.turbulence_threshold = turbulence_threshold
         # initalize state: initial portfolio return + individual stock return + individual weights
         self.portfolio_value = self.initial_amount
 
@@ -78,8 +75,6 @@ class PortfolioEnv(Environment):
                                [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
 
         self.portfolio_value = self.initial_amount
-        # self.cost = 0
-        # self.trades = 0
         self.terminal = False
         self.portfolio_return_memory = [0]
         self.actions_memory = [[1 / self.stock_dim] * self.stock_dim]
@@ -90,15 +85,7 @@ class PortfolioEnv(Environment):
         self.terminal = self.day >= len(self.df.index.unique()) - 1
         if self.terminal:
             df = pd.DataFrame(self.portfolio_return_memory)
-            print(df)
             df.columns = ['daily_return']
-            plt.plot(df.daily_return.cumsum(), 'r')
-            # plt.savefig('results/cumulative_reward.png')
-            plt.close()
-
-            plt.plot(self.portfolio_return_memory, 'r')
-            # plt.savefig('results/rewards.png')
-            plt.close()
 
             print("=================================")
             print("begin_total_asset:{}".format(self.asset_memory[0]))
@@ -125,8 +112,8 @@ class PortfolioEnv(Environment):
             self.covs = self.data['cov_list'].values[0]
             self.state = np.append(np.array(self.covs),
                                    [self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
-            portfolio_return = sum(((self.data.close.values / last_day_memory.close.values) - 1) * weights)
-            log_portfolio_return = np.log(sum((self.data.close.values / last_day_memory.close.values) * weights))
+            portfolio_return = sum(((self.data.close.values / last_day_memory.close.values) - 1) * weights) 
+
             # update portfolio value
             new_portfolio_value = self.portfolio_value * (1 + portfolio_return)
             self.portfolio_value = new_portfolio_value
@@ -147,8 +134,6 @@ class PortfolioEnv(Environment):
     def save_asset_memory(self):
         date_list = self.date_memory
         portfolio_return = self.portfolio_return_memory
-        # print(len(date_list))
-        # print(len(asset_list))
         df_account_value = pd.DataFrame({'date': date_list, 'daily_return': portfolio_return})
         return df_account_value
 

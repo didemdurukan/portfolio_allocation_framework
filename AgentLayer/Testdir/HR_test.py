@@ -13,12 +13,12 @@ if __name__ == '__main__':
             user_params = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
-
-    tickers = user_params["tickers"]
-    env_kwargs = user_params["env_params"]
-    train_params = user_params["train_params"]
-    policy_params = user_params["policy_params"]
-    test_params = user_params["test_params"]
+            
+    tickers = user_params["TICKERS"]
+    env_kwargs = user_params["ENV_PARAMS"]
+    train_params = user_params["TRAIN_PARAMS"]
+    policy_params = user_params["POLICY_PARAMS"]
+    test_params = user_params["TEST_PARAMS"]
 
     # FETCH DATA
     print("\nTest 3: Downloading from Yahoo.........")

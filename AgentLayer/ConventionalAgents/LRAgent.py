@@ -15,8 +15,8 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
 
-config = yaml.safe_load(open("../user_params.yaml"))
-
+#config = yaml.safe_load(open("../user_params.yaml"))
+config = yaml.safe_load(open("user_params.yaml")) #bende boyle calisiyor
 
 class LRAgent(ConventionalAgent):
 
@@ -69,8 +69,7 @@ class LRAgent(ConventionalAgent):
         # '''Backtest hasn't been implemented yet, hence commented.'''
         # stats = backtest_stats(portfolio, value_col_name='account_value')
 
-        portfolio_cumprod = (
-                                    portfolio.account_value.pct_change() + 1).cumprod() - 1
+        portfolio_cumprod = (portfolio.account_value.pct_change() + 1).cumprod() - 1
 
         return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 

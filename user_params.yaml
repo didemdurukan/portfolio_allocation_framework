@@ -238,7 +238,8 @@ POLICY_PARAMS:
       tol: 1e-05,
     }
 
-  LR_PARAMS: { fit_intercept: True, copy_X: True, positive: False }
+  LR_PARAMS: { fit_intercept: True,
+               copy_X: True, positive: False }
 
   A2C_PARAMS:
     {
