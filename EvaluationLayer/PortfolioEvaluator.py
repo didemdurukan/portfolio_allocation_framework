@@ -6,8 +6,8 @@ import warnings
 import yaml
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
-#config = yaml.safe_load(open("../user_params.yaml"))
-config = yaml.safe_load(open("user_params.yaml"))#bende boyleyken calisiyor 
+config = yaml.safe_load(open("../user_params.yaml"))
+# config = yaml.safe_load(open("user_params.yaml"))#bende boyleyken calisiyor
 
 class PortfolioEvaluator:
 
