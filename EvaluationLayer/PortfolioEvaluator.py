@@ -7,33 +7,42 @@ import yaml
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 config = yaml.safe_load(open("../user_params.yaml"))
+
+
 # config = yaml.safe_load(open("user_params.yaml"))#bende boyleyken calisiyor
 
 class PortfolioEvaluator:
 
-    def __init__(self, portfolio_df):
-        self.portfolio_df = portfolio_df
-        self.stats = None
+    def __init__(self, *portfolio_dfs):
+        self.portfolio_dfs = portfolio_dfs
+        self.stats_list = None
 
     def backtest_stats(self, value_col_name="account_value"):
-        dr_test = self._get_daily_return(self.portfolio_df, value_col_name=value_col_name)
-        self.stats = timeseries.perf_stats(
+        perf_stats_list = []
+        for portfolio in self.portfolio_dfs:
+            perf_stats_list.append(self._get_stats(portfolio, value_col_name))
+        self.stats_list = perf_stats_list
+        return perf_stats_list
+
+    def _get_stats(self, portfolio_df, value_col_name="account_value"):
+        dr_test = self._get_daily_return(portfolio_df, value_col_name=value_col_name)
+        perf_stats = timeseries.perf_stats(
             returns=dr_test,
-            factor_returns=None,  # bechmark_returns
+            factor_returns=None,
             positions=None,
             transactions=None,
             turnover_denom="AGB"
         )
-        perf_stats_all = self.stats
-        return perf_stats_all
+        return perf_stats
 
-    def backtest_plot(self,
-                      baseline_start=config["TRADE_START_DATE"],
-                      baseline_end=config["TRADE_END_DATE"],
-                      baseline_ticker="^DJI",
-                      value_col_name="account_value",
-                      ):
-        df = self.portfolio_df.copy()
+    def _create_backtest_plot(self,
+                              portfolio_df,
+                              baseline_start=config["TRADE_START_DATE"],
+                              baseline_end=config["TRADE_END_DATE"],
+                              baseline_ticker="^DJI",
+                              value_col_name="account_value",
+                              ):
+        df = portfolio_df.copy()
         df["date"] = pd.to_datetime(df["date"])
         test_returns = self._get_daily_return(df, value_col_name=value_col_name)
 
@@ -48,8 +57,17 @@ class PortfolioEvaluator:
 
         with pyfolio.plotting.plotting_context(font_scale=1.1):
             pyfolio.create_full_tear_sheet(
-                returns=test_returns, benchmark_rets=baseline_returns, set_context=False
+                returns=test_returns, benchmark_rets=baseline_returns
             )
+
+    def backtest_plot(self,
+                      baseline_start=config["TRADE_START_DATE"],
+                      baseline_end=config["TRADE_END_DATE"],
+                      baseline_ticker="^DJI",
+                      value_col_name="account_value",
+                      ):
+        for portfolio in self.portfolio_dfs:
+            self._create_backtest_plot(portfolio, baseline_start, baseline_end, baseline_ticker, value_col_name)
 
     @staticmethod
     def _get_daily_return(portfolio_df, value_col_name="account_value"):
