@@ -78,11 +78,8 @@ class DTAgent(ConventionalAgent):
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
         
-        portfolio_cumprod = (
-            portfolio.account_value.pct_change()+1).cumprod()-1
-
         meta_coefficient = pd.DataFrame(meta_coefficient).set_index("date")
-        return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
+        return portfolio, meta_coefficient
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
 
         current_date = unique_trade_date[i]

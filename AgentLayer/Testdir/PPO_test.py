@@ -58,8 +58,11 @@ if __name__ == '__main__':
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
     #TEST PPO AGENT
-    ppo.predict(environment = env_test, **test_params["PPO_PARAMS"])
-
+    df_portfolio_ppo, df_actions_ppo = ppo.predict(environment = env_test, **test_params["PPO_PARAMS"])
+    print(df_portfolio_ppo)
+    print("------\n")
+    print(df_actions_ppo)
+    
     #SAVE AGENT
     ppo.save_model("AgentLayer/RLAgents/ppo_model")
 

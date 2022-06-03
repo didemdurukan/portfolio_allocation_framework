@@ -62,24 +62,33 @@ class DDPG(RLAgent):
         return self.model
 
     def predict(self, environment, **test_params):
-        env_test, obs_test = environment.get_env()
-        """make a prediction"""
-        account_memory = []
-        actions_memory = []
 
-        env_test.reset()
-        for i in range(len(environment.df.index.unique())):
-            action, _states = self.model.predict(obs_test, **test_params)
-            obs_test, rewards, dones, info = env_test.step(action)
-            if i == (len(environment.df.index.unique()) - 2):
-                account_memory = env_test.env_method(method_name="save_asset_memory")
-                actions_memory = env_test.env_method(method_name="save_action_memory")
-            if dones[0]:
-                print("hit end!")
-                break
+            env_test, obs_test = environment.get_env()
+            """make a prediction"""
+            account_memory = []
+            actions_memory = []
 
-        return account_memory[0], actions_memory[0]
+            env_test.reset()
+            for i in range(len(environment.df.index.unique())):
+                action, _states = self.model.predict(obs_test, **test_params)
+                obs_test, rewards, dones, info = env_test.step(action)
+                if i == (len(environment.df.index.unique()) - 2):
+                    account_memory = env_test.env_method(method_name="save_asset_memory")
+                    actions_memory = env_test.env_method(method_name="save_action_memory")
+                if dones[0]:
+                    print("hit end!")
+                    break
+            
+            portfolio_df = account_memory[0]
+            portfolio_df = portfolio_df.rename(columns={"daily_return": "account_value"})
+            portfolio_df.iloc[0, portfolio_df.columns.get_loc("account_value")] = environment.initial_amount
+            values = list(portfolio_df["account_value"])
+            for i in range(1,len(values)):
+                values[i] = (values[i] + 1) * values[i-1]
 
+            portfolio_df["account_value"] = values
+            return portfolio_df, actions_memory[0]
+            
     def load_model(self, path):
         self.model = self.model.load(path)
         return self.model
