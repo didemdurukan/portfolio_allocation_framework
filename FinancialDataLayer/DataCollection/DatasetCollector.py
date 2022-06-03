@@ -16,10 +16,29 @@ class DatasetCollector(ABC):
     # These helper functions are defined here as staticmethods these methods have uses later on in other classes that inherit DatasetCollector
     @staticmethod
     def load_from_df(df_to_load) -> pd.DataFrame:
+        """Loads data from pd.DataFrame
+
+        Args:
+            df_to_load (pd.DataFrame): dataframe to be loaded.
+
+        Returns:
+            pd.DataFrame: loaded data frame. 
+        """
         return df_to_load
 
     @staticmethod
     def load_from_file(path) -> pd.DataFrame:
+        """Loads data from a given file path.
+
+        Args:
+            path (string): path of the file to be loaded.
+
+        Raises:
+            ValueError: Raised when the path contains a file type besides .csv , .xlsx and .json.
+
+        Returns:
+            pd.DataFrame: loaded data. 
+        """
         csv = ".csv"
         excel = ".xlsx"
         json_str = ".json"

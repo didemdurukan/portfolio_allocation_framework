@@ -4,16 +4,11 @@ import yfinance as yf
 from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 
 
-# TODO: add functionality to download minute data
 class DataDownloader(DatasetCollector):
-    """
-    Provides methods for retrieving daily security data from Yahoo Finance API
+    """Provides methods for retrieving daily security data from Yahoo Finance API
 
-    Attributes
-    ----------
-
-    Methods
-    -------
+    Args:
+        DatasetCollector (Abstract Base Class):DataDownloader class inherits DatasetCollector abstract base class.
     """
 
     def __init__(self, start_date: str, end_date: str, ticker_list: list, interval="1d", proxy=None):
@@ -24,19 +19,28 @@ class DataDownloader(DatasetCollector):
         self.proxy = proxy
 
     def collect(self):
+        """Calls the funciton that collects data from Yahoo Finance API
+
+        Returns:
+            pd.DataFrame : downloaded data
+        """
         df = self.download_from_yahoo()
         return df
 
     def download_from_yahoo(self) -> pd.DataFrame:
-        """Fetches data from Yahoo Finance API
-        Parameters
-        ----------
+        """Downloads data from Yahoo Finance API
 
-        Returns
-        -------
-        `pd.DataFrame`
-            7 columns: A date, open, high, low, (adjusted) close, volume and tick symbol
-            for the specified security ticker
+        Returns:
+            pd.DataFrame: Data that has been downloaded from Yahoo Finance API
+                columns: 
+                    "date" : date
+                    "open" : the price when the market is opened.
+                    "high" : highest price at which a stock is traded during a period
+                    "low" :  lowest price of the period
+                    "close" : the price when the market is closed.
+                    "adjclose" : adjusted close price
+                    "volume" : the number of shares traded
+                    "tic" : tickers 
         """
         # Download and save the data in a pandas DataFrame:
         data_df = pd.DataFrame()
