@@ -2,6 +2,19 @@ from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 
 
 class CustomDatasetImporter(DatasetCollector):
+    """Main class that provides methods for collecting data.
+
+     Attributes
+    ----------
+        df: pd.DataFrame
+            dataframe to be loaded
+        path: String
+            path of the file to be loaded.
+    Methods
+    -------
+        collect()
+            main function that calls methods for collecting data.
+    """
 
     def collect(self):
         """Calls the data collection methods according to the

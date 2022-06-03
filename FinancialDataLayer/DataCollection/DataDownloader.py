@@ -7,8 +7,25 @@ from FinancialDataLayer.DataCollection.DatasetCollector import DatasetCollector
 class DataDownloader(DatasetCollector):
     """Provides methods for retrieving daily security data from Yahoo Finance API
 
-    Args:
-        DatasetCollector (Abstract Base Class):DataDownloader class inherits DatasetCollector abstract base class.
+     Attributes
+    ----------
+        start_date: String
+            date that the data starts from
+        end_date : String
+            date that the data ends
+        ticker_list: List
+            tickers to be downloaded
+        interval: String
+            interval to sample the data
+        proxy: String
+            make each request with a proxy
+    Methods
+    -------
+        collect()
+            calls the funciton that collects data from Yahoo Finance API.
+        download_from_yahoo()
+            downloads data from Yahoo Finance API.
+
     """
 
     def __init__(self, start_date: str, end_date: str, ticker_list: list, interval="1d", proxy=None):

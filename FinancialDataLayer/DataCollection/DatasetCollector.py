@@ -7,6 +7,19 @@ import pandas as pd
 class DatasetCollector(ABC):
     """"
     This abstract base class defines the base structure of data collectors
+
+    Attributes
+    ----------
+        -
+
+    Methods
+    -------
+        collect()
+            abstract method
+        load_from_df()
+            loads data from a dataframe.
+        load_from_path()
+            loads data from a file given the path.
     """
 
     @abstractmethod
@@ -22,7 +35,7 @@ class DatasetCollector(ABC):
             df_to_load (pd.DataFrame): dataframe to be loaded.
 
         Returns:
-            pd.DataFrame: loaded data frame. 
+            pd.DataFrame: loaded data. 
         """
         return df_to_load
 
@@ -35,6 +48,7 @@ class DatasetCollector(ABC):
 
         Raises:
             ValueError: Raised when the path contains a file type besides .csv , .xlsx and .json.
+            FileNotFound: Raised when the file to be loaded does not found. 
 
         Returns:
             pd.DataFrame: loaded data. 
