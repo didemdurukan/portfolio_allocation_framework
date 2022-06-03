@@ -234,7 +234,7 @@ class PortfolioEnv(Environment):
         """Creates the envrionment
 
         Returns:
-            Vectorized Environment : e
+            Vectorized Environment : environment
             np.array : array of observations
         """
         e = DummyVecEnv([lambda: self])
