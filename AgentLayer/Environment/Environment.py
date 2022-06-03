@@ -4,6 +4,25 @@ import gym
 
 
 class Environment(gym.Env, ABC):
+    """ Defines the base structure for classes that generates Environments for 
+    Reinforcement Learning Agents.
+
+    Attributes
+    ----------        
+        -
+    Methods
+    -------
+        reset()
+            abtract method
+        step()
+            abstract method
+        render()
+            abstract method
+        get_env()
+            abstract method
+        softmax_normalization()
+            applies softmax normalization on actions.
+    """
 
     @abstractmethod
     def reset(self):
