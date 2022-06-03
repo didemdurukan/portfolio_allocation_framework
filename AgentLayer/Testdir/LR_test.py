@@ -60,6 +60,8 @@ if __name__ == '__main__':
     #predict 
     portfolio, portfolio_cumprod, meta_coefficient = lr.predict(trade, **test_params["LR_PARAMS"])
     print(portfolio)
+    print("--------\n")
+    print(meta_coefficient)
 
     #save model
     lr.save_model("AgentLayer/ConventionalAgents/lr_model")

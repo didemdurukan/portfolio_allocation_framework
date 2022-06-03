@@ -60,6 +60,8 @@ if __name__ == '__main__':
     portfolio, portfolio_cumprod, meta_coefficient = hr.predict(
         trade, **test_params["HR_PARAMS"])
     print(portfolio)
+    print("--------\n")
+    print(meta_coefficient)
 
     # save model
     hr.save_model("AgentLayer/ConventionalAgents/hr_model")

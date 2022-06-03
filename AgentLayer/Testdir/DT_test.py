@@ -59,6 +59,8 @@ if __name__ == '__main__':
     #predict 
     portfolio, portfolio_cumprod, meta_coefficient = dt.predict(trade, **test_params["DT_PARAMS"])
     print(portfolio)
+    print("--------\n")
+    print(meta_coefficient)
 
     #save model
     dt.save_model("AgentLayer/ConventionalAgents/dt_model")

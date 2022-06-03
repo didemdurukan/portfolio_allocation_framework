@@ -8,7 +8,7 @@ from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
 
-config = yaml.safe_load(open("../user_params.yaml"))
+config = yaml.safe_load(open("user_params.yaml"))
 
 
 # config = yaml.safe_load(open("user_params.yaml"))#bende boyle calisiyor
@@ -56,33 +56,32 @@ class SVRAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=0,  # TODO: make this 1000000
-                tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
+                tech_indicator_list=config["TEST_PARAMS"]["SVR_PARAMS"]["tech_indicator_list"]
                 ):
 
-        meta_coefficient = {"date": [], "weights": []}
+        meta_coefficient = {"date": []}
+        for i in test_data.tic:
+            meta_coefficient[i] = []
         unique_trade_date = test_data.date.unique()
         portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
         portfolio.loc[0, unique_trade_date[0]] = initial_capital
-
         for i in range(len(unique_trade_date) - 1):
             mu, sigma, tics, df_current, df_next = self._return_predict(
                 unique_trade_date, test_data, i, tech_indicator_list)
 
             portfolio_value = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
-
+    
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
-
-        '''Backtest hasn't been implemented yet, hence commented.'''
-        # stats = backtest_stats(portfolio, value_col_name='account_value')
-
+        
         portfolio_cumprod = (
-                                    portfolio.account_value.pct_change() + 1).cumprod() - 1
+            portfolio.account_value.pct_change()+1).cumprod()-1
 
+        meta_coefficient = pd.DataFrame(meta_coefficient).set_index("date")
         return portfolio, portfolio_cumprod, pd.DataFrame(meta_coefficient)
 
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
@@ -110,7 +109,7 @@ class SVRAgent(ConventionalAgent):
 
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
-            {"tic": tics.reshape(-1, ), "predicted_y": mu.reshape(-1, )})
+            {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
         min_weight, max_weight = 0, 1
 
         ef = EfficientFrontier(mu, sigma)
@@ -134,18 +133,22 @@ class SVRAgent(ConventionalAgent):
             weight_df['weight'] += [weights[item]]
 
         weight_df = pd.DataFrame(weight_df).merge(predicted_y_df, on=['tic'])
-        meta_coefficient["weights"] += [weight_df]
+
+        tics_list = list(weight_df['tic'])
+        weights_list = list(weight_df['weight'])
+        for j in range(len(tics_list)):
+            meta_coefficient[tics_list[j]] += [weights_list[j]]
+
         cap = portfolio.iloc[0, i]
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
-        current_shares = list(np.array(current_cash) /
-                              np.array(df_current.close))
+        current_shares = list(np.array(current_cash) / np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
-        portfolio.iloc[0, i + 1] = np.dot(current_shares, next_price)
+        portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio
+        return portfolio 
 
     def save_model(self, file_name):
         with open(file_name, 'wb') as files:
