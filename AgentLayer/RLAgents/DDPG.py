@@ -10,6 +10,62 @@ import torch as th
 
 
 class DDPG(RLAgent):
+    """Provides methods for DDPG Agent.
+    Attributes
+    ----------        
+        policy: str
+            The policy model to use
+        env: DummyVecEnv
+            The environment to learn from 
+        learning_rate: float
+             learning rate for adam optimizer
+        buffer_size : int
+            size of the replay buffer
+        learning_starts  : int
+            how many steps of the model to collect transitions for before learning starts
+        batch_size : int
+             Minibatch size for each gradient update
+        tau : float  
+            the soft update coefficient 
+        gamma  : float
+            the discount factor
+        train_freq  : [int,str]  
+            Update the model every train_freq steps.
+        gradient_steps  : int
+           How many gradient steps to do after each rollout
+        action_noise  : object
+            the action noise type
+        replay_buffer_class   : object
+            Replay buffer class to use
+        replay_buffer_kwargs   : dict  
+            Keyword arguments to pass to the replay buffer on creation.
+        optimize_memory_usage   : boolean
+            Enable a memory efficient variant of the replay buffer at a cost of more complexity
+        create_eval_env : boolean
+            Whether to create a second environment that will be used for evaluating the agent periodically.
+        policy_kwargs: dict
+            additional arguments to be passed to the policy on creation
+        verbose : int
+            the verbosity level: 0 no output, 1 info, 2 debug
+        seed : int
+             Seed for the pseudo random generators
+        device : str
+            Device (cpu, cuda, …) on which the code should be run.
+        _init_setup_model: boolean
+            Whether or not to build the network at the creation of the instance.
+
+    Methods
+    -------
+        train_model()
+            trains the agent.
+        predict()
+            prediction method.
+        save_model()
+            saves the model.
+        load_model()
+            loads the model.
+    """
+
     def __init__(self,
                  policy="MlpPolicy",
                  env=None,
@@ -58,40 +114,70 @@ class DDPG(RLAgent):
                              _init_setup_model=_init_setup_model)
 
     def train_model(self, **train_params):
+        """Trains the model
+
+        Returns:
+            model: trained model.
+        """
         self.model = self.model.learn(**train_params)
         return self.model
 
     def predict(self, environment, **test_params):
+        """Does the prediction
 
-            env_test, obs_test = environment.get_env()
-            """make a prediction"""
-            account_memory = []
-            actions_memory = []
+        Args:
+            environment (env): test environment
 
-            env_test.reset()
-            for i in range(len(environment.df.index.unique())):
-                action, _states = self.model.predict(obs_test, **test_params)
-                obs_test, rewards, dones, info = env_test.step(action)
-                if i == (len(environment.df.index.unique()) - 2):
-                    account_memory = env_test.env_method(method_name="save_asset_memory")
-                    actions_memory = env_test.env_method(method_name="save_action_memory")
-                if dones[0]:
-                    print("hit end!")
-                    break
-            
-            portfolio_df = account_memory[0]
-            portfolio_df = portfolio_df.rename(columns={"daily_return": "account_value"})
-            portfolio_df.iloc[0, portfolio_df.columns.get_loc("account_value")] = environment.initial_amount
-            values = list(portfolio_df["account_value"])
-            for i in range(1,len(values)):
-                values[i] = (values[i] + 1) * values[i-1]
+        Returns:
+            pd.DataFrame: portfolio
+            ndarray : actions memory
+        """
 
-            portfolio_df["account_value"] = values
-            return portfolio_df, actions_memory[0]
-            
+        env_test, obs_test = environment.get_env()
+        account_memory = []
+        actions_memory = []
+
+        env_test.reset()
+        for i in range(len(environment.df.index.unique())):
+            action, _states = self.model.predict(obs_test, **test_params)
+            obs_test, rewards, dones, info = env_test.step(action)
+            if i == (len(environment.df.index.unique()) - 2):
+                account_memory = env_test.env_method(
+                    method_name="save_asset_memory")
+                actions_memory = env_test.env_method(
+                    method_name="save_action_memory")
+            if dones[0]:
+                print("hit end!")
+                break
+
+        portfolio_df = account_memory[0]
+        portfolio_df = portfolio_df.rename(
+            columns={"daily_return": "account_value"})
+        portfolio_df.iloc[0, portfolio_df.columns.get_loc(
+            "account_value")] = environment.initial_amount
+        values = list(portfolio_df["account_value"])
+        for i in range(1, len(values)):
+            values[i] = (values[i] + 1) * values[i-1]
+
+        portfolio_df["account_value"] = values
+        return portfolio_df, actions_memory[0]
+
     def load_model(self, path):
+        """Loads the model
+
+        Args:
+            path (str): path from loading the model.
+
+        Returns:
+            model: loaded model
+        """
         self.model = self.model.load(path)
         return self.model
 
     def save_model(self, path):
+        """Saves the model
+
+        Args:
+            path (str): path for where to save the model.
+        """
         self.model.save(path)
