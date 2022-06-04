@@ -5,16 +5,69 @@ from sklearn.utils.validation import _num_samples
 
 
 class BlockingTimeSeriesSplitter(TimeSeriesSplit):
+    """Provides methods for implementing Blocking Time Series Splitter.
+
+    Attributes
+        n_splits: int
+            number of splits
+        test_size: int
+            size of the test set
+        gap: int
+            Number of samples to exclude from the end of each train set before the test set.
+    Methods
+    -------
+        _iter_test_indices()
+            generates integer indices corresponding to test sets.
+        get_n_split()
+            returns the number of splitting iterations in the cross-validator
+        split()
+            generate indices to split data into training and test set
+
+    """
+
     def _iter_test_indices(self, X=None, y=None, groups=None):
+        """Generates integer indices corresponding to test sets.
+
+        Args:
+            X (object, optional): Always ignored, exists for compatibility. Defaults to None.
+            y (object, optional): Always ignored, exists for compatibility. Defaults to None.
+            groups (object, optional): Always ignored, exists for compatibility. Defaults to None.
+        """
         super()._iter_test_indices(X, y, groups)
 
     def __init__(self, n_splits=5, *, test_size=None, gap=0):
         super().__init__(n_splits, test_size=test_size, gap=gap)
 
     def get_n_splits(self, X=None, y=None, groups=None):
+        """Returns the number of splitting iterations in the cross-validator
+
+        Args:
+            X (object, optional): Always ignored, exists for compatibility. Defaults to None.
+            y (object, optional): Always ignored, exists for compatibility. Defaults to None.
+            groups (object, optional): Always ignored, exists for compatibility. Defaults to None.
+
+        Returns:
+            int : number of splitting iterations in the cross-validator
+        """
         return self.n_splits
 
     def split(self, X, y=None, groups=None):
+        """Generate indices to split data into training and test set.
+
+        Args:
+            X (array-like of shape (n_samples, n_features)): Training data, where n_samples is the number of samples and n_features is the number of features.
+            y (array-like of shape (n_samples)): Always ignored, exists for compatibility. Defaults to None.
+            groups (array-like of shape (n_samples) optional): Always ignored, exists for compatibility. Defaults to None.
+
+        Raises:
+            ValueError: Raised when the number of folds are greater than number of samples.
+            ValueError: Raised when the number of splits is too many for number of samples.
+            ValueError: Raised when the number of slipts is incompatible.
+
+        Yields:
+            ndarray: The training set indices for that split.
+            ndarray: The testing set indices for that split.
+        """
         X, y, groups = indexable(X, y, groups)
         n_samples = _num_samples(X)
         n_splits = self.n_splits
