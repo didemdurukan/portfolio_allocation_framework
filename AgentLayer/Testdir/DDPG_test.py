@@ -59,8 +59,11 @@ if __name__ == '__main__':
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
     #TEST DDPG AGENT
-    ddpg.predict(environment = env_test, **test_params["DDPG_PARAMS"])
-
+    df_portfolio_ddpg, df_actions_ddpg = ddpg.predict(environment = env_test, **test_params["DDPG_PARAMS"])
+    print(df_portfolio_ddpg)
+    print("-------\n")
+    print(df_actions_ddpg)
+    
     #SAVE AGENT
     ddpg.save_model("AgentLayer/RLAgents/ddpg_model")
 

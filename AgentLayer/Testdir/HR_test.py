@@ -57,9 +57,10 @@ if __name__ == '__main__':
     hr.train_model(train_x, train_y, **train_params["HR_PARAMS"])
 
     # predict
-    portfolio, portfolio_cumprod, meta_coefficient = hr.predict(
-        trade, **test_params["HR_PARAMS"])
+    portfolio, meta_coefficient = hr.predict(trade, **test_params["HR_PARAMS"])
     print(portfolio)
+    print("--------\n")
+    print(meta_coefficient)
 
     # save model
     hr.save_model("AgentLayer/ConventionalAgents/hr_model")

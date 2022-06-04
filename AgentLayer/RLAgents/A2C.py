@@ -83,8 +83,16 @@ class A2C(RLAgent):
             if dones[0]:
                 print("hit end!")
                 break
+        
+        portfolio_df = account_memory[0]
+        portfolio_df = portfolio_df.rename(columns={"daily_return": "account_value"})
+        portfolio_df.iloc[0, portfolio_df.columns.get_loc("account_value")] = environment.initial_amount
+        values = list(portfolio_df["account_value"])
+        for i in range(1,len(values)):
+            values[i] = (values[i] + 1) * values[i-1]
 
-        return account_memory[0], actions_memory[0]
+        portfolio_df["account_value"] = values
+        return portfolio_df, actions_memory[0]
 
     def save_model(self, path):
         self.model.save(path)

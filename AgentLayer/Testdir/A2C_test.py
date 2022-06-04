@@ -58,11 +58,10 @@ if __name__ == '__main__':
     env_test = PortfolioEnv(df=df_processed, **env_kwargs)
 
     # TEST A2C AGENT
-    df_daily_return_a2c, df_actions_a2c = a2c.predict(environment=env_test, **test_params["A2C_PARAMS"])
-
-    a2c_weights = a2c.extract_weights(df_actions_a2c)
-    print("Portfolio weights per day:\n")
-    print(a2c_weights)
+    df_portfolio_a2c, df_actions_a2c = a2c.predict(environment=env_test, **test_params["A2C_PARAMS"])
+    print(df_portfolio_a2c)
+    print("----------\n")
+    print(df_actions_a2c)
 
 
     # SAVE AGENT

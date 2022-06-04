@@ -60,10 +60,14 @@ if __name__ == '__main__':
     env_test = PortfolioEnv(df=df_processed, **env_kwargs) 
 
     #TEST TD3 AGENT
-    td3.predict(environment = env_test, **test_params["TD3_PARAMS"])
-
+    df_portfolio_td3, df_actions_td3 =td3.predict(environment = env_test, **test_params["TD3_PARAMS"])
+    print(df_portfolio_td3)
+    print("------\n")
+    print(df_actions_td3)
+    
     #SAVE AGENT
     td3.save_model("AgentLayer/RLAgents/td3_model")
+ 
 
     #LOAD AGENT 
     loaded_td3_model = td3.load_model("AgentLayer/RLAgents/td3_model")

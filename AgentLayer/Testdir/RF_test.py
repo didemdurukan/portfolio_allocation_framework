@@ -57,8 +57,10 @@ if __name__ == '__main__':
     rf.train_model(train_x, train_y, **train_params["RF_PARAMS"])
 
     #predict 
-    portfolio, portfolio_cumprod, meta_coefficient = rf.predict(trade, **test_params["RF_PARAMS"])
+    portfolio, meta_coefficient = rf.predict(trade, **test_params["RF_PARAMS"])
     print(portfolio)
+    print("--------\n")
+    print(meta_coefficient)
 
     #save model
     rf.save_model("AgentLayer/ConventionalAgents/rf_model")

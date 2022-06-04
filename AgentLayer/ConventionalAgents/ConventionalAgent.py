@@ -28,8 +28,5 @@ class ConventionalAgent(Agent, ABC):
     def _weight_optimization(self, *args, **kwargs):
         pass
 
-    @staticmethod
-    def _extract_weights(meta_coefficient):
-        return meta_coefficient
 
 

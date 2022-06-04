@@ -7,8 +7,8 @@ from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.FeatureEngineer import FeatureEngineer
 import yaml
 
-config = yaml.safe_load(open("../user_params.yaml"))
-# config = yaml.safe_load(open("user_params.yaml")) #bende boyleyken calisiyor
+#config = yaml.safe_load(open("../user_params.yaml"))
+config = yaml.safe_load(open("user_params.yaml")) #bende boyleyken calisiyor
 
 
 class DefaultFeatureEngineer(FeatureEngineer):
