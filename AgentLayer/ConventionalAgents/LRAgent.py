@@ -56,6 +56,7 @@ class LRAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=1000000,
+                transaction_cost_pct = 0.001,
                 tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
                 ):
         """
@@ -70,14 +71,15 @@ class LRAgent(ConventionalAgent):
         for i in test_data.tic:
             meta_coefficient[i] = []
         unique_trade_date = test_data.date.unique()
+        weight_arr = [np.array([1/len(test_data.tic.unique())]*len(test_data.tic.unique()))]
         portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
         portfolio.loc[0, unique_trade_date[0]] = initial_capital
         for i in range(len(unique_trade_date) - 1):
             mu, sigma, tics, df_current, df_next = self._return_predict(
                 unique_trade_date, test_data, i, tech_indicator_list)
 
-            portfolio_value = self._weight_optimization(
-                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
+            portfolio_value, weight_arr = self._weight_optimization(
+                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr)
     
         portfolio = portfolio_value
         portfolio = portfolio.T
@@ -115,27 +117,15 @@ class LRAgent(ConventionalAgent):
 
         return mu, sigma, tics, df_current, df_next
 
-    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current,
-                             df_next):
-        """
-
-        @param i:
-        @param unique_trade_date:
-        @param meta_coefficient:
-        @param mu:
-        @param sigma:
-        @param tics:
-        @param portfolio:
-        @param df_current:
-        @param df_next:
-        @return:
-        """
+    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr):
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
             {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
         min_weight, max_weight = 0, 1
 
         ef = EfficientFrontier(mu, sigma)
+        w_prev = np.array(weight_arr[-1],dtype=object)
+        ef.add_objective(objective_functions.transaction_cost, w_prev = w_prev, k = transaction_cost_pct)
         weights = ef.nonconvex_objective(
             objective_functions.sharpe_ratio,
             objective_args=(ef.expected_returns, ef.cov_matrix),
@@ -147,7 +137,8 @@ class LRAgent(ConventionalAgent):
                 {"type": "ineq", "fun": lambda w: max_weight - w},
             ],
         )
-
+   
+        
         weight_df = {"tic": [], "weight": []}
         meta_coefficient["date"] += [current_date]
 
@@ -159,9 +150,11 @@ class LRAgent(ConventionalAgent):
 
         tics_list = list(weight_df['tic'])
         weights_list = list(weight_df['weight'])
+        new_weights = []
         for j in range(len(tics_list)):
             meta_coefficient[tics_list[j]] += [weights_list[j]]
-
+            new_weights.append(weights_list[j])
+        weight_arr.append(new_weights)
         cap = portfolio.iloc[0, i]
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
@@ -171,7 +164,7 @@ class LRAgent(ConventionalAgent):
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio 
+        return portfolio , weight_arr
 
     def save_model(self, file_name):
         """

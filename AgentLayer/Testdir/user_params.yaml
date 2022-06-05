@@ -99,6 +99,7 @@ TEST_PARAMS:
   RF_PARAMS:
     {
       initial_capital: 1000000,
+      transaction_cost_pct: 0.001,
       tech_indicator_list:
         [
           "macd",
@@ -114,6 +115,7 @@ TEST_PARAMS:
   DT_PARAMS:
     {
       initial_capital: 1000000,
+      transaction_cost_pct: 0.001,
       tech_indicator_list:
         [
           "macd",
@@ -129,6 +131,7 @@ TEST_PARAMS:
   SVR_PARAMS:
     {
       initial_capital: 1000000,
+      transaction_cost_pct: 0.001,
       tech_indicator_list:
         [
           "macd",
@@ -144,6 +147,7 @@ TEST_PARAMS:
   LR_PARAMS:
     {
       initial_capital: 1000000,
+      transaction_cost_pct: 0.001,
       tech_indicator_list:
         [
           "macd",
@@ -159,6 +163,7 @@ TEST_PARAMS:
   HR_PARAMS:
     {
       initial_capital: 1000000,
+      transaction_cost_pct: 0.001,
       tech_indicator_list:
         [
           "macd",
