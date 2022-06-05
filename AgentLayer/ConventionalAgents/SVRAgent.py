@@ -14,6 +14,54 @@ config = yaml.safe_load(open("user_params.yaml"))
 # config = yaml.safe_load(open("user_params.yaml"))#bende boyle calisiyor
 
 class SVRAgent(ConventionalAgent):
+    """Provides methods for Support Vector Regression Agent.
+
+    Attributes
+    ----------
+        kernel : {'linear', 'poly', 'rbf', 'sigmoid', 'precomputed'} or callable
+            Specifies the kernel type to be used in the algorithm.
+        degree : int
+            Degree of the polynomial kernel function ('poly').
+        gamma : {'scale', 'auto'} or
+            Kernel coefficient for 'rbf', 'poly' and 'sigmoid'.
+        coef0 : float
+            Independent term in kernel function. It is only significant in 'poly' and 'sigmoid'.
+        tol : float
+            Tolerance for stopping criterion.
+        C : float
+            Regularization parameter.
+        epsilon : float
+            Epsilon in the epsilon-SVR model.
+        shrinking : bool
+            A node will be split if this split induces a decrease of the impurity greater than or equal to this value.
+        cache_size : float
+            Specify the size of the kernel cache (in MB).
+        verbose : bool
+            Enable verbose output.
+        max_iter : int
+            Hard limit on iterations within solver, or -1 for no limit.
+
+    Methods
+    -------
+        train_model()
+            trains the model.
+        get_params()
+            Get parameters for this estimator.
+        predict()
+            main prediction method. 
+            does prediction using _return_predict() and _weight_optimizion()
+            helper functions.
+        save_model()
+            saves the model.
+        load_model()
+            loads the model.
+        _return_predict()
+            predicts the expected return.
+            helper function for the main predict method.
+        _weight_optimization()
+            optimizes weights using efficient frontier.
+            helper function for the main predict method.
+    """
 
     def __init__(self,
                  kernel='rbf',
@@ -39,16 +87,26 @@ class SVRAgent(ConventionalAgent):
                          cache_size=cache_size,
                          verbose=verbose,
                          max_iter=max_iter)
-                         
-    def get_params(self, deep = True):
-        return self.model.get_params(deep = deep)
+
+    def get_params(self, deep=True):
+        """Get parameters for this estimator.
+
+        Args:
+            deep (bool, optional): If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.
+
+        Returns:
+            dict: parameters
+        """
+        return self.model.get_params(deep=deep)
 
     def train_model(self, train_x, train_y, **train_params):
-        '''
-        *Trains the model*
-        Input: Train data x and train data y
-        Output: saves the trained model to class
-        '''
+        """Trains the model and saves it to class.
+
+        Args:
+            train_x (pd.DataFrame): train_x data
+            train_y (pd.DataFrame): train_y data
+            train_params (dict) : training parameters
+        """
         try:
             trained = self.model.fit(train_x, train_y.ravel(), **train_params)
             self.model = trained
@@ -62,7 +120,18 @@ class SVRAgent(ConventionalAgent):
                 transaction_cost_pct = 0.001,
                 tech_indicator_list=config["TEST_PARAMS"]["SVR_PARAMS"]["tech_indicator_list"]
                 ):
+        """Main prediction method.
 
+        Args:
+            test_data (pd.DataFrame): test data
+            initial_capital (int) : initial capital
+            tech_indicator_list (list) : technical indicators
+
+        Returns:
+            pd.DataFrame: portfolio with dates and account value
+            pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+            and predicted y value.
+        """
         meta_coefficient = {"date": []}
         for i in test_data.tic:
             meta_coefficient[i] = []
@@ -82,11 +151,27 @@ class SVRAgent(ConventionalAgent):
         portfolio.columns = ['account_value']
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
-        
+
         meta_coefficient = pd.DataFrame(meta_coefficient).set_index("date")
         return portfolio, meta_coefficient
 
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
+        """Predicts the expected return using  technical indicators.
+            Helper function for the main predict method.
+
+        Args:
+            unique_trade_date (datetime): unique dates in the test data
+            test_data (pd.DataFrame): test data
+            i (int): index for the loop
+            tech_indicator_list (list): technical indicators
+
+        Returns:
+            pd.DataFrame: current date
+            pd.DataFrame: next date
+            list: tickers
+            np.ndarray: predicted y_values (expected returns)
+            np.ndarray: risk (covarience matrix)
+        """
 
         current_date = unique_trade_date[i]
         next_date = unique_trade_date[i + 1]
@@ -148,7 +233,8 @@ class SVRAgent(ConventionalAgent):
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
-        current_shares = list(np.array(current_cash) / np.array(df_current.close))
+        current_shares = list(np.array(current_cash) /
+                              np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
@@ -156,11 +242,24 @@ class SVRAgent(ConventionalAgent):
         return portfolio , weight_arr
 
     def save_model(self, file_name):
+        """Saves the model
+
+        Args:
+            file_name (str): file name for saving the model
+        """
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")
 
     def load_model(self, file_name):
+        """Loads the model
+
+        Args:
+            file_name (str): file to be loaded.
+
+        Returns:
+            sklearn.model: loaded model
+        """
         with open(file_name, 'rb') as f:
             self.model = pickle.load(f)
         print("Model loaded succesfully.")
