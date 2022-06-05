@@ -42,6 +42,8 @@ class DTAgent(ConventionalAgent):
     -------
         train_model()
             trains the model.
+        get_params()
+            Get parameters for this estimator.
         predict()
             main prediction method. 
             does prediction using _return_predict() and _weight_optimizion()
@@ -84,15 +86,24 @@ class DTAgent(ConventionalAgent):
                                            min_impurity_decrease=min_impurity_decrease,
                                            ccp_alpha=ccp_alpha)
 
-    def get_params(self, deep = True):
-        return self.model.get_params(deep = deep)
-        
+    def get_params(self, deep=True):
+        """Get parameters for this estimator.
+
+        Args:
+            deep (bool, optional): If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.
+
+        Returns:
+            dict: parameters
+        """
+        return self.model.get_params(deep=deep)
+
     def train_model(self, train_x, train_y, **train_params):
         """Trains the model and saves it to class.
 
         Args:
             train_x (pd.DataFrame): train_x data
             train_y (pd.DataFrame): train_y data
+            train_params (dict) : training parameters
         """
         try:
             trained = self.model.fit(train_x, train_y, **train_params)
@@ -257,7 +268,7 @@ class DTAgent(ConventionalAgent):
             file_name (str): file to be loaded.
 
         Returns:
-            model: loaded model
+            sklearn.model: loaded model
         """
         with open(file_name, 'rb') as f:
             self.model = pickle.load(f)

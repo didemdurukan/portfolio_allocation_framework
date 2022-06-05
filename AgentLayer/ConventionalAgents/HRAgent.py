@@ -15,6 +15,45 @@ config = yaml.safe_load(open("user_params.yaml"))  # bende boyle calisiyor
 
 
 class HRAgent(ConventionalAgent):
+    """Provides methods Huber Regressor Agent.
+
+    Attributes
+    ----------
+        epsilon : float, greater than 1.0
+            The parameter epsilon controls the number of samples that should be classified as outliers.
+        max_iter : int
+            Maximum number of iterations 
+        alpha : float
+            Regularization parameter.
+        warm_start : bool
+            This is useful if the stored attributes of a previously used model has to be reused. 
+            If set to False, then the coefficients will be rewritten for every call to fit
+        fit_intercept : bool 
+            Whether or not to fit the intercept.
+        tol : float
+            The iteration will stop when max{|proj g_i | i = 1, ..., n} <= tol where pg_i is the i-th component of the projected gradient.
+
+    Methods
+    -------
+        train_model()
+            trains the model.
+        get_params()
+            Get parameters for this estimator.
+        predict()
+            main prediction method. 
+            does prediction using _return_predict() and _weight_optimizion()
+            helper functions.
+        save_model()
+            saves the model.
+        load_model()
+            loads the model.
+        _return_predict()
+            predicts the expected return.
+            helper function for the main predict method.
+        _weight_optimization()
+            optimizes weights using efficient frontier.
+            helper function for the main predict method.
+    """
 
     def __init__(self, *,
                  epsilon=1.35,
@@ -30,15 +69,26 @@ class HRAgent(ConventionalAgent):
                                     warm_start=warm_start,
                                     fit_intercept=fit_intercept,
                                     tol=tol)
-    def get_params(self, deep = True):
-        return self.model.get_params(deep = deep)
-        
+
+    def get_params(self, deep=True):
+        """Get parameters for this estimator.
+
+        Args:
+            deep (bool, optional): If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.
+
+        Returns:
+            dict: parameters
+        """
+        return self.model.get_params(deep=deep)
+
     def train_model(self, train_x, train_y, **train_params):
-        '''
-        *Trains the model*
-        Input: Train data x and train data y
-        Output: saves the trained model to class
-        '''
+        """Trains the model and saves it to class.
+
+        Args:
+            train_x (pd.DataFrame): train_x data
+            train_y (pd.DataFrame): train_y data
+            train_params (dict) : training parameters
+        """
         try:
             trained = self.model.fit(train_x, train_y.ravel(), **train_params)
             self.model = trained
@@ -51,6 +101,18 @@ class HRAgent(ConventionalAgent):
                 initial_capital=1000000,
                 tech_indicator_list=config["TEST_PARAMS"]["HR_PARAMS"]["tech_indicator_list"]
                 ):
+        """Main prediction method.
+
+        Args:
+            test_data (pd.DataFrame): test data
+            initial_capital (int) : initial capital
+            tech_indicator_list (list) : technical indicators
+
+        Returns:
+            pd.DataFrame: portfolio with dates and account value
+            pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+            and predicted y value.
+        """
 
         meta_coefficient = {"date": []}
         for i in test_data.tic:
@@ -64,17 +126,33 @@ class HRAgent(ConventionalAgent):
 
             portfolio_value = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next)
-    
+
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
         portfolio = portfolio.reset_index()
         portfolio.columns = ['date', 'account_value']
-        
+
         meta_coefficient = pd.DataFrame(meta_coefficient).set_index("date")
         return portfolio, meta_coefficient
 
     def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
+        """Predicts the expected return using  technical indicators.
+            Helper function for the main predict method.
+
+        Args:
+            unique_trade_date (datetime): unique dates in the test data
+            test_data (pd.DataFrame): test data
+            i (int): index for the loop
+            tech_indicator_list (list): technical indicators
+
+        Returns:
+            pd.DataFrame: current date
+            pd.DataFrame: next date
+            list: tickers
+            np.ndarray: predicted y_values (expected returns)
+            np.ndarray: risk (covarience matrix)
+        """
 
         current_date = unique_trade_date[i]
         next_date = unique_trade_date[i + 1]
@@ -96,6 +174,23 @@ class HRAgent(ConventionalAgent):
 
     def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current,
                              df_next):
+        """Optimizes weights using efficient frontier.
+            Helper function for the main predict method.
+
+        Args:
+            i (int): index for the loop
+            unique_trade_date (datetime): unique dates in the test data
+            meta_coefficient (pd.DataFrame): empty DataFrame to be filled with weights and tickers.
+            mu (pd.Series): predicted y values (expected returns)
+            sigma (np.ndarray): covarience matrix
+            tics (list): tickers
+            portfolio (pd.DataFrame): DataFrame to hold portfolio info
+            df_current (pd.DataFrame): current date
+            df_next (pd.DataFrame): next date
+
+        Returns:
+            pd.DataFrame: portfolio 
+        """
 
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
@@ -133,19 +228,33 @@ class HRAgent(ConventionalAgent):
         # current cash invested for each stock
         current_cash = [element * cap for element in list(weights.values())]
         # current held shares
-        current_shares = list(np.array(current_cash) / np.array(df_current.close))
+        current_shares = list(np.array(current_cash) /
+                              np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio 
+        return portfolio
 
     def save_model(self, file_name):
+        """Saves the model
+
+        Args:
+            file_name (str): file name for saving the model
+        """
         with open(file_name, 'wb') as files:
             pickle.dump(self.model, files)
         print("Model saved succesfully.")
 
     def load_model(self, file_name):
+        """Loads the model
+
+        Args:
+            file_name (str): file to be loaded.
+
+        Returns:
+            sklearn.model: loaded model
+        """
         with open(file_name, 'rb') as f:
             self.model = pickle.load(f)
         print("Model loaded succesfully.")
