@@ -30,7 +30,9 @@ class HRAgent(ConventionalAgent):
                                     warm_start=warm_start,
                                     fit_intercept=fit_intercept,
                                     tol=tol)
-
+    def get_params(self, deep = True):
+        return self.model.get_params(deep = deep)
+        
     def train_model(self, train_x, train_y, **train_params):
         '''
         *Trains the model*
