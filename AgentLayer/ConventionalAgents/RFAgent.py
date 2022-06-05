@@ -51,6 +51,9 @@ class RFAgent(ConventionalAgent):
                                            warm_start=warm_start,
                                            ccp_alpha=ccp_alpha,
                                            max_samples=max_samples)
+                                    
+    def get_params(self, deep = True):
+        return self.model.get_params(deep = deep)
 
     def train_model(self, train_x, train_y, **train_params):
         '''

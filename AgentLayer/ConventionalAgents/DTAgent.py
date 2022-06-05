@@ -84,6 +84,9 @@ class DTAgent(ConventionalAgent):
                                            min_impurity_decrease=min_impurity_decrease,
                                            ccp_alpha=ccp_alpha)
 
+    def get_params(self, deep = True):
+        return self.model.get_params(deep = deep)
+        
     def train_model(self, train_x, train_y, **train_params):
         """Trains the model and saves it to class.
 
