@@ -39,6 +39,9 @@ class SVRAgent(ConventionalAgent):
                          cache_size=cache_size,
                          verbose=verbose,
                          max_iter=max_iter)
+                         
+    def get_params(self, deep = True):
+        return self.model.get_params(deep = deep)
 
     def train_model(self, train_x, train_y, **train_params):
         '''
