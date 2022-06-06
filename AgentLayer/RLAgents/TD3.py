@@ -10,54 +10,13 @@ import torch as th
 
 class TD3(RLAgent):
     """Provides methods for TD3 Agent.
+
     Attributes
     ----------        
-        policy: str
-            The policy model to use
         env: DummyVecEnv
             The environment to learn from 
-        learning_rate: float
-             learning rate for adam optimizer
-        buffer_size : int
-            size of the replay buffer
-        learning_starts  : int
-            how many steps of the model to collect transitions for before learning starts
-        batch_size : int
-             Minibatch size for each gradient update
-        tau : float  
-            the soft update coefficient 
-        gamma  : float
-            the discount factor
-        train_freq  : [int,str]  
-            Update the model every train_freq steps.
-        gradient_steps  : int
-           How many gradient steps to do after each rollout
-        action_noise  : object
-            the action noise type
-        replay_buffer_class   : object
-            Replay buffer class to use
-        replay_buffer_kwargs   : dict  
-            Keyword arguments to pass to the replay buffer on creation.
-        optimize_memory_usage   : boolean
-            Enable a memory efficient variant of the replay buffer at a cost of more complexity
-        policy_delay : int
-            Policy and target networks will only be updated once every policy_delay steps per training steps
-        target_policy_noise : int
-            Standard deviation of Gaussian noise added to target policy (smoothing noise)
-        target_noise_clip : float
-            Limit for absolute value of target policy smoothing noise.
-        create_eval_env : boolean
-            Whether to create a second environment that will be used for evaluating the agent periodically.
-        policy_kwargs: dict
-            additional arguments to be passed to the policy on creation
-        verbose : int
-            the verbosity level: 0 no output, 1 info, 2 debug
-        seed : int
-             Seed for the pseudo random generators
-        device : str
-            Device (cpu, cuda, …) on which the code should be run.
-        _init_setup_model: boolean
-            Whether or not to build the network at the creation of the instance.
+        model: stable_baselines3.TD3 Agent
+            RL Agent
 
     Methods
     -------
@@ -93,6 +52,35 @@ class TD3(RLAgent):
                  seed: Optional[int] = None,
                  device: Union[th.device, str] = "auto",
                  _init_setup_model: bool = True):
+        """Initializer for TD3 Object.
+
+        Args:
+            policy (str, optional): The policy to use. Defaults to "MlpPolicy".
+            env (DummyVecEnv, optional): The environment to learn from . Defaults to None.
+            learning_rate (float, optional): learning rate for adam optimizer. Defaults to 1e-3.
+            buffer_size (int, optional): size of the replay buffer. Defaults to 1_000_000.
+            batch_size (int, optional): Minibatch size for each gradient update. Defaults to 100.
+            tau (float, optional): the soft update coefficient . Defaults to 0.005.
+            gamma (float, optional): the discount factor. Defaults to 0.99.
+            train_freq (int, optional): Update the model every train_freq steps. Defaults to 1.
+            gradient_steps (int, optional): How many gradient steps to do after each rollout. Defaults to -1.
+            action_noise (Optional[ActionNoise], optional): the action noise type. Defaults to None.
+            replay_buffer_class (Optional[ReplayBuffer], optional): Replay buffer class to use. Defaults to None.
+            replay_buffer_kwargs (Optional[Dict[str, Any]], optional): Keyword arguments to pass to the replay buffer on creation. Defaults to None.
+            optimize_memory_usage (bool, optional): Enable a memory efficient variant of the replay buffer at a cost of more complexity. Defaults to False.
+
+            policy_delay(int,optional) : Policy and target networks will only be updated once every policy_delay steps per training steps. Defaults to 2.
+            target_policy_noise (float,optional) : Standard deviation of Gaussian noise added to target policy (smoothing noise). Defaults to 0.02
+            target_noise_clip (float,optional) : Limit for absolute value of target policy smoothing noise. Defaults to 0.05
+
+            tensorboard_log (Optional[str], optional): the log location for tensorboard. Defaults to None. 
+            create_eval_env (bool, optional): Whether to create a second environment that will be used for evaluating the agent periodically. Defaults to False.
+            policy_kwargs (Optional[Dict[str, Any]], optional): additional arguments to be passed to the policy on creation. Defaults to None.
+            verbose (int, optional): the verbosity level: 0 no output, 1 info, 2 debug. Defaults to 0.
+            seed (Optional[int], optional): Seed for the pseudo random generators. Defaults to None.
+            device (Union[th.device, str], optional):  on which the code should be run. Defaults to "auto".
+            _init_setup_model (bool, optional): Whether or not to build the network at the creation of the instance. Defaults to True.
+        """
 
         self.env = env
 
@@ -121,6 +109,9 @@ class TD3(RLAgent):
     def train_model(self, **train_params):
         """Trains the model
 
+        Args:
+            train_params (dict) : train parameters
+
         Returns:
             model: trained model.
         """
@@ -131,7 +122,8 @@ class TD3(RLAgent):
         """Does the prediction
 
         Args:
-            environment (env): test environment
+            environment (DummyVecEnv): test environment
+            test_params (dict) : test parameters
 
         Returns:
             pd.DataFrame: portfolio

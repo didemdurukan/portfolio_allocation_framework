@@ -18,57 +18,13 @@ import torch as th
 
 class PPO(RLAgent):
     """"Provides methods for PPO Agent.
+
     Attributes
     ----------        
-        policy: str
-            The policy model to use
         env: DummyVecEnv
             The environment to learn from 
-        learning_rate: float
-             The learning rate
-        n_steps: int
-            The number of steps to run for each environment per update 
-            (i.e. batch size is n_steps * n_env where n_env is number of environment copies running in parallel)
-        batch_size : int 
-            Minibatch size
-        n_epochs : int
-            number of epochs when optimizing the surrogate loss
-        gamma : float
-            discount factor
-        gae_lambda: float
-             Factor for trade-off of bias vs variance for Generalized Advantage Estimator Equivalent to classic advantage when set to 1.
-        clip_range : float
-            Clipping parameter
-        clip_range_vf : float
-            Clipping parameter for the value function
-        ent_coef: float  
-            Entropy coefficient for the loss calculation
-        vf_coef : float
-            Value function coefficient for the loss calculationv
-        max_grad_norm : float  
-            The maximum value for the gradient clipping
-        use_sde  : boolean
-            Whether to use generalized State Dependent Exploration (gSDE) instead of action noise exploration (default: False)
-        sde_sample_freq  : int  
-            Sample a new noise matrix every n steps when using gSDE
-        normalize_advantage  : boolean
-            Whether to normalize or not the advantage
-        target_kl : float
-             Limit the KL divergence between updates
-        tensorboard_log  : str
-            the log location for tensorboard
-        create_eval_env : boolean
-            Whether to create a second environment that will be used for evaluating the agent periodically.
-        policy_kwargs: dict
-            additional arguments to be passed to the policy on creation
-        verbose : int
-            the verbosity level: 0 no output, 1 info, 2 debug
-        seed : int
-             Seed for the pseudo random generators
-        device : str
-            Device (cpu, cuda, …) on which the code should be run.
-        _init_setup_model: boolean
-            Whether or not to build the network at the creation of the instance.
+        model: stable_baselines3.PPO Agent
+            RL Agent
 
     Methods
     -------
@@ -107,6 +63,36 @@ class PPO(RLAgent):
                  seed: Optional[int] = None,
                  device: Union[th.device, str] = "auto",
                  _init_setup_model: bool = True):
+        """Initializer for PPO Object"
+
+        Args:
+            policy (str, optional): The policy to use. Defaults to "MlpPolicy".
+            env (DummyVecEnv, optional): The environment to learn from. Defaults to None.
+            learning_rate (float, optional): The learning rate. Defaults to 3e-4.
+            n_steps (int, optional): The number of steps to run for each environment per update 
+            (i.e. batch size is n_steps * n_env where n_env is number of environment copies running in parallel)
+            . Defaults to 2048.
+            batch_size (int, optional): Minibatch size. Defaults to 64.
+            n_epochs (int, optional): number of epochs when optimizing the surrogate loss. Defaults to 10.
+            gamma (float, optional): discount factor. Defaults to 0.99.
+            gae_lambda (float, optional): Factor for trade-off of bias vs variance for Generalized Advantage Estimator Equivalent to classic advantage when set to 1. Defaults to 0.95.
+            clip_range (Union[float, Schedule], optional): Clipping parameter. Defaults to 0.2.
+            clip_range_vf (Union[None, float, Schedule], optional): Clipping parameter for the value function. Defaults to None.
+            normalize_advantage (bool, optional): Whether to normalize or not the advantage. Defaults to True.
+            ent_coef (float, optional): Entropy coefficient for the loss calculation. Defaults to 0.0.
+            vf_coef (float, optional): Value function coefficient for the loss calculation. Defaults to 0.5.
+            max_grad_norm (float, optional): The maximum value for the gradient clipping. Defaults to 0.5.
+            use_sde (bool, optional): Whether to use generalized State Dependent Exploration (gSDE) instead of action noise exploration. Defaults to False.
+            sde_sample_freq (int, optional): Sample a new noise matrix every n steps when using gSDE. Defaults to -1.
+            target_kl (Optional[float], optional): Limit the KL divergence between updates. Defaults to None.
+            tensorboard_log (Optional[str], optional): the log location for tensorboard. Defaults to None.
+            create_eval_env (bool, optional): Whether to create a second environment that will be used for evaluating the agent periodically. Defaults to False.
+            policy_kwargs (Optional[Dict[str, Any]], optional): additional arguments to be passed to the policy on creation. Defaults to None.
+            verbose (int, optional): the verbosity level: 0 no output, 1 info, 2 debug. Defaults to 0.
+            seed (Optional[int], optional): Seed for the pseudo random generators. Defaults to None.
+            device (Union[th.device, str], optional): Device (cpu, cuda, …) on which the code should be run. Defaults to "auto".
+            _init_setup_model (bool, optional): Whether or not to build the network at the creation of the instance. Defaults to True.
+        """
 
         self.env = env
         self.model = sb_PPO(policy=policy,
@@ -137,8 +123,11 @@ class PPO(RLAgent):
     def train_model(self, **train_params):
         """Trains the model
 
+        Args:
+            train_params (dict) : train parameters
+
         Returns:
-            model: trained model.
+            model: trained model
         """
         self.model = self.model.learn(**train_params)
         return self.model
@@ -147,7 +136,8 @@ class PPO(RLAgent):
         """Does the prediction
 
         Args:
-            environment (env): test environment
+            environment (DummyVecEnv): test environment
+            test_params (dict) : test parameters
 
         Returns:
             pd.DataFrame: portfolio

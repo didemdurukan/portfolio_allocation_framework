@@ -18,49 +18,10 @@ class A2C(RLAgent):
     """Provides methods for A2C Agent.
     Attributes
     ----------        
-        policy: str
-            The policy model to use
         env: DummyVecEnv
             The environment to learn from 
-        learning_rate: float
-             The learning rate
-        n_steps: int
-            The number of steps to run for each environment per update 
-            (i.e. batch size is n_steps * n_env where n_env is number of environment copies running in parallel)
-        gamma : float
-            discount factor
-        gae_lambda: float
-             Factor for trade-off of bias vs variance for Generalized Advantage Estimator Equivalent to classic advantage when set to 1.
-        ent_coef: float  
-            Entropy coefficient for the loss calculation
-        vf_coef : float
-            Value function coefficient for the loss calculationv
-        max_grad_norm : float  
-            The maximum value for the gradient clipping
-        rms_prop_eps : float
-            RMSProp epsilon. It stabilizes square root computation in denominator of RMSProp update
-        use_rms_prop : boolean
-            an increment number to control date
-        use_sde  : boolean
-            Whether to use generalized State Dependent Exploration (gSDE) instead of action noise exploration (default: False)
-        sde_sample_freq  : int  
-            Sample a new noise matrix every n steps when using gSDE
-        normalize_advantage  : boolean
-            Whether to normalize or not the advantage
-        tensorboard_log  : str
-            the log location for tensorboard
-        create_eval_env : boolean
-            Whether to create a second environment that will be used for evaluating the agent periodically.
-        policy_kwargs: dict
-            additional arguments to be passed to the policy on creation
-        verbose : int
-            the verbosity level: 0 no output, 1 info, 2 debug
-        seed : int
-             Seed for the pseudo random generators
-        device : str
-            Device (cpu, cuda, …) on which the code should be run.
-        _init_setup_model: boolean
-            Whether or not to build the network at the creation of the instance.
+        model: stable_baselines3.A2C Agent
+            RL Agent
 
     Methods
     -------
@@ -96,6 +57,33 @@ class A2C(RLAgent):
                  seed: Optional[int] = None,
                  device: Union[th.device, str] = "auto",
                  _init_setup_model: bool = True):
+        """Initializer for A2C object.
+
+        Args:
+            policy (str, optional): The policy to use. Defaults to "MlpPolicy".
+            env (DummyVecEnv, optional): environment. Defaults to None.
+            learning_rate (float, optional): The learning rate. Defaults to 7e-4.
+            n_steps (int, optional): The number of steps to run for each environment per update 
+            (i.e. batch size is n_steps * n_env where n_env is number of environment copies running in parallel)
+            . Defaults to 5.
+            gamma (float, optional): discount factor. Defaults to 0.99.
+            gae_lambda (float, optional): Factor for trade-off of bias vs variance for Generalized . Defaults to 1.0.
+            ent_coef (float, optional): Entropy coefficient for the loss calculation. Defaults to 0.0.
+            vf_coef (float, optional): Value function coefficient for the loss calculationv. Defaults to 0.5.
+            max_grad_norm (float, optional): The maximum value for the gradient clipping. Defaults to 0.5.
+            rms_prop_eps (float, optional): RMSProp epsilon. It stabilizes square root computation in denominator of RMSProp update. Defaults to 1e-5.
+            use_rms_prop (bool, optional): Whether to use RMSprop (default) or Adam as optimizer. Defaults to True.
+            use_sde (bool, optional): Whether to use generalized State Dependent Exploration (gSDE) instead of action noise exploration. Defaults to False.
+            sde_sample_freq (int, optional):  Sample a new noise matrix every n steps when using gSDE. Defaults to -1.
+            normalize_advantage (bool, optional): Whether to normalize or not the advantage. Defaults to False.
+            tensorboard_log (Optional[str], optional): the log location for tensorboard. Defaults to None.
+            create_eval_env (bool, optional): Whether to create a second environment that will be used for evaluating the agent periodically. Defaults to False.
+            policy_kwargs (Optional[Dict[str, Any]], optional): additional arguments to be passed to the policy on creation. Defaults to None.
+            verbose (int, optional): the verbosity level: 0 no output, 1 info, 2 debug. Defaults to 0.
+            seed (Optional[int], optional): Seed for the pseudo random generators. Defaults to None.
+            device (Union[th.device, str], optional): Device (cpu, cuda, …) on which the code should be run. Defaults to "auto".
+            _init_setup_model (bool, optional): Whether or not to build the network at the creation of the instance. Defaults to True.
+        """
 
         self.env = env
 
@@ -124,6 +112,9 @@ class A2C(RLAgent):
     def train_model(self, **train_params):
         """Trains the model
 
+        Args:
+            train_params (dict) : train parameters
+
         Returns:
             model: trained model.
         """
@@ -134,11 +125,11 @@ class A2C(RLAgent):
         """Does the prediction
 
         Args:
-            environment (env): test environment
+            environment (DummyVecEnv): test environment
 
         Returns:
             pd.DataFrame: portfolio
-            ndarray : actions memory
+            numpy.ndarray : actions memory
         """
 
         env_test, obs_test = environment.get_env()
