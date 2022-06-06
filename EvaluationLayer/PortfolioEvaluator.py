@@ -3,16 +3,10 @@ import pyfolio
 import pandas as pd
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 import warnings
-import yaml
-import os
-from utils import get_project_root
+from utils import read_config_file
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
-
-ROOT_DIR = get_project_root()
-CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
-
-config = yaml.safe_load(open(CONFIG_PATH))
+config = read_config_file()
 
 
 class PortfolioEvaluator:

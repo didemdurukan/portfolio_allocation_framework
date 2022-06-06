@@ -6,14 +6,10 @@ import pickle
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import objective_functions
-import yaml
-import os
-from utils import get_project_root
+from utils import read_config_file
 
-ROOT_DIR = get_project_root()
-CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
 
-config = yaml.safe_load(open(CONFIG_PATH))
+config = read_config_file()
 
 
 class HRAgent(ConventionalAgent):
