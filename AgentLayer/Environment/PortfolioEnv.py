@@ -31,16 +31,36 @@ class PortfolioEnv(Environment):
             transaction cost percentage per trade
         reward_scaling: float
             scaling factor for reward as training progresses
-         state_space: int  
-            the dimension of input features (state space)
-        action_space: int
-            number of actions, which is equal to portfolio dimension
+        state_space: gym.spaces.Box object  
+            state space
+        action_space: gym.spaces.Box object  
+            action space
         tech_indicator_list: list  
             a list of technical indicator names
         lookback: int
-            ??
+            lookback value
         day: int
             an increment number to control date
+        observation space: gym.spaces.Box object 
+            observation space
+        data: pd.DataFrame
+            data to be used.
+        covs: pd.Series
+            covarience values from the data
+        state: np.array
+            states
+        terminal: bool
+            if terminal state
+        portfolio_value:
+            portfolio value
+        asset_memory:
+            used for memorizing portfolio value each step
+        portfolio_return_memory: 
+            used for memorizing return each step
+        actions_memory:
+            actions memory
+        date_memory:
+            date memory
 
 
     Methods
@@ -50,7 +70,7 @@ class PortfolioEnv(Environment):
         reset()
             reset the environment
         render()
-            use render to return other functions
+            gym environment rendering
         save_asset_memory()
             return account value at each time step
         save_action_memory()
@@ -73,6 +93,33 @@ class PortfolioEnv(Environment):
                  tech_indicator_list: list,  # a list of technical indicator names
                  lookback=252,  #
                  day=0):  # an increment number to control date
+        """Initializer for Portfolio Envrionment object
+
+        Args:
+            df: pd.DataFrame
+                input data
+            stock_dim: int
+                number of unique securities in the investment universe
+            hmax: float
+                maximum number of shares to trade
+            initial_amount: float
+                initial cash value
+            transaction_cost_pct: float
+                transaction cost percentage per trade
+            reward_scaling: float
+                scaling factor for reward as training progresses
+            state_space: int  
+                the dimension of input features (state space)
+            action_space: int
+                number of actions, which is equal to portfolio dimension
+            tech_indicator_list: list  
+                a list of technical indicator names
+            lookback: int
+                lookback value
+            day: int
+                an increment number to control date
+
+        """
 
         self.df = df
         self.day = day
@@ -139,7 +186,7 @@ class PortfolioEnv(Environment):
         Returns:
             np.array : state
             int : reward -> new portfolio value or end portfolo value
-            boolean : terminal state
+            bool : if terminal state
 
         """
         self.terminal = self.day >= len(self.df.index.unique()) - 1

@@ -42,6 +42,14 @@ class Environment(gym.Env, ABC):
 
     @staticmethod
     def softmax_normalization(actions):
+        """Applies softmax normalization on actions
+
+        Args:
+            actions (action space): actions
+
+        Returns:
+            float: softmax_output
+        """
         numerator = np.exp(actions)
         denominator = np.sum(np.exp(actions))
         softmax_output = numerator / denominator
