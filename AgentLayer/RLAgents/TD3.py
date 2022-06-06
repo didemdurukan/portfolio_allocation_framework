@@ -45,6 +45,9 @@ class TD3(RLAgent):
                  replay_buffer_class: Optional[ReplayBuffer] = None,
                  replay_buffer_kwargs: Optional[Dict[str, Any]] = None,
                  optimize_memory_usage: bool = False,
+                 policy_delay: int = 2,
+                 target_policy_noise: float = 0.02,
+                 target_noise_clip: float = 0.05,
                  tensorboard_log: Optional[str] = None,
                  create_eval_env: bool = False,
                  policy_kwargs: Optional[Dict[str, Any]] = None,
@@ -68,11 +71,9 @@ class TD3(RLAgent):
             replay_buffer_class (Optional[ReplayBuffer], optional): Replay buffer class to use. Defaults to None.
             replay_buffer_kwargs (Optional[Dict[str, Any]], optional): Keyword arguments to pass to the replay buffer on creation. Defaults to None.
             optimize_memory_usage (bool, optional): Enable a memory efficient variant of the replay buffer at a cost of more complexity. Defaults to False.
-
             policy_delay(int,optional) : Policy and target networks will only be updated once every policy_delay steps per training steps. Defaults to 2.
             target_policy_noise (float,optional) : Standard deviation of Gaussian noise added to target policy (smoothing noise). Defaults to 0.02
             target_noise_clip (float,optional) : Limit for absolute value of target policy smoothing noise. Defaults to 0.05
-
             tensorboard_log (Optional[str], optional): the log location for tensorboard. Defaults to None. 
             create_eval_env (bool, optional): Whether to create a second environment that will be used for evaluating the agent periodically. Defaults to False.
             policy_kwargs (Optional[Dict[str, Any]], optional): additional arguments to be passed to the policy on creation. Defaults to None.
@@ -98,6 +99,9 @@ class TD3(RLAgent):
                             replay_buffer_class=replay_buffer_class,
                             replay_buffer_kwargs=replay_buffer_kwargs,
                             optimize_memory_usage=optimize_memory_usage,
+                            policy_delay=policy_delay,
+                            target_policy_noise=target_policy_noise,
+                            target_noise_clip=target_noise_clip,
                             tensorboard_log=tensorboard_log,
                             create_eval_env=create_eval_env,
                             policy_kwargs=policy_kwargs,
