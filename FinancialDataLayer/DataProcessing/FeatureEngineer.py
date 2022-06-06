@@ -15,5 +15,5 @@ class FeatureEngineer(ABC):
     """
 
     @abstractmethod
-    def extend_data(self, df):
+    def extend_data(self, *args, **kwargs):
         pass
