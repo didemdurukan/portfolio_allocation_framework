@@ -54,9 +54,9 @@ class PortfolioEnv(Environment):
         portfolio_value:
             portfolio value
         asset_memory:
-            used for memorizing portfolio value each step
+            used for memorizing portfolio value at each step
         portfolio_return_memory: 
-            used for memorizing return each step
+            used for memorizing return at each step
         actions_memory:
             actions memory
         date_memory:
