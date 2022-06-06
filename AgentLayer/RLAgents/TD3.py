@@ -9,7 +9,7 @@ import torch as th
 
 
 class TD3(RLAgent):
-    """Provides methods for DDPG Agent.
+    """Provides methods for TD3 Agent.
     Attributes
     ----------        
         policy: str
