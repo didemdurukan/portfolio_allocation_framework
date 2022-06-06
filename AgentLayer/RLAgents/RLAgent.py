@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from AgentLayer.Agent import Agent
-import pandas as pd
 
 
 class RLAgent(Agent, ABC):

@@ -6,9 +6,13 @@ from stockstats import StockDataFrame as Sdf
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.FeatureEngineer import FeatureEngineer
 import yaml
+import os
+from utils import get_project_root
 
-#config = yaml.safe_load(open("../user_params.yaml"))
-config = yaml.safe_load(open("user_params.yaml")) 
+ROOT_DIR = get_project_root()
+CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
+
+config = yaml.safe_load(open(CONFIG_PATH))
 
 
 class DefaultFeatureEngineer(FeatureEngineer):

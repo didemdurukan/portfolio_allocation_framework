@@ -4,12 +4,16 @@ import pandas as pd
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 import warnings
 import yaml
+import os
+from utils import get_project_root
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
-#config = yaml.safe_load(open("../user_params.yaml"))
 
+ROOT_DIR = get_project_root()
+CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
 
-config = yaml.safe_load(open("user_params.yaml"))#bende boyleyken calisiyor
+config = yaml.safe_load(open(CONFIG_PATH))
+
 
 class PortfolioEvaluator:
 

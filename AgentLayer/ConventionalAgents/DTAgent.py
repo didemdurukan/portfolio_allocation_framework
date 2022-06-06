@@ -1,17 +1,19 @@
 from AgentLayer.ConventionalAgents.ConventionalAgent import ConventionalAgent
 import numpy as np
 from sklearn.tree import DecisionTreeRegressor
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models
 import pandas as pd
 import pickle
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
+import os
+from utils import get_project_root
 
-#config = yaml.safe_load(open("../user_params.yaml"))
-config = yaml.safe_load(open("user_params.yaml"))  # bende boyle calisiyor
+ROOT_DIR = get_project_root()
+CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
+
+config = yaml.safe_load(open(CONFIG_PATH))
 
 
 class DTAgent(ConventionalAgent):
@@ -115,7 +117,7 @@ class DTAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=1000000,
-                transaction_cost_pct = 0.001,
+                transaction_cost_pct=0.001,
                 tech_indicator_list=config["TEST_PARAMS"]["DT_PARAMS"]["tech_indicator_list"]
                 ):
         """Main prediction method.
@@ -135,7 +137,7 @@ class DTAgent(ConventionalAgent):
         for i in test_data.tic:
             meta_coefficient[i] = []
         unique_trade_date = test_data.date.unique()
-        weight_arr = [np.array([1/len(test_data.tic.unique())]*len(test_data.tic.unique()))]
+        weight_arr = [np.array([1 / len(test_data.tic.unique())] * len(test_data.tic.unique()))]
         portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
         portfolio.loc[0, unique_trade_date[0]] = initial_capital
         for i in range(len(unique_trade_date) - 1):
@@ -143,8 +145,9 @@ class DTAgent(ConventionalAgent):
                 unique_trade_date, test_data, i, tech_indicator_list)
 
             portfolio_value, weight_arr = self._weight_optimization(
-                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr)
-    
+                i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next,
+                transaction_cost_pct, weight_arr)
+
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
@@ -173,7 +176,7 @@ class DTAgent(ConventionalAgent):
         """
 
         current_date = unique_trade_date[i]
-        next_date = unique_trade_date[i+1]
+        next_date = unique_trade_date[i + 1]
 
         df_current = test_data[test_data.date ==
                                current_date].reset_index(drop=True)
@@ -190,15 +193,16 @@ class DTAgent(ConventionalAgent):
 
         return mu, sigma, tics, df_current, df_next
 
-    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr):
+    def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current,
+                             df_next, transaction_cost_pct, weight_arr):
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
-            {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
+            {"tic": tics.reshape(-1, ), "predicted_y": mu.reshape(-1, )})
         min_weight, max_weight = 0, 1
 
         ef = EfficientFrontier(mu, sigma)
-        w_prev = np.array(weight_arr[-1],dtype=object)
-        ef.add_objective(objective_functions.transaction_cost, w_prev = w_prev, k = transaction_cost_pct)
+        w_prev = np.array(weight_arr[-1], dtype=object)
+        ef.add_objective(objective_functions.transaction_cost, w_prev=w_prev, k=transaction_cost_pct)
         weights = ef.nonconvex_objective(
             objective_functions.sharpe_ratio,
             objective_args=(ef.expected_returns, ef.cov_matrix),
@@ -210,8 +214,7 @@ class DTAgent(ConventionalAgent):
                 {"type": "ineq", "fun": lambda w: max_weight - w},
             ],
         )
-   
-        
+
         weight_df = {"tic": [], "weight": []}
         meta_coefficient["date"] += [current_date]
 
@@ -236,11 +239,11 @@ class DTAgent(ConventionalAgent):
                               np.array(df_current.close))
         # next time period price
         next_price = np.array(df_next.close)
-        portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
+        portfolio.iloc[0, i + 1] = np.dot(current_shares, next_price)
 
-        return portfolio , weight_arr
-        
-    def save_model(self,  file_name):
+        return portfolio, weight_arr
+
+    def save_model(self, file_name):
         """Saves the model
 
         Args:

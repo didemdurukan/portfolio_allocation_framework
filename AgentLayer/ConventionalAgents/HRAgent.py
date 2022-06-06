@@ -1,17 +1,19 @@
 from AgentLayer.ConventionalAgents.ConventionalAgent import ConventionalAgent
 import numpy as np
 from sklearn.linear_model import HuberRegressor
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models
 import pandas as pd
 import pickle
 from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import objective_functions
 import yaml
+import os
+from utils import get_project_root
 
-# config = yaml.safe_load(open("../user_params.yaml"))
-config = yaml.safe_load(open("user_params.yaml"))  # bende boyle calisiyor
+ROOT_DIR = get_project_root()
+CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
+
+config = yaml.safe_load(open(CONFIG_PATH))
 
 
 class HRAgent(ConventionalAgent):
