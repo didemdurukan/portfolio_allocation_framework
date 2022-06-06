@@ -1,19 +1,20 @@
-TICKERS: [ "AAPL", "BA", "CAT", "CVX" ]
+TICKERS: ["AAPL", "BA", "CAT", "CVX"]
 
-TRADE_START_DATE: '2020-07-01'
-TRADE_END_DATE: '2021-09-02'
+TRADE_START_DATE: "2020-07-01"
+TRADE_END_DATE: "2021-09-02"
 
 FEATURE_ENG_PARAMS:
-  tech_indicator_list: [
-    "macd",
-    "boll_ub",
-    "boll_lb",
-    "rsi_30",
-    "cci_30",
-    "dx_30",
-    "close_30_sma",
-    "close_60_sma",
-  ]
+  tech_indicator_list:
+    [
+      "macd",
+      "boll_ub",
+      "boll_lb",
+      "rsi_30",
+      "cci_30",
+      "dx_30",
+      "close_30_sma",
+      "close_60_sma",
+    ]
 
 ENV_PARAMS:
   hmax: 100 # maximum number of shares to trade
@@ -22,15 +23,15 @@ ENV_PARAMS:
   state_space: 4 # number of unique stocks
   stock_dim: 4 # number of unique stocks
   tech_indicator_list: [
-    "macd",
-    "boll_ub",
-    "boll_lb",
-    "rsi_30",
-    "cci_30",
-    "dx_30",
-    "close_30_sma",
-    "close_60_sma",
-  ] # technical indicators
+      "macd",
+      "boll_ub",
+      "boll_lb",
+      "rsi_30",
+      "cci_30",
+      "dx_30",
+      "close_30_sma",
+      "close_60_sma",
+    ] # technical indicators
   action_space: 4 # number of stocks in training data
   reward_scaling: 0.1 # hyperparameter
 
@@ -243,8 +244,7 @@ POLICY_PARAMS:
       tol: 1e-05,
     }
 
-  LR_PARAMS: { fit_intercept: True,
-               copy_X: True, positive: False }
+  LR_PARAMS: { fit_intercept: True, copy_X: True, positive: False }
 
   A2C_PARAMS:
     {
@@ -298,47 +298,50 @@ POLICY_PARAMS:
     }
 
   DDPG_PARAMS: {
-    policy: "MlpPolicy",
-    learning_rate: 0.001,
-    buffer_size: 1_000_000, # 1e6
-    learning_starts: 100,
-    batch_size: 100,
-    tau: 0.005,
-    gamma: 0.99,
-    train_freq: 1,
-    gradient_steps: -1,
-    action_noise: null,
-    replay_buffer_class: null,
-    replay_buffer_kwargs: null,
-    optimize_memory_usage: False,
-    tensorboard_log: null,
-    create_eval_env: False,
-    policy_kwargs: null,
-    verbose: 0,
-    seed: null,
-    device: "auto",
-    _init_setup_model: True,
-  }
+      policy: "MlpPolicy",
+      learning_rate: 0.001,
+      buffer_size: 1_000_000, # 1e6
+      learning_starts: 100,
+      batch_size: 100,
+      tau: 0.005,
+      gamma: 0.99,
+      train_freq: 1,
+      gradient_steps: -1,
+      action_noise: null,
+      replay_buffer_class: null,
+      replay_buffer_kwargs: null,
+      optimize_memory_usage: False,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }
 
   TD3_PARAMS: {
-    policy: "MlpPolicy",
-    learning_rate: 0.001,
-    buffer_size: 1_000_000, # 1e6
-    learning_starts: 100,
-    batch_size: 100,
-    tau: 0.005,
-    gamma: 0.99,
-    train_freq: 1,
-    gradient_steps: -1,
-    action_noise: null,
-    replay_buffer_class: null,
-    replay_buffer_kwargs: null,
-    optimize_memory_usage: False,
-    tensorboard_log: null,
-    create_eval_env: False,
-    policy_kwargs: null,
-    verbose: 0,
-    seed: null,
-    device: "auto",
-    _init_setup_model: True,
-  }
+      policy: "MlpPolicy",
+      learning_rate: 0.001,
+      buffer_size: 1_000_000, # 1e6
+      learning_starts: 100,
+      batch_size: 100,
+      tau: 0.005,
+      gamma: 0.99,
+      train_freq: 1,
+      gradient_steps: -1,
+      action_noise: null,
+      replay_buffer_class: null,
+      replay_buffer_kwargs: null,
+      optimize_memory_usage: False,
+      policy_delay: 2,
+      target_policy_noise: 0.02,
+      target_noise_clip: 0.05,
+      tensorboard_log: null,
+      create_eval_env: False,
+      policy_kwargs: null,
+      verbose: 0,
+      seed: null,
+      device: "auto",
+      _init_setup_model: True,
+    }
