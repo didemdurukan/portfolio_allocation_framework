@@ -17,12 +17,10 @@ class LRAgent(ConventionalAgent):
 
     Attributes
     ----------
-        fit_intercept : bool 
-            Whether to calculate the intercept for this model.
-        copy_X : bool 
-            If True, X will be copied; else, it may be overwritten.
-        positive : bool 
-            When set to True, forces the coefficients to be positive.
+
+        model : sklearn.model object
+            conventional agent model
+
 
     Methods
     -------
@@ -50,6 +48,13 @@ class LRAgent(ConventionalAgent):
                  fit_intercept=True,
                  copy_X=True,
                  positive=False):
+        """Initialize Linear Regression Agent object
+
+        Args:
+            fit_intercept (bool, optional): Whether to calculate the intercept for this model. Defaults to True.
+            copy_X (bool, optional): If True, X will be copied; else, it may be overwritten.. Defaults to True.
+            positive (bool, optional): When set to True, forces the coefficients to be positive.. Defaults to False.
+        """
 
         self.model = LinearRegression(fit_intercept=fit_intercept,
                                       copy_X=copy_X,

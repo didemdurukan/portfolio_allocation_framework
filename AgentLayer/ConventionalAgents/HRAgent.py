@@ -17,19 +17,8 @@ class HRAgent(ConventionalAgent):
 
     Attributes
     ----------
-        epsilon : float, greater than 1.0
-            The parameter epsilon controls the number of samples that should be classified as outliers.
-        max_iter : int
-            Maximum number of iterations 
-        alpha : float
-            Regularization parameter.
-        warm_start : bool
-            This is useful if the stored attributes of a previously used model has to be reused. 
-            If set to False, then the coefficients will be rewritten for every call to fit
-        fit_intercept : bool 
-            Whether or not to fit the intercept.
-        tol : float
-            The iteration will stop when max{|proj g_i | i = 1, ..., n} <= tol where pg_i is the i-th component of the projected gradient.
+        model : sklearn.model object
+            conventional agent model
 
     Methods
     -------
@@ -60,6 +49,17 @@ class HRAgent(ConventionalAgent):
                  warm_start=False,
                  fit_intercept=True,
                  tol=1e-05):
+        """Initialize Huber Regressor Agent object
+
+        Args:
+            epsilon (float, optional): The parameter epsilon controls the number of samples that should be classified as outliers.. Defaults to 1.35.
+            max_iter (int, optional): Maximum number of iterations . Defaults to 1000.
+            alpha (float, optional): Regularization parameter.. Defaults to 0.0001.
+            warm_start (bool, optional): This is useful if the stored attributes of a previously used model has to be reused. 
+            If set to False, then the coefficients will be rewritten for every call to fit. Defaults to False.
+            fit_intercept (bool, optional): Whether or not to fit the intercept. Defaults to True.
+            tol (float, optional): The iteration will stop when max{|proj g_i | i = 1, ..., n} <= tol where pg_i is the i-th component of the projected gradient. Defaults to 1e-05.
+        """
 
         self.model = HuberRegressor(epsilon=epsilon,
                                     max_iter=max_iter,

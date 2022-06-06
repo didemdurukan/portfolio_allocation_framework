@@ -17,24 +17,8 @@ class DTAgent(ConventionalAgent):
 
     Attributes
     ----------
-        criterion : {“squared_error”, “friedman_mse”, “absolute_error”, “poisson”}
-            The function to measure the quality of a split.
-        splitter : {“best”, “random”}
-            The strategy used to choose the split at each node.
-        max_depth : int
-            The maximum depth of the tree.
-        min_samples_split : int or float
-            The minimum number of samples required to split an internal node
-        min_samples_leaf : int or float
-            The minimum number of samples required to be at a leaf node
-        min_weight_fraction_leaf : float
-            The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node.
-        max_features : int, float or {“auto”, “sqrt”, “log2”}
-            The number of features to consider when looking for the best split.
-        random_state : int, RandomState instance or None
-            Controls the randomness of the estimator
-        max_leaf_nodes : int
-            Grow a tree with max_leaf_nodes in best-first fashion
+        model : sklearn.model object
+            conventional agent model
 
     Methods
     -------
@@ -71,6 +55,21 @@ class DTAgent(ConventionalAgent):
                  max_leaf_nodes=None,
                  min_impurity_decrease=0,
                  ccp_alpha=0):
+        """Initialize Decision Tree Agent object
+
+        Args:
+            criterion (str, optional): The function to measure the quality of a split. Defaults to "squared_error".
+            splitter (str, optional): The strategy used to choose the split at each node.. Defaults to "best".
+            max_depth (int, optional): The maximum depth of the tree.. Defaults to None.
+            min_samples_split (int, optional): The minimum number of samples required to split an internal node. Defaults to 2.
+            min_samples_leaf (int, optional): The minimum number of samples required to be at a leaf node. Defaults to 1.
+            min_weight_fraction_leaf (float, optional): The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node. Defaults to 0.
+            max_features (int, optional): The number of features to consider when looking for the best split. Defaults to None.
+            random_state (int, optional): Controls the randomness of the estimator. Defaults to None.
+            max_leaf_nodes (int, optional): Grow a tree with max_leaf_nodes in best-first fashion. Defaults to None.
+            min_impurity_decrease (float, optional): A node will be split if this split induces a decrease of the impurity greater than or equal to this value. Defaults to 0.
+            ccp_alpha (float, optional): Complexity parameter used for Minimal Cost-Complexity Pruning. Defaults to 0.
+        """
 
         self.model = DecisionTreeRegressor(criterion=criterion,
                                            splitter=splitter,

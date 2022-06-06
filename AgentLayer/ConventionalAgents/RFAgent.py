@@ -17,40 +17,8 @@ class RFAgent(ConventionalAgent):
 
     Attributes
     ----------
-        criterion : {“squared_error”, “friedman_mse”, “absolute_error”, “poisson”}
-            The function to measure the quality of a split.
-        max_depth : int
-            The maximum depth of the tree.
-        min_samples_split : int or float
-            The minimum number of samples required to split an internal node
-        min_samples_leaf : int or float
-            The minimum number of samples required to be at a leaf node
-        min_weight_fraction_leaf : float
-            The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node.
-        max_features : int, float or {“auto”, “sqrt”, “log2”}
-            The number of features to consider when looking for the best split.
-        max_leaf_nodes : int
-            Grow a tree with max_leaf_nodes in best-first fashion.
-        min_impurity_decrease : float
-            A node will be split if this split induces a decrease of the impurity greater than or equal to this value.
-        bootstrap : bool
-            Whether bootstrap samples are used when building trees.
-        oob_score : bool
-            Whether to use out-of-bag samples to estimate the generalization score. Only available if bootstrap=True.
-        n_jobs : int
-            The number of jobs to run in parallel.
-        random_state : int, RandomState instance or None
-            Controls both the randomness of the bootstrapping of the samples used when building trees 
-            (if bootstrap=True) and the sampling of the features to consider when looking for the best split 
-            at each node (if max_features < n_features).
-        verbose : int
-            Controls the verbosity when fitting and predicting.
-        warm_start : bool
-            When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, 
-            otherwise, just fit a whole new forest
-        ccp_alpha : non-negative float
-            Complexity parameter used for Minimal Cost-Complexity Pruning.
-        max_samples : int or float,
+         model : sklearn.model object
+            conventional agent model
 
 
     Methods
@@ -93,6 +61,27 @@ class RFAgent(ConventionalAgent):
                  warm_start=False,
                  ccp_alpha=0,
                  max_samples=None):
+        """Initialize Random Forest Agent object.
+
+        Args:
+            n_estimators (int, optional): The number of trees in the forest. Defaults to 100.
+            criterion (str, optional): The function to measure the quality of a split. Defaults to "squared_error".
+            max_depth (int, optional): The maximum depth of the tree. Defaults to None.
+            min_samples_split (int, optional): The minimum number of samples required to split an internal node. Defaults to 2.
+            min_samples_leaf (int, optional): The minimum number of samples required to be at a leaf node. Defaults to 1.
+            min_weight_fraction_leaf (int, optional): The minimum weighted fraction of the sum total of weights (of all the input samples) required to be at a leaf node. Defaults to 0.
+            max_features (int, optional): The number of features to consider when looking for the best split. Defaults to 1.  
+            max_leaf_nodes (int, optional): Grow trees with max_leaf_nodes in best-first fashion. Defaults to None.
+            min_impurity_decrease (float, optional): A node will be split if this split induces a decrease of the impurity greater than or equal to this value.. Defaults to 0.
+            bootstrap (bool, optional): Whether bootstrap samples are used when building trees. Defaults to True.
+            oob_score (bool, optional): Whether to use out-of-bag samples to estimate the generalization score. Defaults to False.
+            n_jobs (int, optional): The number of jobs to run in parallel. Defaults to None.
+            random_state (int, optional): Controls both the randomness of the bootstrapping of the samples used when building trees (if bootstrap=True) and the sampling of the features to consider when looking for the best split at each node (if max_features < n_features). Defaults to None.
+            verbose (int, optional): Controls the verbosity when fitting and predicting. Defaults to 0.
+            warm_start (bool, optional): When set to True, reuse the solution of the previous call to fit and add more estimators to the ensemble, otherwise, just fit a whole new forest.. Defaults to False.
+            ccp_alpha (float, optional): Complexity parameter used for Minimal Cost-Complexity Pruning. Defaults to 0.
+            max_samples (int or float, optional): If bootstrap is True, the number of samples to draw from X to train each base estimator. Defaults to None.
+        """
 
         self.model = RandomForestRegressor(n_estimators=n_estimators,
                                            criterion=criterion,

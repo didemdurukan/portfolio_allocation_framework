@@ -17,28 +17,8 @@ class SVRAgent(ConventionalAgent):
 
     Attributes
     ----------
-        kernel : {'linear', 'poly', 'rbf', 'sigmoid', 'precomputed'} or callable
-            Specifies the kernel type to be used in the algorithm.
-        degree : int
-            Degree of the polynomial kernel function ('poly').
-        gamma : {'scale', 'auto'} or
-            Kernel coefficient for 'rbf', 'poly' and 'sigmoid'.
-        coef0 : float
-            Independent term in kernel function. It is only significant in 'poly' and 'sigmoid'.
-        tol : float
-            Tolerance for stopping criterion.
-        C : float
-            Regularization parameter.
-        epsilon : float
-            Epsilon in the epsilon-SVR model.
-        shrinking : bool
-            A node will be split if this split induces a decrease of the impurity greater than or equal to this value.
-        cache_size : float
-            Specify the size of the kernel cache (in MB).
-        verbose : bool
-            Enable verbose output.
-        max_iter : int
-            Hard limit on iterations within solver, or -1 for no limit.
+         model : sklearn.model object
+            conventional agent model
 
     Methods
     -------
@@ -74,6 +54,21 @@ class SVRAgent(ConventionalAgent):
                  cache_size=200,
                  verbose=False,
                  max_iter=-1):
+        """Initializes Support Vector Regressor Agent object.
+
+        Args:
+            kernel (str, optional): Specifies the kernel type to be used in the algorithm. Defaults to 'rbf'.
+            degree (int, optional): Degree of the polynomial kernel function ('poly'). Defaults to 3.
+            gamma (str, optional): Kernel coefficient for 'rbf', 'poly' and 'sigmoid'. Defaults to 'scale'.
+            coef0 (float, optional): Independent term in kernel function. It is only significant in 'poly' and 'sigmoid'.. Defaults to 0.
+            tol (float, optional): Tolerance for stopping criterion. Defaults to 0.001.
+            C (float, optional): Regularization parameter. Defaults to 1.
+            epsilon (float, optional): Epsilon in the epsilon-SVR model.. Defaults to 0.1.
+            shrinking (bool, optional): Whether to use the shrinking heuristic. Defaults to True.
+            cache_size (int, optional): Specify the size of the kernel cache (in MB). Defaults to 200.
+            verbose (bool, optional): Enable verbose output.. Defaults to False.
+            max_iter (int, optional): Hard limit on iterations within solver, or -1 for no limit. Defaults to -1.
+        """
 
         self.model = SVR(kernel=kernel,
                          degree=degree,
