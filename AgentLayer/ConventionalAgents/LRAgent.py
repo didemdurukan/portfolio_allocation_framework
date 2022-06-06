@@ -88,7 +88,7 @@ class LRAgent(ConventionalAgent):
     def predict(self,
                 test_data,
                 initial_capital=1000000,
-                transaction_cost_pct = 0.001,
+                transaction_cost_pct=0.001,
                 tech_indicator_list=config["TEST_PARAMS"]["LR_PARAMS"]["tech_indicator_list"]
                 ):
         """
@@ -98,6 +98,7 @@ class LRAgent(ConventionalAgent):
             test_data (pd.DataFrame): test data
             initial_capital (int) : initial capital
             tech_indicator_list (list) : technical indicators
+            transaction_cost_pct (float) : transaction cost
 
         Returns:
             pd.DataFrame: portfolio with dates and account value
@@ -109,7 +110,8 @@ class LRAgent(ConventionalAgent):
         for i in test_data.tic:
             meta_coefficient[i] = []
         unique_trade_date = test_data.date.unique()
-        weight_arr = [np.array([1/len(test_data.tic.unique())]*len(test_data.tic.unique()))]
+        weight_arr = [
+            np.array([1/len(test_data.tic.unique())]*len(test_data.tic.unique()))]
         portfolio = pd.DataFrame(index=range(1), columns=unique_trade_date)
         portfolio.loc[0, unique_trade_date[0]] = initial_capital
         for i in range(len(unique_trade_date) - 1):
@@ -118,7 +120,7 @@ class LRAgent(ConventionalAgent):
 
             portfolio_value, weight_arr = self._weight_optimization(
                 i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr)
-    
+
         portfolio = portfolio_value
         portfolio = portfolio.T
         portfolio.columns = ['account_value']
@@ -165,14 +167,34 @@ class LRAgent(ConventionalAgent):
         return mu, sigma, tics, df_current, df_next
 
     def _weight_optimization(self, i, unique_trade_date, meta_coefficient, mu, sigma, tics, portfolio, df_current, df_next, transaction_cost_pct, weight_arr):
+        """Optimizes weights using efficient frontier.
+            Helper function for the main predict method.
+
+        Args:
+            i (int): index for the loop
+            unique_trade_date (datetime): unique dates in the test data
+            meta_coefficient (pd.DataFrame): empty DataFrame to be filled with weights and tickers.
+            mu (pd.Series): predicted y values (expected returns)
+            sigma (np.ndarray): covarience matrix
+            tics (list): tickers
+            portfolio (pd.DataFrame): DataFrame to hold portfolio info
+            df_current (pd.DataFrame): current date
+            df_next (pd.DataFrame): next date
+            transaction_cost_pct (float) : transaction cost
+            weight_arr (np.array) : initial weights
+
+        Returns:
+            pd.DataFrame: portfolio 
+        """
         current_date = unique_trade_date[i]
         predicted_y_df = pd.DataFrame(
             {"tic": tics.reshape(-1,), "predicted_y": mu.reshape(-1,)})
         min_weight, max_weight = 0, 1
 
         ef = EfficientFrontier(mu, sigma)
-        w_prev = np.array(weight_arr[-1],dtype=object)
-        ef.add_objective(objective_functions.transaction_cost, w_prev = w_prev, k = transaction_cost_pct)
+        w_prev = np.array(weight_arr[-1], dtype=object)
+        ef.add_objective(objective_functions.transaction_cost,
+                         w_prev=w_prev, k=transaction_cost_pct)
         weights = ef.nonconvex_objective(
             objective_functions.sharpe_ratio,
             objective_args=(ef.expected_returns, ef.cov_matrix),
@@ -184,8 +206,7 @@ class LRAgent(ConventionalAgent):
                 {"type": "ineq", "fun": lambda w: max_weight - w},
             ],
         )
-   
-        
+
         weight_df = {"tic": [], "weight": []}
         meta_coefficient["date"] += [current_date]
 
@@ -212,7 +233,7 @@ class LRAgent(ConventionalAgent):
         next_price = np.array(df_next.close)
         portfolio.iloc[0, i+1] = np.dot(current_shares, next_price)
 
-        return portfolio , weight_arr
+        return portfolio, weight_arr
 
     def save_model(self, file_name):
         """
