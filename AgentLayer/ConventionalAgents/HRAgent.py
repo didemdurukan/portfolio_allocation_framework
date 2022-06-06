@@ -98,14 +98,14 @@ class HRAgent(ConventionalAgent):
                 test_data,
                 initial_capital=1000000,
                 transaction_cost_pct=0.001,
-                tech_indicator_list=config["TEST_PARAMS"]["HR_PARAMS"]["tech_indicator_list"]
+                feature_list=config["TEST_PARAMS"]["HR_PARAMS"]["feature_list"]
                 ):
         """Main prediction method.
 
         Args:
             test_data (pd.DataFrame): test data
             initial_capital (int) : initial capital
-            tech_indicator_list (list) : technical indicators
+            feature_list (list) : a list of features to be used for prediction
             transaction_cost_pct (float) : transaction cost
 
         Returns:
@@ -138,7 +138,7 @@ class HRAgent(ConventionalAgent):
         meta_coefficient = pd.DataFrame(meta_coefficient).set_index("date")
         return portfolio, meta_coefficient
 
-    def _return_predict(self, unique_trade_date, test_data, i, tech_indicator_list):
+    def _return_predict(self, unique_trade_date, test_data, i, feature_list):
         """Predicts the expected return using  technical indicators.
             Helper function for the main predict method.
 
@@ -146,7 +146,7 @@ class HRAgent(ConventionalAgent):
             unique_trade_date (datetime): unique dates in the test data
             test_data (pd.DataFrame): test data
             i (int): index for the loop
-            tech_indicator_list (list): technical indicators
+            feature_list (list) : a list of features to be used for prediction
 
         Returns:
             pd.DataFrame: current date
@@ -165,7 +165,7 @@ class HRAgent(ConventionalAgent):
                             next_date].reset_index(drop=True)
 
         tics = df_current['tic'].values
-        features = df_current[tech_indicator_list].values
+        features = df_current[feature_list].values
 
         predicted_y = self.model.predict(features)
         mu = predicted_y

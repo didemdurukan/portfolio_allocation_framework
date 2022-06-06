@@ -1,18 +1,13 @@
 import itertools
-
 import numpy as np
 import pandas as pd
 from stockstats import StockDataFrame as Sdf
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
 from FinancialDataLayer.DataProcessing.FeatureEngineer import FeatureEngineer
-import yaml
-import os
-from utils import get_project_root
+from utils import read_config_file
 
-ROOT_DIR = get_project_root()
-CONFIG_PATH = os.path.join(ROOT_DIR, 'user_params.yaml')
 
-config = yaml.safe_load(open(CONFIG_PATH))
+config = read_config_file()
 
 
 class DefaultFeatureEngineer(FeatureEngineer):
@@ -65,7 +60,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
             raise ValueError(
                 "Use default cannot be True if technical indicator list is supplied.")
         if use_default is True:
-            self.tech_indicator_list = config["feature_eng_params"]["tech_indicator_list"]
+            self.tech_indicator_list = config["FEATURE_ENG_PARAMS"]["tech_indicator_list"]
         else:
             self.tech_indicator_list = tech_indicator_list
         self.use_default = use_default
@@ -76,6 +71,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
         self.use_turbulence = use_turbulence
         self.df = pd.DataFrame()
         self.df_processed = pd.DataFrame()
+        self.feature_list = []
 
     def extend_data(self, df):
         """Main method to do the feature engineering
@@ -381,17 +377,19 @@ class DefaultFeatureEngineer(FeatureEngineer):
             ['date', 'tic']).reset_index(drop=True)
         return df_processed_full
 
-    def prepare_ml_data(self, train_data):
+    def prepare_ml_data(self, train_data, feature_list):
         """Splits data to X (features) and y (labels)
 
         Args:
             train_data (pd.DataFrame): data to be splitted.
+            feature_list : a list of features to be used for training
         Raises:
             Exception: Raised when provided data does not contain return values
         Returns:
             pd.DataFrame : dataframe that has the features
-            pd.DataFrame : dataframe that has the return values. 
+            pd.DataFrame : dataframe that has the return values.
         """
+        self.feature_list = feature_list
         train_date = sorted(set(train_data.date.values))
         X = []
         for i in range(0, len(train_date) - 1):
@@ -404,12 +402,12 @@ class DefaultFeatureEngineer(FeatureEngineer):
                                d_next].return_list.iloc[0].loc[d_next].reset_index()
             y.columns = ['tic', 'return']
             x = train_data.loc[train_data['date'] ==
-                               d][["tic"] + self.tech_indicator_list]
+                               d][["tic"] + self.feature_list]
             train_piece = pd.merge(x, y, on='tic')
             train_piece['date'] = [d] * len(train_piece)
             X += [train_piece]
         train_data_ml = pd.concat(X)
-        X = train_data_ml[self.tech_indicator_list].values
+        X = train_data_ml[self.feature_list].values
         Y = train_data_ml[['return']].values
 
         return X, Y

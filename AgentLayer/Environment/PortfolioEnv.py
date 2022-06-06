@@ -35,8 +35,8 @@ class PortfolioEnv(Environment):
             state space
         action_space: gym.spaces.Box object  
             action space
-        tech_indicator_list: list  
-            a list of technical indicator names
+        feature_list: list
+            a list of features to be used for the state observations
         lookback: int
             lookback value
         day: int
@@ -76,7 +76,7 @@ class PortfolioEnv(Environment):
         save_action_memory()
             return actions/positions at each time step
         get_env()
-            generates envrionment.
+            generates environment.
 
     """
 
@@ -90,7 +90,7 @@ class PortfolioEnv(Environment):
                  # the dimension of input features (state space)
                  state_space: int,
                  action_space: int,  # number of actions, which is equal to portfolio dimension
-                 tech_indicator_list: list,  # a list of technical indicator names
+                 feature_list: list,  # a list of features to be used as observations
                  lookback=252,  #
                  day=0):  # an increment number to control date
         """Initializer for Portfolio Envrionment object
@@ -112,8 +112,8 @@ class PortfolioEnv(Environment):
                 the dimension of input features (state space)
             action_space: int
                 number of actions, which is equal to portfolio dimension
-            tech_indicator_list: list  
-                a list of technical indicator names
+            feature_list: list
+                a list of features to be used for the state observations
             lookback: int
                 lookback value
             day: int
@@ -131,20 +131,20 @@ class PortfolioEnv(Environment):
         self.reward_scaling = reward_scaling
         self.state_space = state_space
         self.action_space = action_space
-        self.tech_indicator_list = tech_indicator_list
+        self.feature_list = feature_list
 
         # action_space normalization and shape is self.stock_dim
         self.action_space = spaces.Box(
             low=0, high=1, shape=(self.action_space,))
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf,
-                                            shape=(self.state_space + len(self.tech_indicator_list), self.state_space))
+                                            shape=(self.state_space + len(self.feature_list), self.state_space))
 
         # load data from a pandas dataframe
 
         self.data = self.df.loc[self.day, :]
         self.covs = self.data['cov_list'].values[0]
         self.state = np.append(np.array(self.covs), [
-                               self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
+                               self.data[feat].values.tolist() for feat in self.feature_list], axis=0)
         self.terminal = False
         #self.turbulence_threshold = turbulence_threshold
         # initalize state: initial portfolio return + individual stock return + individual weights
@@ -169,7 +169,7 @@ class PortfolioEnv(Environment):
         # load states
         self.covs = self.data['cov_list'].values[0]
         self.state = np.append(np.array(self.covs), [
-                               self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
+                               self.data[feat].values.tolist() for feat in self.feature_list], axis=0)
 
         self.portfolio_value = self.initial_amount
         self.terminal = False
@@ -185,7 +185,7 @@ class PortfolioEnv(Environment):
 
         Returns:
             np.array : state
-            int : reward -> new portfolio value or end portfolo value
+            int : reward -> new portfolio value or end portfolio value
             bool : if terminal state
 
         """
@@ -218,7 +218,7 @@ class PortfolioEnv(Environment):
             self.data = self.df.loc[self.day, :]
             self.covs = self.data['cov_list'].values[0]
             self.state = np.append(np.array(self.covs), [
-                                   self.data[tech].values.tolist() for tech in self.tech_indicator_list], axis=0)
+                                   self.data[feat].values.tolist() for feat in self.feature_list], axis=0)
             portfolio_return = sum(
                 ((self.data.close.values / last_day_memory.close.values) - 1) * weights)
             # update portfolio value

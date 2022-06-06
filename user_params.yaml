@@ -3,6 +3,8 @@ TICKERS: [ "AAPL", "BA", "CAT", "CVX" ]
 TRADE_START_DATE: '2020-07-01'
 TRADE_END_DATE: '2021-09-02'
 
+BASELINE_TICKER: "^DJI"
+
 FEATURE_ENG_PARAMS:
   tech_indicator_list: [
     "macd",
@@ -21,7 +23,7 @@ ENV_PARAMS:
   transaction_cost_pct: 0.001 # transaction cost percentage
   state_space: 4 # number of unique stocks
   stock_dim: 4 # number of unique stocks
-  tech_indicator_list: [
+  feature_list: [
     "macd",
     "boll_ub",
     "boll_lb",
@@ -30,6 +32,7 @@ ENV_PARAMS:
     "dx_30",
     "close_30_sma",
     "close_60_sma",
+    "close"
   ] # technical indicators
   action_space: 4 # number of stocks in training data
   reward_scaling: 0.1 # hyperparameter
@@ -100,7 +103,7 @@ TEST_PARAMS:
     {
       initial_capital: 1000000,
       transaction_cost_pct: 0.001,
-      tech_indicator_list:
+      feature_list:
         [
           "macd",
           "boll_ub",
@@ -110,13 +113,14 @@ TEST_PARAMS:
           "dx_30",
           "close_30_sma",
           "close_60_sma",
+          "close"
         ],
     }
   DT_PARAMS:
     {
       initial_capital: 1000000,
       transaction_cost_pct: 0.001,
-      tech_indicator_list:
+      feature_list:
         [
           "macd",
           "boll_ub",
@@ -126,13 +130,14 @@ TEST_PARAMS:
           "dx_30",
           "close_30_sma",
           "close_60_sma",
+          "close"
         ],
     }
   SVR_PARAMS:
     {
       initial_capital: 1000000,
       transaction_cost_pct: 0.001,
-      tech_indicator_list:
+      feature_list:
         [
           "macd",
           "boll_ub",
@@ -142,13 +147,14 @@ TEST_PARAMS:
           "dx_30",
           "close_30_sma",
           "close_60_sma",
+          "close"
         ],
     }
   LR_PARAMS:
     {
       initial_capital: 1000000,
       transaction_cost_pct: 0.001,
-      tech_indicator_list:
+      feature_list:
         [
           "macd",
           "boll_ub",
@@ -158,13 +164,14 @@ TEST_PARAMS:
           "dx_30",
           "close_30_sma",
           "close_60_sma",
+          "close"
         ],
     }
   HR_PARAMS:
     {
       initial_capital: 1000000,
       transaction_cost_pct: 0.001,
-      tech_indicator_list:
+      feature_list:
         [
           "macd",
           "boll_ub",
@@ -174,6 +181,7 @@ TEST_PARAMS:
           "dx_30",
           "close_30_sma",
           "close_60_sma",
+          "close"
         ],
     }
   A2C_PARAMS: { state: null, episode_start: null, deterministic: True }
