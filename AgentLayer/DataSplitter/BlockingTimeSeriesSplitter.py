@@ -36,6 +36,13 @@ class BlockingTimeSeriesSplitter(TimeSeriesSplit):
         super()._iter_test_indices(X, y, groups)
 
     def __init__(self, n_splits=5, *, test_size=None, gap=0):
+        """Initializer for the BlockingTimeSeriesSplitter object.
+
+        Args:
+            n_splits (int, optional): number of splits. Defaults to 5.
+            test_size (int, optional): size of the test set. Defaults to None.
+            gap (int, optional): Number of samples to exclude from the end of each train set before the test set.. Defaults to 0.
+        """
         super().__init__(n_splits, test_size=test_size, gap=gap)
 
     def get_n_splits(self, X=None, y=None, groups=None):

@@ -34,6 +34,14 @@ class TimeSeriesSplitter(TimeSeriesSplit):
         super()._iter_test_indices(X, y, groups)
 
     def __init__(self, n_splits=5, max_train_size=None, test_size=None, gap=0):
+        """Initializer for the TimeSeriesSplitter object.
+
+        Args:
+            n_splits (int, optional): number of splits. Defaults to 5.
+            max_train_size (int, optional): maximum train size. Defaults to None.
+            test_size (int, optional): size of the test set. Defaults to None.
+            gap (int, optional): Number of samples to exclude from the end of each train set before the test set. Defaults to 0.
+        """
         super().__init__(n_splits, max_train_size=max_train_size, test_size=test_size, gap=gap)
 
     def split(self, X, y=None, groups=None):
@@ -49,7 +57,7 @@ class TimeSeriesSplitter(TimeSeriesSplit):
 
     @staticmethod
     def get_split_data(df, start, end, target_date_col="date"):
-        """_summary_
+        """Splits the data to test data or train data
 
         Args:
             df (pd.DataFrame): Dataframe to be splitted
