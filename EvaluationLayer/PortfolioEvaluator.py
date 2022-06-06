@@ -44,6 +44,12 @@ class PortfolioEvaluator:
     """
 
     def __init__(self, *portfolio_dfs, agent_names):
+        """Constructor for Portfolio Evaluator Class.
+
+        Args:
+            agent_names (list): agent names
+            portfolio_dfs (pd.DataFrame) : portfolios to be evaluated.
+        """
         self.portfolio_dfs = portfolio_dfs
         if agent_names is None:
             self.agent_names = ["Agent" + str(i)
