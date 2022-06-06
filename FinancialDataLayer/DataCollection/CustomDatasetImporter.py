@@ -8,7 +8,7 @@ class CustomDatasetImporter(DatasetCollector):
     ----------
         df: pd.DataFrame
             dataframe to be loaded
-        path: String
+        path: str
             path of the file to be loaded.
     Methods
     -------
@@ -33,5 +33,11 @@ class CustomDatasetImporter(DatasetCollector):
         return self.df
 
     def __init__(self, path="", df=None):
+        """Initializer for the CustomDatasetImporter object.
+
+        Args:
+            path (str, optional): path of the file to be loaded. Defaults to "".
+            df (pd.DataFrame, optional): dataframe to be loaded. Defaults to None.
+        """
         self.df = df
         self.path = path

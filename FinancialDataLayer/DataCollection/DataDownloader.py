@@ -9,15 +9,15 @@ class DataDownloader(DatasetCollector):
 
      Attributes
     ----------
-        start_date: String
+        start_date: str
             date that the data starts from
-        end_date : String
+        end_date : str
             date that the data ends
         ticker_list: List
             tickers to be downloaded
-        interval: String
+        interval: str
             interval to sample the data
-        proxy: String
+        proxy: str
             make each request with a proxy
     Methods
     -------
@@ -29,6 +29,15 @@ class DataDownloader(DatasetCollector):
     """
 
     def __init__(self, start_date: str, end_date: str, ticker_list: list, interval="1d", proxy=None):
+        """Initiliazer for DataDownloader object.
+
+        Args:
+            start_date (str): date that the data starts from
+            end_date (str): date that the data ends
+            ticker_list (list): tickers to be downloaded
+            interval (str, optional):interval to sample the data. Defaults to "1d".
+            proxy (str, optional): make each request with a proxy. Defaults to None.
+        """
         self.start_date = start_date
         self.end_date = end_date
         self.ticker_list = ticker_list

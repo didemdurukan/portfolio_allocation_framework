@@ -44,7 +44,7 @@ class PortfolioEvaluator:
     """
 
     def __init__(self, *portfolio_dfs, agent_names):
-        """Constructor for Portfolio Evaluator Class.
+        """Initiliazer for Portfolio Evaluator object.
 
         Args:
             agent_names (list): agent names
