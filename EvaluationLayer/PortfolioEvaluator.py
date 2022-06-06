@@ -17,8 +17,12 @@ config = yaml.safe_load(open(CONFIG_PATH))
 
 class PortfolioEvaluator:
 
-    def __init__(self, *portfolio_dfs):
+    def __init__(self, *portfolio_dfs, agent_names):
         self.portfolio_dfs = portfolio_dfs
+        if agent_names is None:
+            self.agent_names=["Agent" + str(i) for i in range(len(portfolio_dfs))]
+        else:
+            self.agent_names = agent_names
         self.stats_list = None
 
     def backtest_stats(self, value_col_name="account_value"):
@@ -26,7 +30,7 @@ class PortfolioEvaluator:
         for portfolio in self.portfolio_dfs:
             perf_stats_list.append(self._get_stats(portfolio, value_col_name))
         self.stats_list = perf_stats_list
-        return perf_stats_list
+        return pd.DataFrame(perf_stats_list, index=self.agent_names)
 
     def _get_stats(self, portfolio_df, value_col_name="account_value"):
         dr_test = self._get_daily_return(portfolio_df, value_col_name=value_col_name)
@@ -45,10 +49,11 @@ class PortfolioEvaluator:
                               baseline_end=config["TRADE_END_DATE"],
                               baseline_ticker="^DJI",
                               value_col_name="account_value",
+                              output_col_name="Agent"
                               ):
         df = portfolio_df.copy()
         df["date"] = pd.to_datetime(df["date"])
-        test_returns = self._get_daily_return(df, value_col_name=value_col_name)
+        test_returns = self._get_daily_return(df, value_col_name=value_col_name, output_col_name=output_col_name)
 
         baseline_df = self._get_baseline(
             ticker=baseline_ticker, start=baseline_start, end=baseline_end
@@ -57,7 +62,7 @@ class PortfolioEvaluator:
         baseline_df["date"] = pd.to_datetime(baseline_df["date"], format="%Y-%m-%d")
         baseline_df = pd.merge(df[["date"]], baseline_df, how="left", on="date")
         baseline_df = baseline_df.fillna(method="ffill").fillna(method="bfill")
-        baseline_returns = self._get_daily_return(baseline_df, value_col_name="close")
+        baseline_returns = self._get_daily_return(baseline_df, value_col_name="close", output_col_name="Baseline")
 
         with pyfolio.plotting.plotting_context(font_scale=1.1):
             pyfolio.create_full_tear_sheet(
@@ -70,17 +75,22 @@ class PortfolioEvaluator:
                       baseline_ticker="^DJI",
                       value_col_name="account_value",
                       ):
-        for portfolio in self.portfolio_dfs:
-            self._create_backtest_plot(portfolio, baseline_start, baseline_end, baseline_ticker, value_col_name)
+        for index, portfolio in enumerate(self.portfolio_dfs):
+            self._create_backtest_plot(portfolio,
+                                       baseline_start,
+                                       baseline_end,
+                                       baseline_ticker,
+                                       value_col_name,
+                                       self.agent_names[index])
 
     @staticmethod
-    def _get_daily_return(portfolio_df, value_col_name="account_value"):
+    def _get_daily_return(portfolio_df, value_col_name="account_value", output_col_name="daily_return"):
         df = portfolio_df.copy()
-        df["daily_return"] = df[value_col_name].pct_change(1)
+        df[output_col_name] = df[value_col_name].pct_change(1)
         df["date"] = pd.to_datetime(df["date"])
         df.set_index("date", inplace=True, drop=True)
         df.index = df.index.tz_localize("UTC")
-        return pd.Series(df["daily_return"], index=df.index, dtype='float64')
+        return pd.Series(df[output_col_name], index=df.index, dtype='float64')
 
     @staticmethod
     def _get_baseline(ticker, start, end):
