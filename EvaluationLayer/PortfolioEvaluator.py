@@ -18,6 +18,14 @@ class PortfolioEvaluator:
                 portfolios to be evaluated.
             -agent_names : list
                 agent names
+            -stats_list : list
+                list for statistics.
+            -baseline_start : str
+                start date for downloading data for the baseline ticker
+            -baseline_end : str
+                end date for downloading data for the baseline ticker
+            -baseline_ticker : str
+                baseline ticker
 
         Methods
         -------
@@ -45,8 +53,11 @@ class PortfolioEvaluator:
         """Initiliazer for Portfolio Evaluator object.
 
         Args:
-            agent_names (list): agent names
-            portfolio_dfs (pd.DataFrame) : portfolios to be evaluated.
+            portfolio_dfs (pd.DataFrame) : Portfolio Dataframes.
+            agent_names (list): list of agent names
+            baseline_start (str, optional): start date for downloading data for the baseline ticker. Defaults to config["TRADE_START_DATE"].
+            baseline_end (str, optional): end date for downloading data for the baseline ticker. Defaults to config["TRADE_END_DATE"].
+            baseline_ticker (str, optional): baseline ticker. Defaults to config["BASELINE_TICKER"].
         """
         self.portfolio_dfs = portfolio_dfs
         if agent_names is None:
@@ -62,34 +73,36 @@ class PortfolioEvaluator:
     def backtest_stats(self,
                        value_col_name="account_value",
                        output_col_name="Baseline"):
-        """Gets backtest statistics using _get_stats() helper function.
+        """Gets backtest statistics using _get_portfolio_stats() and _get_baseline_stats helper functions.
 
         Args:
-            value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
-
+            value_col_name (str, optional): Column name in the dataframe for calculating the portfolio statistics. Defaults to "account_value".
+            output_col_name (str, optional): Column name in the dataframe for calculating the baseline statistics. Defaults to "Baseline".
         Returns:
             pd.DataFrame: backtest statistics
         """
         perf_stats_list = []
         index_list = self.agent_names
         for portfolio in self.portfolio_dfs:
-            perf_stats_list.append(self._get_portfolio_stats(portfolio, value_col_name))
+            perf_stats_list.append(
+                self._get_portfolio_stats(portfolio, value_col_name))
         if self.baseline_ticker is not None:
-            baseline_stats = self._get_baseline_stats(output_col_name=output_col_name)
+            baseline_stats = self._get_baseline_stats(
+                output_col_name=output_col_name)
             perf_stats_list.append(baseline_stats)
             index_list.append(self.baseline_ticker)
         self.stats_list = perf_stats_list
         return pd.DataFrame(perf_stats_list, index=index_list)
 
     def _get_portfolio_stats(self, portfolio_df, value_col_name="account_value"):
-        """Calculates performance statistics.
+        """Calculates portfolio statistics.
 
         Args:
             portfolio_df (pd.DataFrame): portfolio data frame
-            value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
+            value_col_name (str, optional): Column name in the dataframe for calculating the portfolio statistics. Defaults to "account_value".
 
         Returns:
-            pd.Series : Performance metrics.
+            pd.Series : Performance statistics.
         """
         dr_test = self._get_daily_return(
             portfolio_df, value_col_name=value_col_name)
@@ -111,9 +124,6 @@ class PortfolioEvaluator:
 
         Args:
             portfolio_df (pd.DataFrame): portfolio data frame
-            baseline_start (str, optional): Start date for baseline. Defaults to config["TRADE_START_DATE"].
-            baseline_end (str, optional): End date for baseline. Defaults to config["TRADE_END_DATE"].
-            baseline_ticker (str, optional): Baseline ticker. Defaults to "^DJI".
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
             output_col_name (str, optional): Output column name. Defaults to "Agent".
         """
@@ -138,6 +148,14 @@ class PortfolioEvaluator:
             )
 
     def _get_baseline_stats(self, output_col_name="daily_return"):
+        """Calculate baseline statistics
+
+        Args:
+            output_col_name (str, optional): Output column in the dataframe. Defaults to "daily_return".
+
+        Returns:
+            pd.Series : Performance statistics.
+        """
 
         baseline_df = self._get_baseline()
         baseline_df["date"] = pd.to_datetime(
@@ -158,9 +176,6 @@ class PortfolioEvaluator:
         """Generates plots using _create_backtest_plots() helper function.
 
         Args:
-            baseline_start (str, optional): Start date for baseline. Defaults to config["TRADE_START_DATE"].
-            baseline_end (str, optional): End date for baseline. Defaults to config["TRADE_END_DATE"].
-            baseline_ticker (str, optional): Baseline ticker. Defaults to "^DJI".
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
         """
         for index, portfolio in enumerate(self.portfolio_dfs):
@@ -175,7 +190,7 @@ class PortfolioEvaluator:
         Args:
             portfolio_df (pd.DataFrame): portfolio data frame
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
-            output_col_name (str, optional): Output column name. Defaults to "Agent".
+            output_col_name (str, optional): Output column name. Defaults to "daily return".
 
         Returns:
             pd.Series: daily return
@@ -188,15 +203,9 @@ class PortfolioEvaluator:
         return pd.Series(df[output_col_name], index=df.index, dtype='float64')
 
     def _get_baseline(self):
-        """Downloads data for the baseline ticker via Yahoo Finance API
-
-        Args:
-            ticker (str): baseline ticker
-            start (str): start date
-            end (str): end date
+        """Gets baseline ticker data via Yahoo Finance API
 
         Returns:
-            pd.DataFrame: downloaded data
+            pd.DataFrame: Data for the baseline ticker.
         """
         return DataDownloader(start_date=self.baseline_start, end_date=self.baseline_end, ticker_list=[self.baseline_ticker]).download_from_yahoo()
-
