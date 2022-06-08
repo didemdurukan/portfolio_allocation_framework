@@ -53,13 +53,13 @@ class PortfolioEnv(Environment):
             if terminal state
         portfolio_value:
             portfolio value
-        asset_memory:
+        asset_memory: pd.DataFrame
             used for memorizing portfolio value at each step
-        portfolio_return_memory: 
+        portfolio_return_memory: pd.DataFrame
             used for memorizing return at each step
-        actions_memory:
+        actions_memory: pd.DataFrame
             actions memory
-        date_memory:
+        date_memory: pd.DataFrame
             date memory
 
 
@@ -181,7 +181,7 @@ class PortfolioEnv(Environment):
     def step(self, actions):
         """Steps the environment with the given action.
         Args:
-            actions (space): action space
+            actions ([int] or [float]) : the action
 
         Returns:
             np.array : state
