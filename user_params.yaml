@@ -1,7 +1,10 @@
 TICKERS: [ "AAPL", "BA", "CAT", "CVX" ]
 
+TRAIN_START_DATE: '2009-01-01'
+TRAIN_END_DATE: '2020-07-01'
+
 TRADE_START_DATE: '2020-07-01'
-TRADE_END_DATE: '2021-09-02'
+TRADE_END_DATE: '2021-09-01'
 
 BASELINE_TICKER: "^DJI"
 
@@ -50,7 +53,7 @@ TRAIN_PARAMS:
 
   A2C_PARAMS:
     {
-      total_timesteps: 1000,
+      total_timesteps: 100000,
       callback: null,
       log_interval: 100,
       eval_env: null,
