@@ -1,14 +1,25 @@
 TICKERS: [ "AAPL", "BA", "CAT", "CVX" ]
 
-TRAIN_START_DATE: '2009-01-01'
-TRAIN_END_DATE: '2020-07-01'
+TRAIN_START_DATE: '2008-01-01'
+#TRAIN_START_DATE: '2009-01-01'
+TRAIN_END_DATE: '2015-12-31'
+#TRAIN_END_DATE: '2020-07-01'
 
-TRADE_START_DATE: '2020-07-01'
-TRADE_END_DATE: '2021-09-01'
+TRADE_START_DATE: '2015-12-31'
+TRADE_END_DATE: '2016-05-15'
+
+#TRADE_START_DATE: '2020-07-01'
+#TRADE_END_DATE: '2022-01-01'
+#TRADE_END_DATE: '2021-09-01'
 
 BASELINE_TICKER: "^DJI"
 
 FEATURE_ENG_PARAMS:
+  use_default: False
+  use_vix: False
+  use_return: True
+  use_turbulence: False
+  use_covar: True
   tech_indicator_list: [
     "macd",
     "boll_ub",

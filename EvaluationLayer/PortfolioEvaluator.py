@@ -2,6 +2,7 @@ from pyfolio import timeseries
 import pyfolio
 import pandas as pd
 from FinancialDataLayer.DataCollection.DataDownloader import DataDownloader
+from EvaluationLayer.Evaluator import Evaluator
 import warnings
 from utils import read_config_file
 
@@ -9,7 +10,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 config = read_config_file()
 
 
-class PortfolioEvaluator:
+class PortfolioEvaluator(Evaluator):
     """Provides methods for portfolio evaluation.
 
         Attributes
@@ -46,7 +47,8 @@ class PortfolioEvaluator:
     """
 
     def __init__(self,
-                 *portfolio_dfs, agent_names,
+                 *portfolio_dfs,
+                 agent_names,
                  baseline_start=config["TRADE_START_DATE"],
                  baseline_end=config["TRADE_END_DATE"],
                  baseline_ticker=config["BASELINE_TICKER"]):
@@ -72,12 +74,12 @@ class PortfolioEvaluator:
 
     def backtest_stats(self,
                        value_col_name="account_value",
-                       output_col_name="Baseline"):
+                       output_col_name="Benchmark"):
         """Gets backtest statistics using _get_portfolio_stats() and _get_baseline_stats helper functions.
 
         Args:
             value_col_name (str, optional): Column name in the dataframe for calculating the portfolio statistics. Defaults to "account_value".
-            output_col_name (str, optional): Column name in the dataframe for calculating the baseline statistics. Defaults to "Baseline".
+            output_col_name (str, optional): Column name in the dataframe for calculating the baseline statistics. Defaults to "Benchmark".
         Returns:
             pd.DataFrame: backtest statistics
         """
@@ -104,8 +106,9 @@ class PortfolioEvaluator:
         Returns:
             pd.Series : Performance statistics.
         """
+        df = portfolio_df.copy()
         dr_test = self._get_daily_return(
-            portfolio_df, value_col_name=value_col_name)
+            df, value_col_name=value_col_name)
         perf_stats = timeseries.perf_stats(
             returns=dr_test,
             factor_returns=None,
@@ -140,7 +143,7 @@ class PortfolioEvaluator:
             df[["date"]], baseline_df, how="left", on="date")
         baseline_df = baseline_df.fillna(method="ffill").fillna(method="bfill")
         baseline_returns = self._get_daily_return(
-            baseline_df, value_col_name="close", output_col_name="Baseline")
+            baseline_df, value_col_name="close", output_col_name="Benchmark")
 
         with pyfolio.plotting.plotting_context(font_scale=1.1):
             pyfolio.create_full_tear_sheet(
@@ -179,7 +182,8 @@ class PortfolioEvaluator:
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
         """
         for index, portfolio in enumerate(self.portfolio_dfs):
-            self._create_backtest_plot(portfolio,
+            df = portfolio.copy()
+            self._create_backtest_plot(df,
                                        value_col_name,
                                        self.agent_names[index])
 

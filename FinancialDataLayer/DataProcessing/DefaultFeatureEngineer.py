@@ -272,7 +272,6 @@ class DefaultFeatureEngineer(FeatureEngineer):
         )
         return turbulence_index
 
-    # TODO: add lookback as parameter
     def _add_covariances(self):
         """Adds covariences as a feature
 
@@ -299,7 +298,7 @@ class DefaultFeatureEngineer(FeatureEngineer):
         df_processed_full = df_processed_full.sort_values(
             ['date', 'tic'])  # sort by date-ticker combination
         df_processed_full = df_processed_full.fillna(
-            0)  # fill the missing data with 0 # TODO: Check if this is a good idea
+            0)  # fill the missing data with 0
 
         # include covariance of stocks as feature depending on 1 year data
         df_processed_full = df_processed_full.sort_values(
@@ -335,7 +334,6 @@ class DefaultFeatureEngineer(FeatureEngineer):
             pd.DataFrame : Dataframe that contains returns values.
         """
         df = self.df_processed.copy()
-        # TODO: Check if some of these preprocessing steps are necessary
         # convert to string temporarily for concatenation purposes
         df['date'] = df['date'].astype(str)
         ticker_list = df["tic"].unique().tolist()  # get ticker types

@@ -60,15 +60,24 @@ class TimeSeriesSplitter(TimeSeriesSplit):
         """Splits the data to test data or train data
 
         Args:
-            df (pd.DataFrame): Dataframe to be splitted
+            df (pd.DataFrame): Dataframe to be split
             start (str): start date
             end (str): end date
             target_date_col (str, optional): target column. Defaults to "date".
 
         Returns:
-            pd.DataFrame: splitted data
+            pd.DataFrame: split data
         """
-        data = df[(df[target_date_col] >= start) & (df[target_date_col] < end)]
+        data = df[(df[target_date_col] >= start) & (df[target_date_col] <= end)]
         data = data.sort_values([target_date_col, "tic"], ignore_index=True)
         data.index = data[target_date_col].factorize()[0]
         return data
+
+    @staticmethod
+    def get_next_df_date(df, date, day=1):
+        index = df[df["date"] > date].index.unique()
+        if len(df.index) > 0:
+            index_of_next_date = index[day - 1]
+            return df.loc[index_of_next_date].date.unique()[0]
+        else:
+            return -1

@@ -15,8 +15,6 @@ class DataDownloader(DatasetCollector):
             date that the data ends
         ticker_list: List
             tickers to be downloaded
-        interval: str
-            interval to sample the data
         proxy: str
             make each request with a proxy
     Methods
@@ -28,20 +26,18 @@ class DataDownloader(DatasetCollector):
 
     """
 
-    def __init__(self, start_date: str, end_date: str, ticker_list: list, interval="1d", proxy=None):
+    def __init__(self, start_date: str, end_date: str, ticker_list: list, proxy=None):
         """Initiliazer for DataDownloader object.
 
         Args:
             start_date (str): date that the data starts from
             end_date (str): date that the data ends
             ticker_list (list): tickers to be downloaded
-            interval (str, optional):interval to sample the data. Defaults to "1d".
             proxy (str, optional): make each request with a proxy. Defaults to None.
         """
         self.start_date = start_date
         self.end_date = end_date
         self.ticker_list = ticker_list
-        self.interval = interval
         self.proxy = proxy
 
     def collect(self):
@@ -71,7 +67,7 @@ class DataDownloader(DatasetCollector):
         # Download and save the data in a pandas DataFrame:
         data_df = pd.DataFrame()
         for tic in self.ticker_list:
-            temp_df = yf.download(tic, start=self.start_date, end=self.end_date, interval=self.interval,
+            temp_df = yf.download(tic, start=self.start_date, end=self.end_date, interval="1d",
                                   proxy=self.proxy)
             temp_df["tic"] = tic
             data_df = pd.concat([data_df, temp_df])
@@ -98,11 +94,6 @@ class DataDownloader(DatasetCollector):
         # create day of the week column (monday = 0)
         data_df["day"] = data_df["date"].dt.dayofweek
         # convert date to standard string format, easy to filter
-
-        # if self.interval in ["1m", "2m", "5m", "15m", "30m”, “60m", "90m", "1h"]:
-        #     data_df["date"] = data_df.date.apply(lambda x: x.strftime("%Y-%m-%d-%HH-%MM"))
-        # else:
-        #     data_df["date"] = data_df.date.apply(lambda x: x.strftime("%Y-%m-%d"))
         # drop missing data
         data_df = data_df.dropna()
         data_df = data_df.reset_index(drop=True)
