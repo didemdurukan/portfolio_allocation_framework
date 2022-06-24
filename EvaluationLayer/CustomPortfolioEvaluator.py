@@ -77,13 +77,11 @@ class CustomPortfolioEvaluator(Evaluator):
         self.benchmark_df = None
 
     def backtest_stats(self,
-                       value_col_name="account_value",
-                       output_col_name="Agent"):
+                       value_col_name="account_value"):
         """Gets backtest statistics using _get_portfolio_stats() and _get_benchmark_stats helper functions.
 
         Args:
             value_col_name (str, optional): Column name in the dataframe for calculating the portfolio statistics. Defaults to "account_value".
-            output_col_name (str, optional): Column name in the dataframe for calculating the benchmark statistics. Defaults to "Benchmark".
         Returns:
             pd.DataFrame: backtest statistics
         """
@@ -120,7 +118,6 @@ class CustomPortfolioEvaluator(Evaluator):
             transactions=None,
             turnover_denom="AGB"
         )
-        dr_test_sr = dr_test.values[1:].copy()
         benchmark_df = self.benchmark_df if self.benchmark_df is not None else self._get_benchmark()
         self.benchmark_df = benchmark_df.copy()
         benchmark_return_df = pd.DataFrame(
@@ -131,8 +128,8 @@ class CustomPortfolioEvaluator(Evaluator):
         benchmark_returns = pd.Series(benchmark_return_df["daily_return"], index=benchmark_return_df.index,
                                       dtype='float64')
         benchmark_sr_est = estimated_sharpe_ratio(benchmark_returns)
-        psr_portfolio_against_benchmark = probabilistic_sharpe_ratio(dr_test_sr, sr_benchmark=benchmark_sr_est)
-        psr_portfolio_against_zero = probabilistic_sharpe_ratio(dr_test_sr, sr_benchmark=0)
+        psr_portfolio_against_benchmark = probabilistic_sharpe_ratio(dr_test, sr_benchmark=benchmark_sr_est)
+        psr_portfolio_against_zero = probabilistic_sharpe_ratio(dr_test, sr_benchmark=0)
         perf_stats = perf_stats.copy().append(pd.Series({"Prob. Sharpe (vs benchmark)": psr_portfolio_against_benchmark,
                                                          "Prob. Sharpe (vs zero skill)": psr_portfolio_against_zero}))
         return perf_stats
@@ -140,20 +137,18 @@ class CustomPortfolioEvaluator(Evaluator):
     def _create_backtest_plot(self,
                               portfolio_df,
                               value_col_name="account_value",
-                              output_col_name="Agent"
-                              ):
+                              agent_label="Agent"):
         """Creates backtest plots
 
         Args:
             portfolio_df (pd.DataFrame): portfolio data frame
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
-            output_col_name (str, optional): Output column name. Defaults to "Agent".
         """
         df = portfolio_df.copy()
         df["date"] = pd.to_datetime(df["date"])
         test_returns = self._get_daily_return(
             df, value_col_name=value_col_name)
-
+        test_returns.name = agent_label  # agent label determines the label for the agent
         benchmark_df = self.benchmark_df if self.benchmark_df is not None else self._get_benchmark()
         self.benchmark_df = benchmark_df.copy()
 
@@ -165,11 +160,11 @@ class CustomPortfolioEvaluator(Evaluator):
         benchmark_return_df = pd.DataFrame(
             benchmark_df.groupby(["date", "tic"], as_index=False)["close"].sum().pivot("date", "tic").pct_change(
                 1).mean(axis=1),
-            columns=[output_col_name])
+            columns=["daily_return"])
         benchmark_return_df.index = benchmark_return_df.index.tz_localize("UTC")
-        benchmark_returns = pd.Series(benchmark_return_df[output_col_name], index=benchmark_return_df.index,
-                                      dtype='float64')
-
+        benchmark_returns = pd.Series(benchmark_return_df["daily_return"], index=benchmark_return_df.index,
+                                      dtype='float64',
+                                      name="Uniform Buy and Hold")  # name determines the label for the benchmark
         # define plotting region (1 row, 2 columns)
         plt.rcParams.update({'axes.titlesize': 'large',
                              'axes.labelsize': 'large',
@@ -195,7 +190,6 @@ class CustomPortfolioEvaluator(Evaluator):
         """Calculate benchmark statistics
 
         Args:
-            output_col_name (str, optional): Output column in the dataframe. Defaults to "daily_return".
 
         Returns:
             pd.Series : Performance statistics.
@@ -205,7 +199,7 @@ class CustomPortfolioEvaluator(Evaluator):
         benchmark_return_df = pd.DataFrame(
             benchmark_df.groupby(["date", "tic"], as_index=False)["close"].sum().pivot("date", "tic").pct_change(
                 1).mean(axis=1),
-            columns=["daily_return"])
+            columns=["daily_return"]).dropna()
         benchmark_return_df.index = benchmark_return_df.index.tz_localize("UTC")
         benchmark_returns = pd.Series(benchmark_return_df["daily_return"], index=benchmark_return_df.index,
                                       dtype='float64')
@@ -216,10 +210,9 @@ class CustomPortfolioEvaluator(Evaluator):
             transactions=None,
             turnover_denom="AGB"
         )
-        benchmark_returns_sr = benchmark_returns.values[1:].copy()
         benchmark_sr_est = estimated_sharpe_ratio(benchmark_returns)
-        psr_benchmark_against_itself = probabilistic_sharpe_ratio(benchmark_returns_sr, sr_benchmark=benchmark_sr_est)
-        psr_benchmark_against_zero = probabilistic_sharpe_ratio(benchmark_returns_sr, sr_benchmark=0)
+        psr_benchmark_against_itself = probabilistic_sharpe_ratio(benchmark_returns, sr_benchmark=benchmark_sr_est)
+        psr_benchmark_against_zero = probabilistic_sharpe_ratio(benchmark_returns, sr_benchmark=0)
         benchmark_perf_stats = benchmark_perf_stats.copy().append(
             pd.Series({"Prob. Sharpe (vs benchmark)": psr_benchmark_against_itself,
                        "Prob. Sharpe (vs zero skill)": psr_benchmark_against_zero}).copy())
@@ -252,7 +245,7 @@ class CustomPortfolioEvaluator(Evaluator):
         df["date"] = pd.to_datetime(df["date"])
         df.set_index("date", inplace=True, drop=True)
         df.index = df.index.tz_localize("UTC")
-        returns = pd.Series(df["daily_return"], index=df.index, dtype='float64')
+        returns = pd.Series(df["daily_return"], index=df.index, dtype='float64').dropna()
         return returns
 
     def _get_benchmark(self):
