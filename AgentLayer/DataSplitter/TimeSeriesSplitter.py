@@ -75,6 +75,16 @@ class TimeSeriesSplitter(TimeSeriesSplit):
 
     @staticmethod
     def get_next_df_date(df, date, day=1):
+        """Gets the next date in the given dataframe
+
+        Args:
+            df (pd.DataFrame): Dataframe containing financial data
+            date (str): start date
+            day (int): end date
+
+        Returns:
+            next date in the Dataframe
+        """
         index = df[df["date"] > date].index.unique()
         if len(df.index) > 0:
             index_of_next_date = index[day - 1]

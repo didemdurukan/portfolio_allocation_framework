@@ -255,7 +255,7 @@ def deflated_sharpe_ratio(trials_returns=None, returns_selected=None, expected_m
 
     returns_selected: pd.Series
     expected_mean_sr: float
-        Expected mean SR, usually 0. We assume that random startegies will have a mean SR of 0,
+        Expected mean SR, usually 0. We assume that random strategies will have a mean SR of 0,
         expressed in the same frequency as the other parameters.
 
     expected_max_sr: float
