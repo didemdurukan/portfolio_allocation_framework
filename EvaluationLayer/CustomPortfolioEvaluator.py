@@ -30,6 +30,7 @@ class CustomPortfolioEvaluator(Evaluator):
                 end date for downloading data for the benchmark ticker
             -benchmark_tickers : str
                 benchmark ticker
+            -benchmark-df : pd.DataFrame
 
         Methods
         -------
@@ -149,6 +150,8 @@ class CustomPortfolioEvaluator(Evaluator):
         test_returns = self._get_daily_return(
             df, value_col_name=value_col_name)
         test_returns.name = agent_label  # agent label determines the label for the agent
+        print("Stats for agent:", agent_label)
+        print("*********************************************************************************")
         benchmark_df = self.benchmark_df if self.benchmark_df is not None else self._get_benchmark()
         self.benchmark_df = benchmark_df.copy()
 
@@ -175,7 +178,7 @@ class CustomPortfolioEvaluator(Evaluator):
             fig, axes = plt.subplots(nrows=1, ncols=2, sharey="all")
             sns.distplot(pd.Series(test_returns[1:]), hist=True, kde=True, color='forestgreen',
                          bins=len(df) // 2, ax=axes[0])
-            axes[0].set(xlabel='Daily Return', ylabel='Density', title=self.agent_names[0])
+            axes[0].set(xlabel='Daily Return', ylabel='Density', title=agent_label)
             sns.distplot(pd.Series(benchmark_returns[1:]), hist=True, kde=True, color='gray',
                          bins=len(df) // 2, ax=axes[1])
             axes[1].set(xlabel='Daily Return', ylabel='Density', title='Uniform Buy and Hold')
