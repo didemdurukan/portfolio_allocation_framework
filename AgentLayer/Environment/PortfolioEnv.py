@@ -231,7 +231,7 @@ class PortfolioEnv(Environment):
             self.date_memory.append(self.data["date"].unique()[0])
             self.asset_memory.append(new_portfolio_value)
 
-            # the reward is the new portfolio value or end portfolo value
+            # the reward is the new portfolio value or end portfolio value
             self.reward = new_portfolio_value
 
         return self.state, self.reward, self.terminal, {}
