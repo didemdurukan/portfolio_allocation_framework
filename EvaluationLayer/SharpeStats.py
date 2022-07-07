@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats as scipy_stats
 
+#implementation inspired by https://github.com/rubenbriones/Probabilistic-Sharpe-Ratio
+
 
 def estimated_sharpe_ratio(returns):
     """
