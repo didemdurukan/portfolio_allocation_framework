@@ -13,7 +13,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 config = read_config_file()
 
 
-class CustomPortfolioEvaluator(Evaluator):
+class ExtendedPortfolioEvaluator(Evaluator):
     """Provides methods for portfolio evaluation.
 
         Attributes
@@ -56,7 +56,7 @@ class CustomPortfolioEvaluator(Evaluator):
                  benchmark_start=config["TRADE_START_DATE"],
                  benchmark_end=config["TRADE_END_DATE"],
                  benchmark_tickers=config["TICKERS"]):
-        """Initiliazer for Portfolio Evaluator object.
+        """Initiliazer for ExtendedPortfolioEvaluator object.
 
         Args:
             portfolio_dfs (pd.DataFrame) : Portfolio Dataframes.
@@ -144,6 +144,7 @@ class CustomPortfolioEvaluator(Evaluator):
         Args:
             portfolio_df (pd.DataFrame): portfolio data frame
             value_col_name (str, optional): Column name in the dataframe for calculating the statistics. Defaults to "account_value".
+            agent_label (str, optional): Agent label in the plot. Defaults to "Agent".
         """
         df = portfolio_df.copy()
         df["date"] = pd.to_datetime(df["date"])
@@ -168,7 +169,7 @@ class CustomPortfolioEvaluator(Evaluator):
         benchmark_returns = pd.Series(benchmark_return_df["daily_return"], index=benchmark_return_df.index,
                                       dtype='float64',
                                       name="Uniform Buy and Hold")  # name determines the label for the benchmark
-        # define plotting region (1 row, 2 columns)
+        print(benchmark_returns)
         plt.rcParams.update({'axes.titlesize': 'large',
                              'axes.labelsize': 'large',
                              'ytick.labelsize': 'large',
