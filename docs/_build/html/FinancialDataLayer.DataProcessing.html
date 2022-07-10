@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinancialDataLayer.DataProcessing package &mdash; UniFi July 2022 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="utils module" href="utils.html" />
+    <link rel="prev" title="FinancialDataLayer.DataCollection package" href="FinancialDataLayer.DataCollection.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> UniFi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uniFi</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AgentLayer.html">AgentLayer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EvaluationLayer.html">EvaluationLayer package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="FinancialDataLayer.html">FinancialDataLayer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="FinancialDataLayer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="FinancialDataLayer.DataCollection.html">FinancialDataLayer.DataCollection package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">FinancialDataLayer.DataProcessing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#financialdatalayer-test-dowloader-module">FinancialDataLayer.test_dowloader module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#module-FinancialDataLayer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UniFi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">uniFi</a> &raquo;</li>
+          <li><a href="FinancialDataLayer.html">FinancialDataLayer package</a> &raquo;</li>
+      <li>FinancialDataLayer.DataProcessing package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/FinancialDataLayer.DataProcessing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="financialdatalayer-dataprocessing-package">
+<h1>FinancialDataLayer.DataProcessing package<a class="headerlink" href="#financialdatalayer-dataprocessing-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-FinancialDataLayer.DataProcessing.CustomFeatureEngineer">
+<span id="financialdatalayer-dataprocessing-customfeatureengineer-module"></span><h2>FinancialDataLayer.DataProcessing.CustomFeatureEngineer module<a class="headerlink" href="#module-FinancialDataLayer.DataProcessing.CustomFeatureEngineer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataProcessing.CustomFeatureEngineer.</span></span><span class="sig-name descname"><span class="pre">CustomFeatureEngineer</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer" title="FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeatureEngineer</span></code></a></p>
+<p>Provides methods for applying custom feature engineering to
+the current dataframe.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.df_processed">
+<span class="sig-name descname"><span class="pre">df_processed</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.df_processed" title="Permalink to this definition"></a></dt>
+<dd><p>processed dataframe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.custom_df">
+<span class="sig-name descname"><span class="pre">custom_df</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.custom_df" title="Permalink to this definition"></a></dt>
+<dd><p>Dataframe that contains the column to be concatenated to the original dataframe as a new a feature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.df">
+<span class="sig-name descname"><span class="pre">df</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.df" title="Permalink to this definition"></a></dt>
+<dd><p>dataframe to be processed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.extend_data">
+<span class="sig-name descname"><span class="pre">extend_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer.extend_data" title="Permalink to this definition"></a></dt>
+<dd><p>main method that calls the function that adds custom features</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer._add_user_defined_feature">
+<span class="sig-name descname"><span class="pre">_add_user_defined_feature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.CustomFeatureEngineer.CustomFeatureEngineer._add_user_defined_feature" title="Permalink to this definition"></a></dt>
+<dd><p>adds user defined features to the dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">extend_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Calls the method that adds user defined features to the provided dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>original_df</strong> (<em>pd.DataFrame</em>) – dataframe to extend</p></li>
+<li><p><strong>custom_df</strong> (<em>pd.DataFrame</em>) – custom dataframe containing the new column to be added to the original dataframe</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>merged dataframe</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataProcessing.DefaultFeatureEngineer">
+<span id="financialdatalayer-dataprocessing-defaultfeatureengineer-module"></span><h2>FinancialDataLayer.DataProcessing.DefaultFeatureEngineer module<a class="headerlink" href="#module-FinancialDataLayer.DataProcessing.DefaultFeatureEngineer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.</span></span><span class="sig-name descname"><span class="pre">DefaultFeatureEngineer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tech_indicator_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_covar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">252</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_vix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_turbulence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer" title="FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeatureEngineer</span></code></a></p>
+<p>Provides methods for feature engineer to apply to security price data</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.tech_indicator_list">
+<span class="sig-name descname"><span class="pre">tech_indicator_list</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.tech_indicator_list" title="Permalink to this definition"></a></dt>
+<dd><p>a list of technical indicator names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.use_turbulence">
+<span class="sig-name descname"><span class="pre">use_turbulence</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.use_turbulence" title="Permalink to this definition"></a></dt>
+<dd><p>use turbulence index or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.user_defined_feature">
+<span class="sig-name descname"><span class="pre">user_defined_feature</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.user_defined_feature" title="Permalink to this definition"></a></dt>
+<dd><p>user defined features or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.extend_data">
+<span class="sig-name descname"><span class="pre">extend_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.extend_data" title="Permalink to this definition"></a></dt>
+<dd><p>main method that does feature engineering</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._clean_data">
+<span class="sig-name descname"><span class="pre">_clean_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._clean_data" title="Permalink to this definition"></a></dt>
+<dd><p>cleans the raw data and deals with missing values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_technical_indicator">
+<span class="sig-name descname"><span class="pre">_add_technical_indicator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_technical_indicator" title="Permalink to this definition"></a></dt>
+<dd><p>calculates technical indicators and uses stockstats package to add technical inidactors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_vix">
+<span class="sig-name descname"><span class="pre">_add_vix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_vix" title="Permalink to this definition"></a></dt>
+<dd><p>adds vix from Yahoo Finance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_turbulence">
+<span class="sig-name descname"><span class="pre">_add_turbulence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_turbulence" title="Permalink to this definition"></a></dt>
+<dd><p>adds turbulence index from a precalculated dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._calculate_turbulence">
+<span class="sig-name descname"><span class="pre">_calculate_turbulence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._calculate_turbulence" title="Permalink to this definition"></a></dt>
+<dd><p>calculate turbulence index based on dow 30</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.__add_covariances">
+<span class="sig-name descname"><span class="pre">__add_covariances</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.__add_covariances" title="Permalink to this definition"></a></dt>
+<dd><p>adds covariences to the dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_returns">
+<span class="sig-name descname"><span class="pre">_add_returns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer._add_returns" title="Permalink to this definition"></a></dt>
+<dd><p>adds returns to the dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.prepare_ml_data">
+<span class="sig-name descname"><span class="pre">prepare_ml_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.DefaultFeatureEngineer.DefaultFeatureEngineer.prepare_ml_data" title="Permalink to this definition"></a></dt>
+<dd><p>splits into train_X and train_Y</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">extend_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Main method to do the feature engineering</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – dataframe to be processed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed dataframe.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">prepare_ml_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Splits data to X (features) and y (labels)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_data</strong> (<em>pd.DataFrame</em>) – data to be splitted.</p></li>
+<li><p><strong>feature_list</strong> – a list of features to be used for training</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – Raised when provided data does not contain return values</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dataframe that has the features
+pd.DataFrame : dataframe that has the return values.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataProcessing.FeatureEngineer">
+<span id="financialdatalayer-dataprocessing-featureengineer-module"></span><h2>FinancialDataLayer.DataProcessing.FeatureEngineer module<a class="headerlink" href="#module-FinancialDataLayer.DataProcessing.FeatureEngineer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataProcessing.FeatureEngineer.</span></span><span class="sig-name descname"><span class="pre">FeatureEngineer</span></span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Defines the base structure of featurer engineer classes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer.exten_data">
+<span class="sig-name descname"><span class="pre">exten_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer.exten_data" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer.extend_data">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extend_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataProcessing.FeatureEngineer.FeatureEngineer.extend_data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataProcessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-FinancialDataLayer.DataProcessing" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="FinancialDataLayer.DataCollection.html" class="btn btn-neutral float-left" title="FinancialDataLayer.DataCollection package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Baris Özakar,Emine Didem Durukan,Dogan Parlak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

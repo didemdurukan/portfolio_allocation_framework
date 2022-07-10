@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EvaluationLayer package &mdash; UniFi July 2022 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FinancialDataLayer package" href="FinancialDataLayer.html" />
+    <link rel="prev" title="AgentLayer.metrics package" href="AgentLayer.metrics.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> UniFi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uniFi</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AgentLayer.html">AgentLayer package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">EvaluationLayer package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-EvaluationLayer.Evaluator">EvaluationLayer.Evaluator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-EvaluationLayer.ExtendedPortfolioEvaluator">EvaluationLayer.ExtendedPortfolioEvaluator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-EvaluationLayer.PortfolioEvaluator">EvaluationLayer.PortfolioEvaluator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-EvaluationLayer.SharpeStats">EvaluationLayer.SharpeStats module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-EvaluationLayer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="FinancialDataLayer.html">FinancialDataLayer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UniFi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">uniFi</a> &raquo;</li>
+      <li>EvaluationLayer package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/EvaluationLayer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="evaluationlayer-package">
+<h1>EvaluationLayer package<a class="headerlink" href="#evaluationlayer-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-EvaluationLayer.Evaluator">
+<span id="evaluationlayer-evaluator-module"></span><h2>EvaluationLayer.Evaluator module<a class="headerlink" href="#module-EvaluationLayer.Evaluator" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EvaluationLayer.Evaluator.Evaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EvaluationLayer.Evaluator.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><a class="headerlink" href="#EvaluationLayer.Evaluator.Evaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.Evaluator.Evaluator.backtest_plot">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">backtest_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.Evaluator.Evaluator.backtest_plot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.Evaluator.Evaluator.backtest_stats">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">backtest_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.Evaluator.Evaluator.backtest_stats" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EvaluationLayer.ExtendedPortfolioEvaluator">
+<span id="evaluationlayer-extendedportfolioevaluator-module"></span><h2>EvaluationLayer.ExtendedPortfolioEvaluator module<a class="headerlink" href="#module-EvaluationLayer.ExtendedPortfolioEvaluator" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EvaluationLayer.ExtendedPortfolioEvaluator.</span></span><span class="sig-name descname"><span class="pre">ExtendedPortfolioEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">portfolio_dfs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2015-12-31'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2016-05-15'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_tickers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['AAPL',</span> <span class="pre">'BA',</span> <span class="pre">'CAT',</span> <span class="pre">'CVX']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EvaluationLayer.Evaluator.Evaluator" title="EvaluationLayer.Evaluator.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a></p>
+<p>Provides methods for portfolio evaluation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-portfolio_dfs</span></span></dt>
+<dd><p>portfolios to be evaluated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-agent_names</span></span></dt>
+<dd><p>agent names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-stats_list</span></span></dt>
+<dd><p>list for statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_start</span></span></dt>
+<dd><p>start date for downloading data for the benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_end</span></span></dt>
+<dd><p>end date for downloading data for the benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_tickers</span></span></dt>
+<dd><p>benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark-df</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator.backtest_stats">
+<span class="sig-name descname"><span class="pre">backtest_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator.backtest_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates backtest statistics using _get_stats() helper function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator._get_stats">
+<span class="sig-name descname"><span class="pre">_get_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator._get_stats" title="Permalink to this definition"></a></dt>
+<dd><p>gets the performance statistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator._create_backtest_plots">
+<span class="sig-name descname"><span class="pre">_create_backtest_plots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator._create_backtest_plots" title="Permalink to this definition"></a></dt>
+<dd><p>creates backtest plots.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-backtest_plot()</span></span></dt>
+<dd><p>generates plots using _create_backtest_plots()
+helper function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-_get_daily_return()</span></span></dt>
+<dd><p>Gets daily return.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-_get_benchmark()</span></span></dt>
+<dd><p>downloads the data of the benchmark from Yahoo API</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator.backtest_plot">
+<span class="sig-name descname"><span class="pre">backtest_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_col_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'account_value'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.ExtendedPortfolioEvaluator.ExtendedPortfolioEvaluator.backtest_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Generates plots using _create_backtest_plots() helper function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value_col_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name in the dataframe for calculating the statistics. Defaults to “account_value”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">backtest_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_col_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'account_value'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Gets backtest statistics using _get_portfolio_stats() and _get_benchmark_stats helper functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value_col_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name in the dataframe for calculating the portfolio statistics. Defaults to “account_value”.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>backtest statistics</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EvaluationLayer.PortfolioEvaluator">
+<span id="evaluationlayer-portfolioevaluator-module"></span><h2>EvaluationLayer.PortfolioEvaluator module<a class="headerlink" href="#module-EvaluationLayer.PortfolioEvaluator" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EvaluationLayer.PortfolioEvaluator.</span></span><span class="sig-name descname"><span class="pre">PortfolioEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">portfolio_dfs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2015-12-31'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'2016-05-15'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark_ticker</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^DJI'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#EvaluationLayer.Evaluator.Evaluator" title="EvaluationLayer.Evaluator.Evaluator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Evaluator</span></code></a></p>
+<p>Provides methods for portfolio evaluation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-portfolio_dfs</span></span></dt>
+<dd><p>portfolios to be evaluated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-agent_names</span></span></dt>
+<dd><p>agent names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-stats_list</span></span></dt>
+<dd><p>list for statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_start</span></span></dt>
+<dd><p>start date for downloading data for the benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_end</span></span></dt>
+<dd><p>end date for downloading data for the benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark_ticker</span></span></dt>
+<dd><p>benchmark ticker</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-benchmark-df</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator.backtest_stats">
+<span class="sig-name descname"><span class="pre">backtest_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator.backtest_stats" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates backtest statistics using _get_stats() helper function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator._get_stats">
+<span class="sig-name descname"><span class="pre">_get_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator._get_stats" title="Permalink to this definition"></a></dt>
+<dd><p>gets the performance statistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator._create_backtest_plots">
+<span class="sig-name descname"><span class="pre">_create_backtest_plots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator._create_backtest_plots" title="Permalink to this definition"></a></dt>
+<dd><p>creates backtest plots.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-backtest_plot()</span></span></dt>
+<dd><p>generates plots using _create_backtest_plots()
+helper function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-_get_daily_return()</span></span></dt>
+<dd><p>Gets daily return.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-_get_benchmark()</span></span></dt>
+<dd><p>downloads the data of the benchmark from Yahoo API</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator.backtest_plot">
+<span class="sig-name descname"><span class="pre">backtest_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_col_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'account_value'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.PortfolioEvaluator.PortfolioEvaluator.backtest_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Generates plots using _create_backtest_plots() helper function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value_col_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name in the dataframe for calculating the statistics. Defaults to “account_value”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">backtest_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_col_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'account_value'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Gets backtest statistics using _get_portfolio_stats() and _get_benchmark_stats helper functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value_col_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Column name in the dataframe for calculating the portfolio statistics. Defaults to “account_value”.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>backtest statistics</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EvaluationLayer.SharpeStats">
+<span id="evaluationlayer-sharpestats-module"></span><h2>EvaluationLayer.SharpeStats module<a class="headerlink" href="#module-EvaluationLayer.SharpeStats" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.ann_estimated_sharpe_ratio">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">ann_estimated_sharpe_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">261</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.ann_estimated_sharpe_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the annualized estimated sharpe ratio (risk_free=0).
+:param returns:
+:type returns: np.array, pd.Series, pd.DataFrame
+:param periods: How many items in <cite>returns</cite> complete a Year.</p>
+<blockquote>
+<div><p>If returns are daily: 261, weekly: 52, monthly: 12, …</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sr</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Sharpe ratio to be annualized, it’s frequency must be coherent with <cite>periods</cite></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float, pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.deflated_sharpe_ratio">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">deflated_sharpe_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trials_returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">returns_selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_mean_sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_max_sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.deflated_sharpe_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Deflated Sharpe Ratio (PSR).
+:param trials_returns: All trials returns, not only the independent trials.
+:type trials_returns: pd.DataFrame
+:param returns_selected:
+:type returns_selected: pd.Series
+:param expected_mean_sr: Expected mean SR, usually 0. We assume that random strategies will have a mean SR of 0,</p>
+<blockquote>
+<div><p>expressed in the same frequency as the other parameters.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expected_max_sr</strong> (<em>float</em>) – The expected maximum sharpe ratio expected after running all the trials,
+expressed in the same frequency as the other parameters.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>DFS = PSR(SR⁰) = probability that SR^ &gt; SR⁰
+SR^ = sharpe ratio estimated with <cite>returns</cite>, or <cite>sr</cite>
+SR⁰ = <cite>max_expected_sr</cite>
+<a class="reference external" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2460551">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2460551</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.estimated_sharpe_ratio">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">estimated_sharpe_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.estimated_sharpe_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the estimated sharpe ratio (risk_free=0).
+:param returns:
+:type returns: np.array, pd.Series, pd.DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float, pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.estimated_sharpe_ratio_stdev">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">estimated_sharpe_ratio_stdev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skew</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kurtosis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.estimated_sharpe_ratio_stdev" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the standard deviation of the sharpe ratio estimation.
+:param returns: If no <cite>returns</cite> are passed it is mandatory to pass the other 4 parameters.
+:type returns: np.array, pd.Series, pd.DataFrame
+:param n: Number of returns samples used for calculating <cite>skew</cite>, <cite>kurtosis</cite> and <cite>sr</cite>.
+:type n: int
+:param skew: The third moment expressed in the same frequency as the other parameters.</p>
+<blockquote>
+<div><p><a href="#id2"><span class="problematic" id="id3">`</span></a>skew`=0 for normal returns.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kurtosis</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – The fourth moment expressed in the same frequency as the other parameters.
+<a href="#id4"><span class="problematic" id="id5">`</span></a>kurtosis`=3 for normal returns.</p></li>
+<li><p><strong>sr</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Sharpe ratio expressed in the same frequency as the other parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float, pd.Series</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This formula generalizes for both normal and non-normal returns.
+<a class="reference external" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.expected_maximum_sr">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">expected_maximum_sr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trials_returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_mean_sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials_sr_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.expected_maximum_sr" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the expected maximum Sharpe ratio (Analytically)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trials_returns</strong> (<em>pd.DataFrame</em>) – All trials returns, not only the independent trials.</p></li>
+<li><p><strong>expected_mean_sr</strong> (<em>float</em>) – Expected mean SR, usually 0. We assume that random startegies will have a mean SR of 0,
+expressed in the same frequency as the other parameters.</p></li>
+<li><p><strong>independent_trials</strong> (<em>int</em>) – Number of independent trials, must be between 1 and <cite>trials_returns.shape[1]</cite></p></li>
+<li><p><strong>trials_sr_std</strong> (<em>float</em>) – Standard deviation fo the Estimated sharpe ratios of all trials,
+expressed in the same frequency as the other parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.min_track_record_length">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">min_track_record_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr_benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.min_track_record_length" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the MIn Track Record Length (minTRL).
+:param returns: If no <cite>returns</cite> are passed it is mandatory to pass a <cite>sr</cite> and <cite>sr_std</cite>.
+:type returns: np.array, pd.Series, pd.DataFrame
+:param sr_benchmark: Benchmark sharpe ratio expressed in the same frequency as the other parameters.</p>
+<blockquote>
+<div><p>By default set to zero (comparing against no investment skill).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> (<em>float</em>) – Confidence level used for calculating the minTRL.
+Between 0 and 1, by default=0.95</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of returns samples used for calculating <cite>sr</cite> and <cite>sr_std</cite>.</p></li>
+<li><p><strong>sr</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Sharpe ratio expressed in the same frequency as the other parameters.</p></li>
+<li><p><strong>sr_std</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Standard deviation fo the Estimated sharpe ratio,
+expressed in the same frequency as the other parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float, pd.Series</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>minTRL = minimum of returns/samples needed (with same SR and SR_STD) to accomplish a PSR(SR*) &gt; <cite>prob</cite>
+PSR(SR*) = probability that SR^ &gt; SR*
+SR^ = sharpe ratio estimated with <cite>returns</cite>, or <cite>sr</cite>
+SR* = <cite>sr_benchmark</cite>
+<a class="reference external" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.num_independent_trials">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">num_independent_trials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trials_returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.num_independent_trials" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the number of independent trials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trials_returns</strong> (<em>pd.DataFrame</em>) – All trials returns, not only the independent trials.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Number of total trials.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – Average correlation between all the trials.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EvaluationLayer.SharpeStats.probabilistic_sharpe_ratio">
+<span class="sig-prename descclassname"><span class="pre">EvaluationLayer.SharpeStats.</span></span><span class="sig-name descname"><span class="pre">probabilistic_sharpe_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">returns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr_benchmark</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EvaluationLayer.SharpeStats.probabilistic_sharpe_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Probabilistic Sharpe Ratio (PSR).
+:param returns: If no <cite>returns</cite> are passed it is mandatory to pass a <cite>sr</cite> and <cite>sr_std</cite>.
+:type returns: np.array, pd.Series, pd.DataFrame
+:param sr_benchmark: Benchmark sharpe ratio expressed in the same frequency as the other parameters.</p>
+<blockquote>
+<div><p>By default set to zero (comparing against no investment skill).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sr</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Sharpe ratio expressed in the same frequency as the other parameters.</p></li>
+<li><p><strong>sr_std</strong> (<em>float</em><em>, </em><em>np.array</em><em>, </em><em>pd.Series</em><em>, </em><em>pd.DataFrame</em>) – Standard deviation fo the Estimated sharpe ratio,
+expressed in the same frequency as the other parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float, pd.Series</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>PSR(SR*) = probability that SR^ &gt; SR*
+SR^ = sharpe ratio estimated with <cite>returns</cite>, or <cite>sr</cite>
+SR* = <cite>sr_benchmark</cite>
+<a class="reference external" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643</a></p>
+</dd></dl>
+
+</section>
+<section id="module-EvaluationLayer">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-EvaluationLayer" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AgentLayer.metrics.html" class="btn btn-neutral float-left" title="AgentLayer.metrics package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FinancialDataLayer.html" class="btn btn-neutral float-right" title="FinancialDataLayer package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Baris Özakar,Emine Didem Durukan,Dogan Parlak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

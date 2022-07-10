@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinancialDataLayer.DataCollection package &mdash; UniFi July 2022 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="FinancialDataLayer.DataProcessing package" href="FinancialDataLayer.DataProcessing.html" />
+    <link rel="prev" title="FinancialDataLayer package" href="FinancialDataLayer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> UniFi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uniFi</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AgentLayer.html">AgentLayer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EvaluationLayer.html">EvaluationLayer package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="FinancialDataLayer.html">FinancialDataLayer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="FinancialDataLayer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">FinancialDataLayer.DataCollection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="FinancialDataLayer.DataProcessing.html">FinancialDataLayer.DataProcessing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#financialdatalayer-test-dowloader-module">FinancialDataLayer.test_dowloader module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="FinancialDataLayer.html#module-FinancialDataLayer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UniFi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">uniFi</a> &raquo;</li>
+          <li><a href="FinancialDataLayer.html">FinancialDataLayer package</a> &raquo;</li>
+      <li>FinancialDataLayer.DataCollection package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/FinancialDataLayer.DataCollection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="financialdatalayer-datacollection-package">
+<h1>FinancialDataLayer.DataCollection package<a class="headerlink" href="#financialdatalayer-datacollection-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-FinancialDataLayer.DataCollection.CustomDatasetImporter">
+<span id="financialdatalayer-datacollection-customdatasetimporter-module"></span><h2>FinancialDataLayer.DataCollection.CustomDatasetImporter module<a class="headerlink" href="#module-FinancialDataLayer.DataCollection.CustomDatasetImporter" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.CustomDatasetImporter.CustomDatasetImporter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataCollection.CustomDatasetImporter.</span></span><span class="sig-name descname"><span class="pre">CustomDatasetImporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.CustomDatasetImporter.CustomDatasetImporter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector" title="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetCollector</span></code></a></p>
+<p>Main class that provides methods for collecting data.</p>
+<blockquote>
+<div><p>Attributes</p>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>df: pd.DataFrame</dt><dd><p>dataframe to be loaded</p>
+</dd>
+<dt>path: str</dt><dd><p>path of the file to be loaded.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.CustomDatasetImporter.CustomDatasetImporter.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.CustomDatasetImporter.CustomDatasetImporter.collect" title="Permalink to this definition"></a></dt>
+<dd><p>main function that calls methods for collecting data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Calls the data collection methods according to the
+given parameter. If dataframe is provided then the function
+that loads data from the dataframe is called, and if the path is
+provided the function that loads the data frame from a file is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>loaded data</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataCollection.DataDownloader">
+<span id="financialdatalayer-datacollection-datadownloader-module"></span><h2>FinancialDataLayer.DataCollection.DataDownloader module<a class="headerlink" href="#module-FinancialDataLayer.DataCollection.DataDownloader" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DataDownloader.DataDownloader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataCollection.DataDownloader.</span></span><span class="sig-name descname"><span class="pre">DataDownloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticker_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DataDownloader.DataDownloader" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector" title="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetCollector</span></code></a></p>
+<p>Provides methods for retrieving daily security data from Yahoo Finance API</p>
+<blockquote>
+<div><p>Attributes</p>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>start_date: str</dt><dd><p>date that the data starts from</p>
+</dd>
+<dt>end_date<span class="classifier">str</span></dt><dd><p>date that the data ends</p>
+</dd>
+<dt>ticker_list: List</dt><dd><p>tickers to be downloaded</p>
+</dd>
+<dt>proxy: str</dt><dd><p>make each request with a proxy</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DataDownloader.DataDownloader.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DataDownloader.DataDownloader.collect" title="Permalink to this definition"></a></dt>
+<dd><p>calls the funciton that collects data from Yahoo Finance API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DataDownloader.DataDownloader.download_from_yahoo">
+<span class="sig-name descname"><span class="pre">download_from_yahoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DataDownloader.DataDownloader.download_from_yahoo" title="Permalink to this definition"></a></dt>
+<dd><p>downloads data from Yahoo Finance API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Calls the funciton that collects data from Yahoo Finance API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>downloaded data</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">download_from_yahoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Downloads data from Yahoo Finance API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Data that has been downloaded from Yahoo Finance API</dt><dd><dl class="simple">
+<dt>columns:</dt><dd><p>”date” : date
+“open” : the price when the market is opened.
+“high” : highest price at which a stock is traded during a period
+“low” :  lowest price of the period
+“close” : the price when the market is closed.
+“adjclose” : adjusted close price
+“volume” : the number of shares traded
+“tic” : tickers</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataCollection.DatasetCollector">
+<span id="financialdatalayer-datacollection-datasetcollector-module"></span><h2>FinancialDataLayer.DataCollection.DatasetCollector module<a class="headerlink" href="#module-FinancialDataLayer.DataCollection.DatasetCollector" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FinancialDataLayer.DataCollection.DatasetCollector.</span></span><span class="sig-name descname"><span class="pre">DatasetCollector</span></span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>”
+This abstract base class defines the base structure of data collectors</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.collect">
+<span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.collect" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_df">
+<span class="sig-name descname"><span class="pre">load_from_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_df" title="Permalink to this definition"></a></dt>
+<dd><p>loads data from a dataframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_path">
+<span class="sig-name descname"><span class="pre">load_from_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_path" title="Permalink to this definition"></a></dt>
+<dd><p>loads data from a file given the path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_to_load</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Loads data from pd.DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df_to_load</strong> (<em>pd.DataFrame</em>) – dataframe to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#FinancialDataLayer.DataCollection.DatasetCollector.DatasetCollector.load_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Loads data from a given file path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>string</em>) – path of the file to be loaded.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Raised when the path contains a file type besides .csv , .xlsx and .json.</p></li>
+<li><p><strong>FileNotFound</strong> – Raised when the file to be loaded does not found.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>loaded data.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FinancialDataLayer.DataCollection">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-FinancialDataLayer.DataCollection" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="FinancialDataLayer.html" class="btn btn-neutral float-left" title="FinancialDataLayer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FinancialDataLayer.DataProcessing.html" class="btn btn-neutral float-right" title="FinancialDataLayer.DataProcessing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Baris Özakar,Emine Didem Durukan,Dogan Parlak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

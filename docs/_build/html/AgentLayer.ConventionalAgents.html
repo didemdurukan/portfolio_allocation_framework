@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentLayer.ConventionalAgents package &mdash; UniFi July 2022 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AgentLayer.DataSplitter package" href="AgentLayer.DataSplitter.html" />
+    <link rel="prev" title="AgentLayer package" href="AgentLayer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> UniFi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uniFi</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="AgentLayer.html">AgentLayer package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="AgentLayer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">AgentLayer.ConventionalAgents package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentLayer.DataSplitter.html">AgentLayer.DataSplitter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentLayer.Environment.html">AgentLayer.Environment package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentLayer.RLAgents.html">AgentLayer.RLAgents package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentLayer.Testdir.html">AgentLayer.Testdir package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentLayer.metrics.html">AgentLayer.metrics package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="AgentLayer.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AgentLayer.html#module-AgentLayer.Agent">AgentLayer.Agent module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AgentLayer.html#module-AgentLayer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EvaluationLayer.html">EvaluationLayer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FinancialDataLayer.html">FinancialDataLayer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UniFi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">uniFi</a> &raquo;</li>
+          <li><a href="AgentLayer.html">AgentLayer package</a> &raquo;</li>
+      <li>AgentLayer.ConventionalAgents package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/AgentLayer.ConventionalAgents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agentlayer-conventionalagents-package">
+<h1>AgentLayer.ConventionalAgents package<a class="headerlink" href="#agentlayer-conventionalagents-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-AgentLayer.ConventionalAgents.ConventionalAgent">
+<span id="agentlayer-conventionalagents-conventionalagent-module"></span><h2>AgentLayer.ConventionalAgents.ConventionalAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.ConventionalAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.ConventionalAgent.</span></span><span class="sig-name descname"><span class="pre">ConventionalAgent</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="AgentLayer.html#AgentLayer.Agent.Agent" title="AgentLayer.Agent.Agent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Defines the base structure of Conventional Agents classes.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>abstract method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents.DTAgent">
+<span id="agentlayer-conventionalagents-dtagent-module"></span><h2>AgentLayer.ConventionalAgents.DTAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.DTAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.DTAgent.</span></span><span class="sig-name descname"><span class="pre">DTAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'squared_error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">splitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'best'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight_fraction_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_leaf_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_impurity_decrease</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccp_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConventionalAgent</span></code></a></p>
+<p>Provides methods for Decision Tree Agent.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.model" title="Permalink to this definition"></a></dt>
+<dd><p>conventional agent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sklearn.model object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>trains the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.get_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>main prediction method.
+does prediction using _return_predict() and _weight_optimizion()
+helper functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>saves the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>loads the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>predicts the expected return.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.DTAgent.DTAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.DTAgent.DTAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>optimizes weights using efficient frontier.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sklearn.model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_capital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_cost_pct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['macd',</span> <span class="pre">'boll_ub',</span> <span class="pre">'boll_lb',</span> <span class="pre">'rsi_30',</span> <span class="pre">'cci_30',</span> <span class="pre">'dx_30',</span> <span class="pre">'close_30_sma',</span> <span class="pre">'close_60_sma',</span> <span class="pre">'close']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>Main prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_data</strong> (<em>pd.DataFrame</em>) – test data</p></li>
+<li><p><strong>initial_capital</strong> (<em>int</em>) – initial capital</p></li>
+<li><p><strong>feature_list</strong> (<em>list</em>) – a list of features to be used for prediction</p></li>
+<li><p><strong>transaction_cost_pct</strong> (<em>float</em>) – transaction cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>portfolio with dates and account value
+pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+and predicted y value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for saving the model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">train_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
+<dd><p>Trains the model and saves it to class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_x</strong> (<em>pd.DataFrame</em>) – train_x data</p></li>
+<li><p><strong>train_y</strong> (<em>pd.DataFrame</em>) – train_y data</p></li>
+<li><p><strong>train_params</strong> (<em>dict</em>) – training parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents.HRAgent">
+<span id="agentlayer-conventionalagents-hragent-module"></span><h2>AgentLayer.ConventionalAgents.HRAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.HRAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.HRAgent.</span></span><span class="sig-name descname"><span class="pre">HRAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConventionalAgent</span></code></a></p>
+<p>Provides methods Huber Regressor Agent.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.model" title="Permalink to this definition"></a></dt>
+<dd><p>conventional agent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sklearn.model object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>trains the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.get_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>main prediction method.
+does prediction using _return_predict() and _weight_optimizion()
+helper functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>saves the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>loads the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>predicts the expected return.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.HRAgent.HRAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.HRAgent.HRAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>optimizes weights using efficient frontier.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id9" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id10" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sklearn.model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_capital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_cost_pct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['macd',</span> <span class="pre">'boll_ub',</span> <span class="pre">'boll_lb',</span> <span class="pre">'rsi_30',</span> <span class="pre">'cci_30',</span> <span class="pre">'dx_30',</span> <span class="pre">'close_30_sma',</span> <span class="pre">'close_60_sma',</span> <span class="pre">'close']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id11" title="Permalink to this definition"></a></dt>
+<dd><p>Main prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_data</strong> (<em>pd.DataFrame</em>) – test data</p></li>
+<li><p><strong>initial_capital</strong> (<em>int</em>) – initial capital</p></li>
+<li><p><strong>feature_list</strong> (<em>list</em>) – a list of features to be used for prediction</p></li>
+<li><p><strong>transaction_cost_pct</strong> (<em>float</em>) – transaction cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>portfolio with dates and account value
+pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+and predicted y value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id12" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for saving the model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">train_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id13" title="Permalink to this definition"></a></dt>
+<dd><p>Trains the model and saves it to class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_x</strong> (<em>pd.DataFrame</em>) – train_x data</p></li>
+<li><p><strong>train_y</strong> (<em>pd.DataFrame</em>) – train_y data</p></li>
+<li><p><strong>train_params</strong> (<em>dict</em>) – training parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents.LRAgent">
+<span id="agentlayer-conventionalagents-lragent-module"></span><h2>AgentLayer.ConventionalAgents.LRAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.LRAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.LRAgent.</span></span><span class="sig-name descname"><span class="pre">LRAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit_intercept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConventionalAgent</span></code></a></p>
+<p>Provides methods Linear Regression Agent.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.model" title="Permalink to this definition"></a></dt>
+<dd><p>conventional agent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sklearn.model object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>trains the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.get_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>main prediction method.
+does prediction using _return_predict() and _weight_optimizion()
+helper functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>saves the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>loads the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>predicts the expected return.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.LRAgent.LRAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.LRAgent.LRAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>optimizes weights using efficient frontier.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id14" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id15" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sklearn.model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_capital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_cost_pct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['macd',</span> <span class="pre">'boll_ub',</span> <span class="pre">'boll_lb',</span> <span class="pre">'rsi_30',</span> <span class="pre">'cci_30',</span> <span class="pre">'dx_30',</span> <span class="pre">'close_30_sma',</span> <span class="pre">'close_60_sma',</span> <span class="pre">'close']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id16" title="Permalink to this definition"></a></dt>
+<dd><p>Main prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_data</strong> (<em>pd.DataFrame</em>) – test data</p></li>
+<li><p><strong>initial_capital</strong> (<em>int</em>) – initial capital</p></li>
+<li><p><strong>feature_list</strong> (<em>list</em>) – a list of features to be used for prediction</p></li>
+<li><p><strong>transaction_cost_pct</strong> (<em>float</em>) – transaction cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>portfolio with dates and account value
+pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+and predicted y value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id17" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for saving the model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">train_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id18" title="Permalink to this definition"></a></dt>
+<dd><p>Trains the model and saves it to class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_x</strong> (<em>pd.DataFrame</em>) – train_x data</p></li>
+<li><p><strong>train_y</strong> (<em>pd.DataFrame</em>) – train_y data</p></li>
+<li><p><strong>train_params</strong> (<em>dict</em>) – training parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents.RFAgent">
+<span id="agentlayer-conventionalagents-rfagent-module"></span><h2>AgentLayer.ConventionalAgents.RFAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.RFAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.RFAgent.</span></span><span class="sig-name descname"><span class="pre">RFAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'squared_error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight_fraction_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_leaf_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_impurity_decrease</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oob_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccp_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConventionalAgent</span></code></a></p>
+<p>Provides methods for Random Forest Agent.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.model" title="Permalink to this definition"></a></dt>
+<dd><p>conventional agent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sklearn.model object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>trains the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.get_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>main prediction method.
+does prediction using _return_predict() and _weight_optimizion()
+helper functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>saves the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>loads the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>predicts the expected return.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.RFAgent.RFAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.RFAgent.RFAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>optimizes weights using efficient frontier.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id19" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id20" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sklearn.model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_capital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_cost_pct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['macd',</span> <span class="pre">'boll_ub',</span> <span class="pre">'boll_lb',</span> <span class="pre">'rsi_30',</span> <span class="pre">'cci_30',</span> <span class="pre">'dx_30',</span> <span class="pre">'close_30_sma',</span> <span class="pre">'close_60_sma',</span> <span class="pre">'close']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id21" title="Permalink to this definition"></a></dt>
+<dd><p>Main prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_data</strong> (<em>pd.DataFrame</em>) – test data</p></li>
+<li><p><strong>initial_capital</strong> (<em>int</em>) – initial capital</p></li>
+<li><p><strong>feature_list</strong> (<em>list</em>) – a list of features to be used for prediction</p></li>
+<li><p><strong>transaction_cost_pct</strong> (<em>float</em>) – transaction cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>portfolio with dates and account value
+pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+and predicted y value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id22" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for saving the model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">train_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id23" title="Permalink to this definition"></a></dt>
+<dd><p>Trains the model and saves it to class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_x</strong> (<em>pd.DataFrame</em>) – train_x data</p></li>
+<li><p><strong>train_y</strong> (<em>pd.DataFrame</em>) – train_y data</p></li>
+<li><p><strong>train_params</strong> (<em>dict</em>) – training parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents.SVRAgent">
+<span id="agentlayer-conventionalagents-svragent-module"></span><h2>AgentLayer.ConventionalAgents.SVRAgent module<a class="headerlink" href="#module-AgentLayer.ConventionalAgents.SVRAgent" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">AgentLayer.ConventionalAgents.SVRAgent.</span></span><span class="sig-name descname"><span class="pre">SVRAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rbf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shrinking</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent" title="AgentLayer.ConventionalAgents.ConventionalAgent.ConventionalAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConventionalAgent</span></code></a></p>
+<p>Provides methods for Support Vector Regression Agent.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.model" title="Permalink to this definition"></a></dt>
+<dd><p>conventional agent model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sklearn.model object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>trains the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.get_params" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.predict" title="Permalink to this definition"></a></dt>
+<dd><p>main prediction method.
+does prediction using _return_predict() and _weight_optimizion()
+helper functions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.save_model" title="Permalink to this definition"></a></dt>
+<dd><p>saves the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent.load_model" title="Permalink to this definition"></a></dt>
+<dd><p>loads the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent._return_predict">
+<span class="sig-name descname"><span class="pre">_return_predict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent._return_predict" title="Permalink to this definition"></a></dt>
+<dd><p>predicts the expected return.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AgentLayer.ConventionalAgents.SVRAgent.SVRAgent._weight_optimization">
+<span class="sig-name descname"><span class="pre">_weight_optimization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#AgentLayer.ConventionalAgents.SVRAgent.SVRAgent._weight_optimization" title="Permalink to this definition"></a></dt>
+<dd><p>optimizes weights using efficient frontier.
+helper function for the main predict method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id24">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id24" title="Permalink to this definition"></a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, will return the parameters for this estimator and contained subobjects that are estimators. Defaults to True.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id25">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id25" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>loaded model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sklearn.model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id26">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_capital</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_cost_pct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['macd',</span> <span class="pre">'boll_ub',</span> <span class="pre">'boll_lb',</span> <span class="pre">'rsi_30',</span> <span class="pre">'cci_30',</span> <span class="pre">'dx_30',</span> <span class="pre">'close_30_sma',</span> <span class="pre">'close_60_sma',</span> <span class="pre">'close']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id26" title="Permalink to this definition"></a></dt>
+<dd><p>Main prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_data</strong> (<em>pd.DataFrame</em>) – test data</p></li>
+<li><p><strong>initial_capital</strong> (<em>int</em>) – initial capital</p></li>
+<li><p><strong>feature_list</strong> (<em>list</em>) – a list of features to be used for prediction</p></li>
+<li><p><strong>transaction_cost_pct</strong> (<em>float</em>) – transaction cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>portfolio with dates and account value
+pd.DataFrame: dataframe that holds info for each ticker for each day the weight
+and predicted y value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id27">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id27" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) – file name for saving the model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id28">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">train_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id28" title="Permalink to this definition"></a></dt>
+<dd><p>Trains the model and saves it to class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_x</strong> (<em>pd.DataFrame</em>) – train_x data</p></li>
+<li><p><strong>train_y</strong> (<em>pd.DataFrame</em>) – train_y data</p></li>
+<li><p><strong>train_params</strong> (<em>dict</em>) – training parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AgentLayer.ConventionalAgents">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-AgentLayer.ConventionalAgents" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AgentLayer.html" class="btn btn-neutral float-left" title="AgentLayer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AgentLayer.DataSplitter.html" class="btn btn-neutral float-right" title="AgentLayer.DataSplitter package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Baris Özakar,Emine Didem Durukan,Dogan Parlak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
