@@ -31,3 +31,4 @@ Testdir section contains tests of functionalities of all agents and splitting me
 ## EvaluationLayer
 Evaluation  Layer contains Evaluator abstract base class. ExtendedPortfolioEvaluator and PorftolioEvaluator classes inherits Evaluator class. SharpeStats.py file implements distinct sharpe ratio calculation methods.
 
+![fin_data](/Users/doganparlak/Desktop/fin_data.png)
