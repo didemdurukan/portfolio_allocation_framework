@@ -10,10 +10,20 @@ The proposed framework is structured in three sequential layers: Financial Data 
 All of the classes mentioned below belongs the their own .py files with the same name of the classes.
 
 ## FinancialDataLayer
+
+![fin_data_layer](https://github.com/didemdurukan/uniFi/blob/Agent/FinancialDataLayer/fin_data.png)
+
 Financial Data Layer contains two main sections namely DataCollection and DataProcessing.
 
 DataCollection section has DatasetCollector abstract base class. DataDownloader and CustomDatasetImporter classes inherits the DatasetCollector class.
+
+
 ## AgentLayer
+
+![agent_layer1](https://github.com/didemdurukan/uniFi/blob/bda9c8e85f6e5f99e366b700b32b7a79cbdd8fae/AgentLayer/unifi_layer-agent.drawio.png)
+
+![agent_layer2](https://github.com/didemdurukan/uniFi/blob/bda9c8e85f6e5f99e366b700b32b7a79cbdd8fae/AgentLayer/unifi_layer-agent2.drawio.png)
+
 Agent Layer contains ConventionalAgents, RLAgents, Environment, DataSplitter, metrics and TestDir sections. Besides them, it contains an Agent abstract base class.
 
 ConventinalAgents section contains ConventionalAgent abstract base class which inherits Agent class. DTAgent (Decision Tree Agent), HRAgent (Huber Regression Agent), LRAgent (Linear Regression Agent), RFAgent (Random Forest Agent) and SVRAgent (Support Vector Regression Agent) classes inherits the ConventionalAgent class.
@@ -29,6 +39,9 @@ Metrics section contains a regression.py file which implements several error met
 Testdir section contains tests of functionalities of all agents and splitting methods. A2C_test.py, DDPG_test.py, DT_test.py, HR_test.py, LR_test.py, PPO_test.py, RF_test.py, SVR_test.py, TD3_test.py and Splitter_test.py files are included in this section. 
 
 ## EvaluationLayer
+
+![eval_layer](https://github.com/didemdurukan/uniFi/blob/bda9c8e85f6e5f99e366b700b32b7a79cbdd8fae/EvaluationLayer/eval_layer.png)
+
 Evaluation  Layer contains Evaluator abstract base class. ExtendedPortfolioEvaluator and PorftolioEvaluator classes inherits Evaluator class. SharpeStats.py file implements distinct sharpe ratio calculation methods.
 
-![fin_data](/Users/doganparlak/Desktop/fin_data.png)
+
