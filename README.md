@@ -18,7 +18,7 @@ Agent Layer contains ConventionalAgents, RLAgents, Environment, DataSplitter, me
 
 ConventinalAgents section contains ConventionalAgent abstract base class which inherits Agent class. DTAgent (Decision Tree Agent), HRAgent (Huber Regression Agent), LRAgent (Linear Regression Agent), RFAgent (Random Forest Agent) and SVRAgent (Support Vector Regression Agent) classes inherits the ConventionalAgent class.
 
-RLAgents section contains RLAgent abstract base class which inherits Agent class. A2C (A2C Agent), DDPG (DDPG Agent), PPO (PPO Agent) and TD3 (TD3 Agent) classes inherits RLAGent class.
+RLAgents section contains RLAgent abstract base class which inherits Agent class. A2C (A2C Agent), DDPG (DDPG Agent), PPO (PPO Agent) and TD3 (TD3 Agent) classes inherits RLAgent class.
 
 Environment section contaions Environment abstract base class. PortfolioEnv (Portfolio Environment) inherits the Environment class.
 
