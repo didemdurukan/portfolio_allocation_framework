@@ -61,7 +61,8 @@ Envrionment module contains methods for implementing the necessary environment f
 
 Since the data that we are tackling with is time-series data, special data splitting methods are in need. These customized data splitting methods which are tailored for time-series data have been implemented in this module. It currently supports Time Series Splitter and Blocking Time Series Splliter functionalities.
 
-![blocking_time_series_splitter](figures/image.png)
+<img src="https://github.com/didemdurukan/uniFi/blob/Agent/figures/image.png" width="400" height="350">
+
 
 ### 5. Metrics Module
 Metrics section implements several error metrics as methods. Here again we use the help of sckit-learn library.
@@ -84,9 +85,11 @@ Provided regression metrics are the following:
 
 Objective of the Evaluation Layer, as the name suggests, is to evaluate the portoflio that has been produces by the agent. It provides methods for applying backtesting, and for visualization. Default portfolio evaluator module helps users compare multiple agents against an exogenous index like Dow Jones Index. However, extended portfolio evaluator module provides methods for comparing multiple agents against the passive strategy (uniform buy and hold), and it also provides additional probabilistic analysis. 
 
-Here an example visualization: 
+Here are couple of example visualizations produced by the Evaluation Layer: 
 
-#TODO: Add figures and figure out how to change the size of it :(
+<img src="https://github.com/didemdurukan/uniFi/blob/Agent/figures/Evaluation_Hist.png" width="700" height="400">
+
+<img src ="https://github.com/didemdurukan/uniFi/blob/Agent/figures/Evaluation_ReturnDist.png" width="700" height="550">
 
 # Requirements
 
