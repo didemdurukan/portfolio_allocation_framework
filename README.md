@@ -93,25 +93,10 @@ Here are couple of example visualizations produced by the Evaluation Layer:
 
 # Requirements
 
-Before you run UniFi make sure you have the following requirements:
+To run UniFi properly download the necessary requirements with the following command:
+
 ```
-pandas~=1.4.2
-numpy~=1.22.4
-matplotlib~=3.5.2
-empyrical~=0.5.5
-seaborn~=0.11.2
-ipython~=8.3.0
-pytz~=2021.3
-scipy~=1.7.3
-nbformat~=5.3.0
-scikit-learn~=1.0.2
-setuptools~=59.5.0
-pyyaml~=6.0
-torch~=1.11.0
-gym~=0.21.0
-tensorflow~=2.8.0
-stockstats~=0.4.1
-yfinance~=0.1.70
+pip install requirements.txt
 ```
 
 # Download UniFi
